@@ -11,7 +11,7 @@ Parts:
 
 # Setup
 ## Linux
-`dmesg|grep cdc_ether` use to see what your cdc_ether NIC is setup as
+`dmesg|grep cdc_ether` use to see what your cdc_ether NIC is setup as\
 `sudo ifconfig {NIC returned from ^} 10.0.0.2 netmask 255.255.255.252 up` use to enable NIC
 
 # Reference Material
