@@ -24,3 +24,7 @@ http://www.isticktoit.net/?p=1383
 https://irq5.io/2016/12/22/raspberry-pi-zero-as-multiple-usb-gadgets/
 
 https://andrewnicolaou.co.uk/posts/2016/pi-zero-midi-3-two-things-at-once
+
+https://shallowsky.com/blog/linux/raspberry-pi-ethernet-gadget-2.html
+
+https://developer.ridgerun.com/wiki/index.php/How_to_use_USB_device_networking
