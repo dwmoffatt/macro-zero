@@ -4,10 +4,15 @@ From prototype to production, macro keyboard utilizing power of a raspberry-pi t
 # Design
 Parts:
 - raspberry pi zero
-- e-ink display https://www.waveshare.com/product/displays/e-paper/2.13inch-e-paper-hat.htm
+- e-ink display https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT
 - 9 mechanical switches - 9 Inputs
-- 2 rotary encoders 
-- 8-16 + 9 WS2812B - 3 Outputs - LEDs under rotary encoders and buttons
+- 2 rotary encoders - 6 Inputs
+- MCP23017 I2C 16 I/O Expander 
+
+# Setup
+## Linux
+`dmesg|grep cdc_ether`
+`sudo ifconfig {NIC returned from ^} 10.0.0.2 netmask 255.255.255.252 up`
 
 # Reference Material
 https://www.rmedgar.com/blog/using-rpi-zero-as-keyboard-setup-and-device-definition/
