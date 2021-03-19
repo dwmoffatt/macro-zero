@@ -11,7 +11,7 @@ Parts:
 
 ## Setup Ethernet Keyboard Gadget
 1. Add `dtoverlay=dwc2` at the end of ` boot/config.txt`
-2. And the following two lines at the end of `/etc/modules`on device rootfs
+2. And the following two lines at the end of `/etc/modules` on device rootfs
    ```
    dwc2
    libcomposite
