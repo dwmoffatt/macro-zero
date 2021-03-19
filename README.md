@@ -11,8 +11,14 @@ Parts:
 
 # Setup
 ## Linux
+#### On Host
+###### Enable USB NIC
 `dmesg | grep cdc_ether` use to see what your cdc_ether NIC is setup as\
 `sudo ifconfig {NIC returned from ^} 10.0.0.2 netmask 255.255.255.252 up` use to enable NIC
+###### Enable Internet Sharing
+`echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null`\
+`sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24`\
+
 
 # Reference Material
 https://www.rmedgar.com/blog/using-rpi-zero-as-keyboard-setup-and-device-definition/
