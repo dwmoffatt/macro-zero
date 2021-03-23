@@ -1,13 +1,17 @@
 """
-macro-zero
-================
+modules
+=============
 
 Holds basic properties used by device
-
-- I/O Mappings
 """
 
 import os
+
+# Pin definition
+RST_PIN = 11
+DC_PIN = 22
+CS_PIN = 24
+BUSY_PIN = 18
 
 __version__ = "0.000.0"
 
