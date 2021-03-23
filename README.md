@@ -1,11 +1,21 @@
 # macro-zero
 From prototype to production, macro keyboard utilizing power of a raspberry-pi to take DIY to a whole new level. Designed around the raspberry pi zero.
 
+## Vision
+
 ## Design
-Parts:
+##### Board Size:
+80mm (w) x 100mm (L)
+
+##### Design Restrictions:
+Max size of PCB: 100mm by 100mm due to cost\
+3D printer build area: 130mm (L) x 80mm (W) x 165mm（H）
+
+
+##### Parts:
 - raspberry pi zero
 - e-ink display https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT_(B)
-- 9 mechanical switches - 9 Inputs
+- 8 mechanical switches - 8 Inputs
 - 2 rotary encoders - 6 Inputs
 - MCP23017 I2C 16 I/O Expander 
 
