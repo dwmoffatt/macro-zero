@@ -2,15 +2,23 @@
 From prototype to production, macro keyboard utilizing power of a raspberry-pi to take DIY to a whole new level. Designed around the raspberry pi zero.
 
 ## Vision
+The idea behind this device is to create a macro-board to assist with tasks that are repeative or tedious while adding some cool features in a small form factor. 8 macro keys with 2 rotary encoders and a e-ink display to show options. One rotatry encoder will be to switch between modes changing what each of the 8 macro keys does. The other rotary encoder will add additonal features on top of the 8 macro keys per mode.
 
 ## Design
+### Software
+Main script:\
+should run device interface without exiting\
+Modules:\
+specific modules for hard interfaces on the device\
+each module will contain a module_init() and a module_close()
+### Hardware
 ##### Board Size:
 80mm (w) x 100mm (L)
 
 ##### Design Restrictions:
 Max size of PCB: 100mm by 100mm due to cost\
-3D printer build area: 130mm (L) x 80mm (W) x 165mm（H）
-
+3D printer build area: 130mm (L) x 80mm (W) x 165mm（H）\
+Limit to 450mA draw from usb port
 
 ##### Parts:
 - raspberry pi zero
