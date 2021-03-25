@@ -7,7 +7,7 @@ Holds basic properties used by device
 
 import os
 
-# Pin definition
+# Pin definition by the board IO
 RST_PIN = 11
 DC_PIN = 22
 CS_PIN = 24
