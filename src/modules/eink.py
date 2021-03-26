@@ -92,7 +92,7 @@ class EInk:
         self.send_command(0x71)
         while digital_read(BUSY_PIN) == 0:  # 0: idle, 1: busy
             self.send_command(0x71)
-            delay_ms(100)
+            delay_ms(10)
         # logging.debug("e-Paper busy release")
 
     def get_buffer(self, image):
@@ -129,7 +129,6 @@ class EInk:
             self.send_data(imagered[i])
 
         self.send_command(0x12)  # REFRESH
-        delay_ms(100)
         self.read_busy()
 
     def clear(self):
@@ -142,7 +141,6 @@ class EInk:
             self.send_data(0xFF)
 
         self.send_command(0x12)  # REFRESH
-        delay_ms(100)
         self.read_busy()
 
     def sleep(self):
