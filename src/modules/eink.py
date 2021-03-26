@@ -56,6 +56,7 @@ class EInk:
         self.send_data(0x77)
 
     def module_close(self):
+        self.clear()
         self.send_command(0x02)  # POWER_OFF
         self.read_busy()
 
