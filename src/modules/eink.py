@@ -8,7 +8,7 @@ import os
 import spidev
 import RPi.GPIO as GPIO
 from . import RST_PIN, DC_PIN, CS_PIN, BUSY_PIN, fonts_path
-from utils import digital_write, digital_read, delay_ms
+from .utils import digital_write, digital_read, delay_ms
 from PIL import Image, ImageDraw, ImageFont
 
 # Display resolution
