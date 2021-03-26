@@ -54,7 +54,7 @@ class MacroZero:
                 self.eink.test_horizontal_image()
                 if self.test_image == 1:
                     self.running = False
-
+                self.eink.clear()
             if self.test_image == 2 or self.test_image == 3:
                 self.eink.test_vertical_image()
                 self.running = False
