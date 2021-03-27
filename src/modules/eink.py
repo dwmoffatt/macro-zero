@@ -144,14 +144,18 @@ class EInk:
         for i in range(0, int(self.width * self.height / 8)):
             self.send_data(imagered[i])
 
+        self.send_command(0x91)
+
         self.send_command(EPD_COMMAND_POWER_ON)  # POWER_ON
         self.read_busy()
 
-        self.send_command(0x12)  # REFRESH
-        self.read_busy()
+        # self.send_command(0x12)  # REFRESH
+        # self.read_busy()
 
         self.send_command(EPD_COMMAND_POWER_OFF)  # POWER_OFF
         self.read_busy()
+
+        self.send_command(0x92)
 
     def clear(self):
         self.send_command(0x10)
