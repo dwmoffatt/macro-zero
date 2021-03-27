@@ -1,6 +1,21 @@
 """
 E-Ink Display Module
 ==========================
+
+Normal Operation of E-Ink Display
+1. Provide Power to Display
+2. Hardware Reset Display
+3. Send Panel Configuration -> C 0x00
+4. Setting Vcom and data interval -> C 0x50
+5. Set Display resolution -> C 0x61
+6. Write Display data to RAM -> C 0x10 & 0x13
+7. Power on Display -> C 0x04
+8. Refresh -> C 0x12 Optional (Investigate partial)
+9. Power off Display -> C 0x02
+
+Put unit into Deep sleep mode to save power. Hardware reset brings it back from that mode
+
+Refs: https://www.waveshare.com/w/upload/d/d8/2.13inch_e-Paper_%28B%29_V3_Specification.pdf
 """
 # import logging
 import time
@@ -14,6 +29,9 @@ from PIL import Image, ImageDraw, ImageFont
 # Display resolution
 EPD_WIDTH = 104
 EPD_HEIGHT = 212
+
+EPD_COMMAND_POWER_OFF = 0x02
+EPD_COMMAND_POWER_ON = 0x04
 
 
 class EInk:
@@ -38,26 +56,23 @@ class EInk:
         self.SPI.max_speed_hz = 4000000
         self.SPI.mode = 0b00
 
-        self.hardware_reset()
-
-        self.send_command(0x04)  # POWER_ON
-        self.read_busy()
+        self.hardware_reset()  # HW Reset
 
         self.send_command(0x00)  # PANEL_SETTING
         self.send_data(0x0F)
         self.send_data(0x89)
+
+        self.send_command(0x50)  # VCOM & DATA INTERVAL
+        self.send_data(0x77)
 
         self.send_command(0x61)  # RESOLUTION_SETTING
         self.send_data(0x68)
         self.send_data(0x00)
         self.send_data(0xD4)
 
-        self.send_command(0x50)
-        self.send_data(0x77)
-
     def module_close(self):
         self.clear()
-        self.send_command(0x02)  # POWER_OFF
+        self.send_command(EPD_COMMAND_POWER_OFF)  # POWER_OFF
         self.read_busy()
 
         # logging.debug("spi end")
@@ -129,8 +144,16 @@ class EInk:
         for i in range(0, int(self.width * self.height / 8)):
             self.send_data(imagered[i])
 
-        self.send_command(0x12)  # REFRESH
+        self.send_command(EPD_COMMAND_POWER_ON)  # POWER_ON
         self.read_busy()
+
+        delay_ms(500)
+
+        self.send_command(EPD_COMMAND_POWER_OFF)  # POWER_OFF
+        self.read_busy()
+
+        # self.send_command(0x12)  # REFRESH
+        # self.read_busy()
 
     def clear(self):
         self.send_command(0x10)
@@ -145,17 +168,10 @@ class EInk:
         self.read_busy()
 
     def sleep(self):
-        self.send_command(0x50)
-        self.send_data(0xF7)
-        self.send_command(0x02)  # POWER_OFF
-        self.read_busy()
         self.send_command(0x07)  # DEEP_SLEEP
         self.send_data(0xA5)  # check code
 
         delay_ms(2000)
-
-        GPIO.output(RST_PIN, 0)
-        GPIO.output(DC_PIN, 0)
 
     def test_horizontal_image(self):
         black_image = Image.new("1", (EPD_HEIGHT, EPD_WIDTH), 255)  # 298*126
