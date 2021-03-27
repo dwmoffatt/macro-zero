@@ -38,7 +38,7 @@ class MacroZero:
         GPIO.setwarnings(False)
 
         self.eink.module_init()
-        # self.eink.clear()
+        self.eink.clear()
 
     def run(self):
         """
