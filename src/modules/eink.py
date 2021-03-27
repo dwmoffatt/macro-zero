@@ -147,13 +147,11 @@ class EInk:
         self.send_command(EPD_COMMAND_POWER_ON)  # POWER_ON
         self.read_busy()
 
-        delay_ms(500)
+        self.send_command(0x12)  # REFRESH
+        self.read_busy()
 
         self.send_command(EPD_COMMAND_POWER_OFF)  # POWER_OFF
         self.read_busy()
-
-        # self.send_command(0x12)  # REFRESH
-        # self.read_busy()
 
     def clear(self):
         self.send_command(0x10)
@@ -164,7 +162,13 @@ class EInk:
         for i in range(0, int(self.width * self.height / 8)):
             self.send_data(0xFF)
 
+        self.send_command(EPD_COMMAND_POWER_ON)  # POWER_ON
+        self.read_busy()
+
         self.send_command(0x12)  # REFRESH
+        self.read_busy()
+
+        self.send_command(EPD_COMMAND_POWER_OFF)  # POWER_OFF
         self.read_busy()
 
     def sleep(self):
