@@ -2,7 +2,7 @@
 From prototype to production, macro keyboard utilizing power of a raspberry-pi to take DIY to a whole new level. Designed around the raspberry pi zero.
 
 ## Vision
-The idea behind this device is to create a macro-board to assist with tasks that are repeative or tedious while adding some cool features in a small form factor. 8 macro keys with 2 rotary encoders and a e-ink display to show options. One rotatry encoder will be to switch between modes changing what each of the 8 macro keys does. The other rotary encoder will add additonal features on top of the 8 macro keys per mode.
+The idea behind this device is to create a macro-board to assist with tasks that are repeative or tedious while adding some cool features in a small form factor. 8 macro keys with 2 rotary encoders and a display to show options. One rotatry encoder will be to switch between modes changing what each of the 8 macro keys does. The other rotary encoder will add additonal features on top of the 8 macro keys per mode.
 
 ## Design
 ### Software
@@ -22,7 +22,7 @@ Limit to 450mA draw from usb port
 
 ##### Parts:
 - raspberry pi zero
-- e-ink display https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT_(B)
+- display
 - 8 mechanical switches - 8 Inputs
 - 2 rotary encoders - 6 Inputs
 - MCP23017 I2C 16 I/O Expander 
