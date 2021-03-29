@@ -8,12 +8,22 @@ Holds basic properties used by device
 import os
 
 # Pin definition by the board IO
-RST_PIN = 11
-DC_PIN = 22
-CS_PIN = 24
-BUSY_PIN = 18
+DC_PIN = 18
+RST_PIN = 22
+PSO_PIN = 16
+MK_B1_PIN = 29
+MK_B2_PIN = 31
+MK_B3_PIN = 33
+MK_B4_PIN = 35
+MK_B5_PIN = 37
+MK_B6_PIN = 36
+MK_B7_PIN = 38
+MK_B8_PIN = 40
+RE_SW_PIN = 11
+RE_DR_PIN = 15
+RE_CLK_PIN = 13
 
-__version__ = "0.000.0"
+__version__ = "0.000.1"
 
 path = os.path.dirname(__file__)
 """Path to StockWatcher package directory."""
