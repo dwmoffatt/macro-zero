@@ -5,11 +5,13 @@ Macro-Zero Interface
 Main Control for Device
 """
 
+import os
 import argparse
-
-# import threading
+import threading
 import logging
-from modules.eink import EInk
+import queue
+from modules import MK_B1_PIN, MK_B2_PIN, MK_B3_PIN, MK_B4_PIN, MK_B5_PIN, MK_B6_PIN, MK_B7_PIN, MK_B8_PIN
+from modules.mkeyboard import MKeyboard
 import RPi.GPIO as GPIO
 
 logging.basicConfig(
@@ -22,11 +24,23 @@ class MacroZero:
         """
         Creates Macro-Zero Device Object
         """
-
-        self.eink = EInk()
         self.test_image = test_image
+        self.thread_lock = threading.Lock()
+        self.input_que = queue.Queue(maxsize=50)
+        self.button_input_list = [
+            MK_B1_PIN,
+            MK_B2_PIN,
+            MK_B3_PIN,
+            MK_B4_PIN,
+            MK_B5_PIN,
+            MK_B6_PIN,
+            MK_B7_PIN,
+            MK_B8_PIN,
+        ]
 
+        self.mkeyboard = MKeyboard(self.button_input_list, self.thread_lock, self.input_que)
         self.running = False
+        self.power_switch_over = False
 
     def init(self):
         """
@@ -34,29 +48,31 @@ class MacroZero:
 
         :return: Nothing
         """
+        logging.info("Initializing macro-zero I/O & peripherals")
+
         GPIO.setmode(GPIO.BOARD)
         GPIO.setwarnings(False)
 
-        self.eink.module_init()
-        self.eink.clear()
+        self.mkeyboard.module_init()
 
     def run(self):
         """
-        Runs the interface. This function should never return. It only bails on an error
+        Runs the interface. This function returns when PSO signals that device is shutting down.
+
+        Each loop and entry will be pulled off the Que and processed.
+
+        Based on events keyboards macros/display changes will take place.
 
         :return: Nothing
         """
+        logging.info("Running macro-zero interface")
+
         self.running = True
 
         while self.running:
 
-            if self.test_image == 1 or self.test_image == 3:
-                self.eink.test_horizontal_image()
-                if self.test_image == 1:
-                    self.running = False
-                self.eink.clear()
-            if self.test_image == 2 or self.test_image == 3:
-                self.eink.test_vertical_image()
+            # Check if running on supercaps, bail out of main loop
+            if self.power_switch_over:
                 self.running = False
 
     def close(self):
@@ -65,9 +81,15 @@ class MacroZero:
 
         :return:
         """
-        self.eink.module_close()
+        logging.info("Closing macro-zero interface")
+
+        self.mkeyboard.module_close()
 
         GPIO.cleanup()
+
+        if self.power_switch_over:
+            logging.info("System shutdown started!")
+            os.system("systemctl poweroff")
 
 
 if __name__ in "__main__":
