@@ -2,7 +2,7 @@
 From prototype to production, macro keyboard utilizing power of a raspberry-pi to take DIY to a whole new level. Designed around the raspberry pi zero.
 
 ## Vision
-The idea behind this device is to create a macro-board to assist with tasks that are repeative or tedious while adding some cool features in a small form factor. 8 macro keys with 2 rotary encoders and a display to show options. One rotatry encoder will be to switch between modes changing what each of the 8 macro keys does. The other rotary encoder will add additonal features on top of the 8 macro keys per mode.
+The idea behind this device is to create a macro-board to assist with tasks that are repeative or tedious while adding some cool features in a small form factor. 8 macro keys, a rotary encoder and a display to show options. The one rotary encoder will be used to switch modes and add some features in each mode.
 
 ## Design
 ### Software
@@ -24,8 +24,38 @@ Limit to 450mA draw from usb port
 - raspberry pi zero
 - display
 - 8 mechanical switches - 8 Inputs
-- 2 rotary encoders - 6 Inputs
-- MCP23017 I2C 16 I/O Expander 
+- 1 rotary encoder - 3 Inputs
+- 1 Supercap backup module with 1 switch sense input
+- MCP23017 I2C 16 I/O Expander
+
+##### I/O Mapping:
+I/O Function| Board Pin Number
+------------|-----------------
+MOSI        | 19 *
+SCLK        | 23 *
+CS          | 24 *
+DC          | 18
+RST         | 22
+SDA         | 3  **
+SCL         | 5  **
+PSO         | 16 ***
+RE_SW       | 11
+RE_CLK      | 13
+RE_DR       | 15
+MK_B1       | 29
+MK_B2       | 31
+MK_B3       | 33
+MK_B4       | 35
+MK_B5       | 37
+MK_B6       | 36
+MK_B7       | 38
+MK_B8       | 40
+
+\* I/O is part of SPI. Declared in python library. No need to configure\
+** I2C interface. Declared in python library. No need to configure\
+*** PSO = Power Switch Over, used to tell when device has lost power over usb. Start shutdown sequence\
+https://pinout.xyz/#
+
 
 ## Setup Ethernet Keyboard Gadget
 1. Add `dtoverlay=dwc2` at the end of ` boot/config.txt`
