@@ -18,7 +18,6 @@ Module `__init__`:
 inputs_list dictionary struct:\
 ```
 { 
-   "InputIndex": 1,
    "InputType": "Button",
    "PinNumber": 22
 }
