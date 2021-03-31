@@ -10,7 +10,20 @@ Main script:\
 should run device interface without exiting\
 Modules:\
 specific modules for hard interfaces on the device\
-each module will contain a module_init() and a module_close()
+each module will contain a module_init() and a module_close()\
+Module `__init__`:
+- inputs_list - list of dictionaries - Input
+- thread_lock - Thread Lock object reference - Input
+- que - Input que - Output
+inputs_list dictionary struct:\
+```
+{ 
+   "InputIndex": 1,
+   "InputType": "Button",
+   "PinNumber": 22
+}
+```
+
 ### Hardware
 ##### Board Size:
 80mm (w) x 100mm (L)
