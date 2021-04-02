@@ -14,7 +14,7 @@ class MKeyboard:
         self.que = que
 
     def module_init(self):
-        logging.info("Initializing Rotary Encoder Module")
+        logging.info("Initializing mKeyboard Module")
 
         # Setup I/O as Inputs Pull Up & attach events to RISING edge of I/O
         for i in range(0, len(self.input_list)):
@@ -24,7 +24,7 @@ class MKeyboard:
             )
 
     def module_close(self):
-        logging.info("Closing Rotary Encoder Module")
+        logging.info("Closing mKeyboard Module")
 
         # De-attach events from I/O
         for i in range(0, len(self.input_list)):
@@ -36,12 +36,12 @@ class MKeyboard:
             if self.input_list[i][INPUT_LIST_KEY_PIN_NUMBER] == channel:
                 button = i + 1
 
-        logging.info(f"Button {button} released")
+        logging.info(f"mKeyboard Button {button} released")
 
         self.thread_lock.acquire()
         try:
-            self.que.put_nowait(f"B{button}")
+            self.que.put_nowait(f"MK_B{button}")
         except queue.Full:
-            logging.exception(f"Que is full when adding B{button}")
+            logging.exception(f"Que is full when adding MK_B{button}")
         finally:
             self.thread_lock.release()

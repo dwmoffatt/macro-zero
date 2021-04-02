@@ -15,6 +15,8 @@ from modules import (
     INPUT_LIST_KEY_PIN_NUMBER,
     INPUT_TYPE_BUTTON,
     INPUT_TYPE_SWITCH,
+    INPUT_TYPE_ROTARY_ENCODER_CLK,
+    INPUT_TYPE_ROTARY_ENCODER_DIR,
     MK_B1_PIN,
     MK_B2_PIN,
     MK_B3_PIN,
@@ -23,10 +25,14 @@ from modules import (
     MK_B6_PIN,
     MK_B7_PIN,
     MK_B8_PIN,
+    RE_SW_PIN,
+    RE_DR_PIN,
+    RE_CLK_PIN,
     PSO_PIN,
 )
 from modules.mkeyboard import MKeyboard
 from modules.pso import PSO
+from modules.rotaryencoder import RotaryEncoder
 import RPi.GPIO as GPIO
 
 logging.basicConfig(
@@ -59,11 +65,18 @@ class MacroZero:
             {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: MK_B8_PIN},
         ]
 
+        mode_select_input_list = [
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: RE_SW_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_ROTARY_ENCODER_DIR, INPUT_LIST_KEY_PIN_NUMBER: RE_DR_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_ROTARY_ENCODER_CLK, INPUT_LIST_KEY_PIN_NUMBER: RE_CLK_PIN},
+        ]
+
         self.running = False
         self.power_switch_over = False
 
         self.pso = PSO(pso_input_list, self.thread_lock, self.input_que)
         self.mkeyboard = MKeyboard(mkeyboard_input_list, self.thread_lock, self.input_que)
+        self.mode_select_rotary_encoder = RotaryEncoder(mode_select_input_list, self.thread_lock, self.input_que)
 
     def init(self):
         """
@@ -78,6 +91,7 @@ class MacroZero:
 
         self.pso.module_init()
         self.mkeyboard.module_init()
+        self.mode_select_rotary_encoder.module_init()
 
     def run(self):
         """
@@ -115,6 +129,7 @@ class MacroZero:
         """
         logging.info("Closing macro-zero interface")
 
+        self.mode_select_rotary_encoder.module_close()
         self.mkeyboard.module_close()
         self.pso.module_close()
 
