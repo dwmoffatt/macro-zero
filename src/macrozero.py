@@ -10,8 +10,23 @@ import argparse
 import threading
 import logging
 import queue
-from modules import MK_B1_PIN, MK_B2_PIN, MK_B3_PIN, MK_B4_PIN, MK_B5_PIN, MK_B6_PIN, MK_B7_PIN, MK_B8_PIN
+from modules import (
+    INPUT_LIST_KEY_INPUT_TYPE,
+    INPUT_LIST_KEY_PIN_NUMBER,
+    INPUT_TYPE_BUTTON,
+    INPUT_TYPE_SWITCH,
+    MK_B1_PIN,
+    MK_B2_PIN,
+    MK_B3_PIN,
+    MK_B4_PIN,
+    MK_B5_PIN,
+    MK_B6_PIN,
+    MK_B7_PIN,
+    MK_B8_PIN,
+    PSO_PIN,
+)
 from modules.mkeyboard import MKeyboard
+from modules.pso import PSO
 import RPi.GPIO as GPIO
 
 logging.basicConfig(
@@ -25,22 +40,30 @@ class MacroZero:
         Creates Macro-Zero Device Object
         """
         self.test_image = test_image
+
         self.thread_lock = threading.Lock()
         self.input_que = queue.Queue(maxsize=50)
-        self.button_input_list = [
-            MK_B1_PIN,
-            MK_B2_PIN,
-            MK_B3_PIN,
-            MK_B4_PIN,
-            MK_B5_PIN,
-            MK_B6_PIN,
-            MK_B7_PIN,
-            MK_B8_PIN,
+
+        pso_input_list = [
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_SWITCH, INPUT_LIST_KEY_PIN_NUMBER: PSO_PIN},
         ]
 
-        self.mkeyboard = MKeyboard(self.button_input_list, self.thread_lock, self.input_que)
+        mkeyboard_input_list = [
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: MK_B1_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: MK_B2_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: MK_B3_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: MK_B4_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: MK_B5_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: MK_B6_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: MK_B7_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_BUTTON, INPUT_LIST_KEY_PIN_NUMBER: MK_B8_PIN},
+        ]
+
         self.running = False
         self.power_switch_over = False
+
+        self.pso = PSO(pso_input_list, self.thread_lock, self.input_que)
+        self.mkeyboard = MKeyboard(mkeyboard_input_list, self.thread_lock, self.input_que)
 
     def init(self):
         """
@@ -53,6 +76,7 @@ class MacroZero:
         GPIO.setmode(GPIO.BOARD)
         GPIO.setwarnings(False)
 
+        self.pso.module_init()
         self.mkeyboard.module_init()
 
     def run(self):
@@ -70,10 +94,18 @@ class MacroZero:
         self.running = True
 
         while self.running:
+            value = None
 
-            # Check if running on supercaps, bail out of main loop
-            if self.power_switch_over:
-                self.running = False
+            self.thread_lock.acquire()
+            try:
+                value = self.input_que.get_nowait()
+            except queue.Empty:
+                pass
+            finally:
+                self.thread_lock.release()
+
+            if value is not None:
+                logging.info(f"Value pulled off Queue - {value}")
 
     def close(self):
         """
@@ -84,6 +116,7 @@ class MacroZero:
         logging.info("Closing macro-zero interface")
 
         self.mkeyboard.module_close()
+        self.pso.module_close()
 
         GPIO.cleanup()
 
