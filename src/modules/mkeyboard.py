@@ -4,6 +4,7 @@ M-Keyboard
 import logging
 import RPi.GPIO as GPIO
 import queue
+from . import INPUT_LIST_KEY_PIN_NUMBER
 
 
 class MKeyboard:
@@ -13,25 +14,28 @@ class MKeyboard:
         self.que = que
 
     def module_init(self):
-        logging.info("Initializing MKeyboard Module")
+        logging.info("Initializing Rotary Encoder Module")
 
-        # Setup I/O as Inputs Pull Up
+        # Setup I/O as Inputs Pull Up & attach events to RISING edge of I/O
         for i in range(0, len(self.input_list)):
-            GPIO.setup(self.input_list[i], GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
-        # Attach events to RISING edge of I/O
-        for i in range(0, len(self.input_list)):
-            GPIO.add_event_detect(self.input_list, GPIO.RISING, callback=self.btn_release, bouncetime=200)
+            GPIO.setup(self.input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.add_event_detect(
+                self.input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.RISING, callback=self.btn_release, bouncetime=200
+            )
 
     def module_close(self):
-        logging.info("Closing MKeyboard Module")
+        logging.info("Closing Rotary Encoder Module")
 
         # De-attach events from I/O
         for i in range(0, len(self.input_list)):
-            GPIO.remove_event_detect(self.input_list)
+            GPIO.remove_event_detect(self.input_list[i][INPUT_LIST_KEY_PIN_NUMBER])
 
     def btn_release(self, channel):
-        button = self.input_list.index(channel) + 1
+        button = 0
+        for i in range(0, len(self.input_list)):
+            if self.input_list[i][INPUT_LIST_KEY_PIN_NUMBER] == channel:
+                button = i + 1
+
         logging.info(f"Button {button} released")
 
         self.thread_lock.acquire()

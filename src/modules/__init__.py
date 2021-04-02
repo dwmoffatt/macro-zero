@@ -7,6 +7,13 @@ Holds basic properties used by device
 
 import os
 
+INPUT_LIST_KEY_INPUT_TYPE = "InputType"
+INPUT_LIST_KEY_PIN_NUMBER = "PinNumber"
+INPUT_TYPE_BUTTON = "Button"
+INPUT_TYPE_SWITCH = "Switch"
+INPUT_TYPE_ROTARY_ENCODER_CLK = "Rotary Encoder Clock"
+INPUT_TYPE_ROTARY_ENCODER_DIR = "Rotary Encoder Direction"
+
 # Pin definition by the board IO
 DC_PIN = 18
 RST_PIN = 22
