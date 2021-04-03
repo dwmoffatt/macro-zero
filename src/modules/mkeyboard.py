@@ -6,6 +6,15 @@ import RPi.GPIO as GPIO
 import queue
 from . import INPUT_LIST_KEY_PIN_NUMBER
 
+MK_B1 = "MK_B1"
+MK_B2 = "MK_B2"
+MK_B3 = "MK_B3"
+MK_B4 = "MK_B4"
+MK_B5 = "MK_B5"
+MK_B6 = "MK_B6"
+MK_B7 = "MK_B7"
+MK_B8 = "MK_B8"
+
 
 class MKeyboard:
     def __init__(self, input_list=None, thread_lock=None, que=None):
@@ -45,3 +54,7 @@ class MKeyboard:
             logging.exception(f"Que is full when adding MK_B{button}")
         finally:
             self.thread_lock.release()
+
+    def write_report(self, report):
+        with open("/dev/hidg0", "rb+") as fd:
+            fd.write(report.encode())

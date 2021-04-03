@@ -30,7 +30,7 @@ from modules import (
     RE_CLK_PIN,
     PSO_PIN,
 )
-from modules.mkeyboard import MKeyboard
+from modules.mkeyboard import MKeyboard, MK_B1
 from modules.pso import PSO
 from modules.rotaryencoder import RotaryEncoder
 import RPi.GPIO as GPIO
@@ -120,6 +120,20 @@ class MacroZero:
 
             if value is not None:
                 logging.info(f"Value pulled off Queue - {value}")
+
+                if value == MK_B1:
+                    self.mkeyboard.write_report(chr(32) + chr(0) + chr(11) + chr(0) * 5)  # H
+                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+                    self.mkeyboard.write_report(chr(0) * 2 + chr(8) + chr(0) * 5)  # e
+                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+                    self.mkeyboard.write_report(chr(0) * 2 + chr(15) + chr(0) * 5)  # l
+                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+                    self.mkeyboard.write_report(chr(0) * 2 + chr(15) + chr(0) * 5)  # l
+                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+                    self.mkeyboard.write_report(chr(0) * 2 + chr(18) + chr(0) * 5)  # o
+                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+                    self.mkeyboard.write_report(chr(32) + chr(0) + chr(30) + chr(0) * 5)  # !
+                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
 
     def close(self):
         """
