@@ -118,3 +118,5 @@ https://andrewnicolaou.co.uk/posts/2016/pi-zero-midi-3-two-things-at-once
 https://shallowsky.com/blog/linux/raspberry-pi-ethernet-gadget-2.html
 
 https://developer.ridgerun.com/wiki/index.php/How_to_use_USB_device_networking
+
+https://everyday.codes/linux/services-in-systemd-in-depth-tutorial/
