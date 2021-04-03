@@ -15,7 +15,7 @@ Module `__init__`:
 - input_list - list of dictionaries - Input
 - thread_lock - Thread Lock object reference - Input
 - que - Input que - Output
-inputs_list dictionary struct:\
+###### input_list dictionary struct:
 ```
 { 
    "InputType": "Button",
@@ -67,7 +67,6 @@ MK_B8       | 40
 ** I2C interface. Declared in python library. No need to configure\
 *** PSO = Power Switch Over, used to tell when device has lost power over usb. Start shutdown sequence\
 https://pinout.xyz/#
-
 
 ## Setup Ethernet Keyboard Gadget
 1. Add `dtoverlay=dwc2` at the end of ` boot/config.txt`
