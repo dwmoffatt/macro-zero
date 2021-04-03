@@ -99,6 +99,8 @@ python3 is used. Required modules below:\
 ###### Disable Internet Sharing
 `echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null`\
 `sudo iptables -t nat -F POSTROUTING`
+###### Give pi permission to hidg0
+`sudo chown pi:root /dev/hidg0`
 ##### On Device
 This is due to Gateway not being setup properly on startup\
 `sudo route del default`\
