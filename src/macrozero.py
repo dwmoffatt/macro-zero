@@ -147,7 +147,7 @@ class MacroZero:
         # Draw a black filled box to clear the image.
         draw.rectangle((0, 0, self.display.width, self.display.height), outline=0, fill=0)
 
-        draw.text((self.x, self.top), "", font=self.font, fill=255)
+        draw.text((self.x, self.top), "Welcome to macro-zero", font=self.font, fill=255)
 
         # Display image.
         self.display.image(image)
