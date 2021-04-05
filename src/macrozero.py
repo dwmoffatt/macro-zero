@@ -35,7 +35,7 @@ from modules import (
     PSO_PIN,
     fonts_path,
 )
-from modules.mkeyboard import MKeyboard, MK_B1
+from modules.mkeyboard import MKeyboard, MK_COMMAND_MK_B1
 from modules.pso import PSO
 from modules.rotaryencoder import RotaryEncoder
 from modules.SSD1305 import SSD1305
@@ -167,7 +167,7 @@ class MacroZero:
             if value is not None:
                 logging.info(f"Value pulled off Queue - {value}")
 
-                if value == MK_B1:
+                if value == MK_COMMAND_MK_B1:
                     self.mkeyboard.write_report(chr(32) + chr(0) + chr(11) + chr(0) * 5)  # H
                     self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
                     self.mkeyboard.write_report(chr(0) * 2 + chr(8) + chr(0) * 5)  # e
