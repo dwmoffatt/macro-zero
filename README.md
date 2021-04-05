@@ -86,7 +86,7 @@ python3 is used. Required modules below:\
 `sudo apt-get install python3-numpy`\
 `sudo pip3 install RPi.GPIO`\
 `sudo pip3 install spidev`\
-`sudo apt-get install python3-smbus`\
+`sudo apt-get install python3-smbus`
 
 #### Setup NIC and setup Internet Sharing
 ##### On Host
