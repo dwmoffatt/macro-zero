@@ -1,0 +1,9 @@
+[Unit]
+Description=Macro-Zero Service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/bin/macro-zero
+
+[Install]
+WantedBy=multi-user.target
