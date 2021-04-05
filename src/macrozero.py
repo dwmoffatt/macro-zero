@@ -17,6 +17,10 @@ from modules import (
     INPUT_TYPE_SWITCH,
     INPUT_TYPE_ROTARY_ENCODER_CLK,
     INPUT_TYPE_ROTARY_ENCODER_DIR,
+    INPUT_TYPE_DISPLAY_RST,
+    INPUT_TYPE_DISPLAY_DC,
+    DISPLAY_RST_PIN,
+    DISPLAY_DC_PIN,
     MK_B1_PIN,
     MK_B2_PIN,
     MK_B3_PIN,
@@ -29,11 +33,16 @@ from modules import (
     RE_DR_PIN,
     RE_CLK_PIN,
     PSO_PIN,
+    fonts_path,
 )
 from modules.mkeyboard import MKeyboard, MK_B1
 from modules.pso import PSO
 from modules.rotaryencoder import RotaryEncoder
+from modules.SSD1305 import SSD1305
 import RPi.GPIO as GPIO
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 
 logging.basicConfig(
     filename="macro_zero.log", format="[%(asctime)s][%(levelname)s] - %(message)s", filemode="w", level=logging.DEBUG
@@ -52,6 +61,11 @@ class MacroZero:
 
         pso_input_list = [
             {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_SWITCH, INPUT_LIST_KEY_PIN_NUMBER: PSO_PIN},
+        ]
+
+        display_input_list = [
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_DISPLAY_DC, INPUT_LIST_KEY_PIN_NUMBER: DISPLAY_DC_PIN},
+            {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_DISPLAY_RST, INPUT_LIST_KEY_PIN_NUMBER: DISPLAY_RST_PIN},
         ]
 
         mkeyboard_input_list = [
@@ -74,7 +88,14 @@ class MacroZero:
         self.running = False
         self.power_switch_over = False
 
+        self.font = None
+        self.padding = 0
+        self.top = 0
+        self.bottom = 0
+        self.x = 0
+
         self.pso = PSO(pso_input_list, self.thread_lock, self.input_que)
+        self.display = SSD1305(display_input_list, self.thread_lock, self.input_que)
         self.mkeyboard = MKeyboard(mkeyboard_input_list, self.thread_lock, self.input_que)
         self.mode_select_rotary_encoder = RotaryEncoder(mode_select_input_list, self.thread_lock, self.input_que)
 
@@ -90,8 +111,19 @@ class MacroZero:
         GPIO.setwarnings(False)
 
         self.pso.module_init()
+        self.display.module_init()
         self.mkeyboard.module_init()
         self.mode_select_rotary_encoder.module_init()
+
+        # Clear display.
+        self.display.clear()
+        self.display.display()
+
+        # Load font
+        self.font = ImageFont.truetype(f"{fonts_path}04B_08__.TTF", 8)
+        self.padding = 0
+        self.top = self.padding
+        self.bottom = self.display.height - self.padding
 
     def run(self):
         """
@@ -106,6 +138,20 @@ class MacroZero:
         logging.info("Running macro-zero interface")
 
         self.running = True
+
+        # Make sure to create image with mode '1' for 1-bit color.
+        image = Image.new("1", (self.display.width, self.display.height))
+        # Get drawing object to draw on image.
+        draw = ImageDraw.Draw(image)
+
+        # Draw a black filled box to clear the image.
+        draw.rectangle((0, 0, self.display.width, self.display.height), outline=0, fill=0)
+
+        draw.text((self.x, self.top), "", font=self.font, fill=255)
+
+        # Display image.
+        self.display.image(image)
+        self.display.display()
 
         while self.running:
             value = None
@@ -145,6 +191,7 @@ class MacroZero:
 
         self.mode_select_rotary_encoder.module_close()
         self.mkeyboard.module_close()
+        self.display.module_close()
         self.pso.module_close()
 
         GPIO.cleanup()
