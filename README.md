@@ -22,6 +22,97 @@ Module `__init__`:
    "PinNumber": 22
 }
 ```
+##### Configuration Loading
+Button configuration will be loadable. File format will be JSON. File name needed is `macro-zero configuration.json`. Config file needs to be stored in `src/configs`. If no config file is present then default/example config will be loaded from `src/configs`. Default/example config file name is `macro-zero default configuration.json`.  Each mode will have a definition for each button. Within th button definition there will be 3 fields: `CommandName`, `CommandInterval`, `Commands`. `CommandName` is the name that will displayed for the command. `CommandInterval` this is the time in seconds to delay between sending commands to the host if more then 1 Command is present in the `Commands` field. `Commands` can either be a single string containing the command or can be a list of commands. Example of default/example config below.
+```
+{
+   "General": { 
+      "B1": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B2: {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B3: {
+         "CommandName": "N/A"
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B4: {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B5: {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B6: {
+         "CommandName": "Git Status",
+         "CommandInterval": 1,
+         "Commands": ["git status"]
+      },
+      "B7: {
+         "CommandName": "Git Pull",
+         "CommandInterval": 1,
+         "Commands": ["git pull"]
+      },
+      "B8: {
+         "CommandName": "Shutdown Linux",
+         "CommandInterval": 1,
+         "Commands": ["sudo shutdown"]
+      }
+   },
+   "Macro-Zero": { 
+      "B1": {
+         "CommandName": "dmesg cdc_ether",
+         "CommandInterval": 1,
+         "Commands": ["dmesg | grep cdc_ether"]
+      },
+      "B2: {
+         "CommandName": "En. Inet Sharing",
+         "CommandInterval": 15,
+         "Commands": ["echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24"]
+      },
+      "B3: {
+         "CommandName": "Dis. Inet Sharing",
+         "CommandInterval": 15,
+         "Commands": ["echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -t nat -F POSTROUTING"]
+      },
+      "B4: {
+         "CommandName": "N/A",
+         "CommandInterval": 10,
+         "Commands": []
+      },
+      "B5: {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B6: {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B7: {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B8: {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      }
+   }
+}
+```
+
 
 ### Hardware
 ##### Board Size:
@@ -99,12 +190,12 @@ python3 is used. Required modules below:\
 ###### Disable Internet Sharing
 `echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null`\
 `sudo iptables -t nat -F POSTROUTING`
-###### Give pi permission to hidg0
-`sudo chown pi:root /dev/hidg0`
 ##### On Device
 This is due to Gateway not being setup properly on startup\
 `sudo route del default`\
 `sudo route add default gw 10.0.0.2`
+###### Give pi permission to hidg0
+`sudo chown pi:root /dev/hidg0`
 
 ## Reference Material
 https://www.rmedgar.com/blog/using-rpi-zero-as-keyboard-setup-and-device-definition/
