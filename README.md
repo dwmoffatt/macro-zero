@@ -32,37 +32,37 @@ Button configuration will be loadable. File format will be JSON. File name neede
          "CommandInterval": 1,
          "Commands": []
       },
-      "B2: {
+      "B2": {
          "CommandName": "N/A",
          "CommandInterval": 1,
          "Commands": []
       },
-      "B3: {
-         "CommandName": "N/A"
-         "CommandInterval": 1,
-         "Commands": []
-      },
-      "B4: {
+      "B3": {
          "CommandName": "N/A",
          "CommandInterval": 1,
          "Commands": []
       },
-      "B5: {
+      "B4": {
          "CommandName": "N/A",
          "CommandInterval": 1,
          "Commands": []
       },
-      "B6: {
+      "B5": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B6": {
          "CommandName": "Git Status",
          "CommandInterval": 1,
          "Commands": ["git status"]
       },
-      "B7: {
+      "B7": {
          "CommandName": "Git Pull",
          "CommandInterval": 1,
          "Commands": ["git pull"]
       },
-      "B8: {
+      "B8": {
          "CommandName": "Shutdown Linux",
          "CommandInterval": 1,
          "Commands": ["sudo shutdown"]
@@ -74,37 +74,37 @@ Button configuration will be loadable. File format will be JSON. File name neede
          "CommandInterval": 1,
          "Commands": ["dmesg | grep cdc_ether"]
       },
-      "B2: {
+      "B2": {
          "CommandName": "En. Inet Sharing",
          "CommandInterval": 15,
          "Commands": ["echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24"]
       },
-      "B3: {
+      "B3": {
          "CommandName": "Dis. Inet Sharing",
          "CommandInterval": 15,
          "Commands": ["echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -t nat -F POSTROUTING"]
       },
-      "B4: {
-         "CommandName": "N/A",
-         "CommandInterval": 10,
-         "Commands": []
-      },
-      "B5: {
+      "B4": {
          "CommandName": "N/A",
          "CommandInterval": 1,
          "Commands": []
       },
-      "B6: {
+      "B5": {
          "CommandName": "N/A",
          "CommandInterval": 1,
          "Commands": []
       },
-      "B7: {
+      "B6": {
          "CommandName": "N/A",
          "CommandInterval": 1,
          "Commands": []
       },
-      "B8: {
+      "B7": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B8": {
          "CommandName": "N/A",
          "CommandInterval": 1,
          "Commands": []
