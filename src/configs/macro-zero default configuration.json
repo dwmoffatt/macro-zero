@@ -1,0 +1,86 @@
+{
+   "General": {
+      "B1": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B2": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B3": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B4": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B5": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B6": {
+         "CommandName": "Git Status",
+         "CommandInterval": 1,
+         "Commands": ["git status"]
+      },
+      "B7": {
+         "CommandName": "Git Pull",
+         "CommandInterval": 1,
+         "Commands": ["git pull"]
+      },
+      "B8": {
+         "CommandName": "Shutdown Linux",
+         "CommandInterval": 1,
+         "Commands": ["sudo shutdown"]
+      }
+   },
+   "Macro-Zero": {
+      "B1": {
+         "CommandName": "dmesg cdc_ether",
+         "CommandInterval": 1,
+         "Commands": ["dmesg | grep cdc_ether"]
+      },
+      "B2": {
+         "CommandName": "En. Inet Sharing",
+         "CommandInterval": 15,
+         "Commands": ["echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24"]
+      },
+      "B3": {
+         "CommandName": "Dis. Inet Sharing",
+         "CommandInterval": 15,
+         "Commands": ["echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -t nat -F POSTROUTING"]
+      },
+      "B4": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B5": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B6": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B7": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      },
+      "B8": {
+         "CommandName": "N/A",
+         "CommandInterval": 1,
+         "Commands": []
+      }
+   }
+}
