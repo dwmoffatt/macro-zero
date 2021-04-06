@@ -59,6 +59,18 @@ class MacroZero:
         self.thread_lock = threading.Lock()
         self.input_que = queue.Queue(maxsize=50)
 
+        self.running = False
+        self.power_switch_over = False
+        self.mode_index = 0
+        self.command_dictionary = None
+
+        self.font_6 = None
+        self.font_4 = None
+        self.padding = 0
+        self.top = 0
+        self.bottom = 0
+        self.x = 0
+
         pso_input_list = [
             {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_SWITCH, INPUT_LIST_KEY_PIN_NUMBER: PSO_PIN},
         ]
@@ -84,15 +96,6 @@ class MacroZero:
             {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_ROTARY_ENCODER_DIR, INPUT_LIST_KEY_PIN_NUMBER: RE_DR_PIN},
             {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_ROTARY_ENCODER_CLK, INPUT_LIST_KEY_PIN_NUMBER: RE_CLK_PIN},
         ]
-
-        self.running = False
-        self.power_switch_over = False
-
-        self.font = None
-        self.padding = 0
-        self.top = 0
-        self.bottom = 0
-        self.x = 0
 
         self.pso = PSO(pso_input_list, self.thread_lock, self.input_que)
         self.display = SSD1305(display_input_list, self.thread_lock, self.input_que)
@@ -120,10 +123,13 @@ class MacroZero:
         self.display.display()
 
         # Load font
-        self.font = ImageFont.truetype(f"{fonts_path}04B_08__.TTF", 8)
+        self.font_6 = ImageFont.truetype(f"{fonts_path}04B_08__.TTF", 6)
+        self.font_4 = ImageFont.truetype(f"{fonts_path}04B_08__.TTF", 4)
         self.padding = 0
         self.top = self.padding
         self.bottom = self.display.height - self.padding
+
+        self.build_command_dictionary()
 
     def run(self):
         """
@@ -147,7 +153,7 @@ class MacroZero:
         # Draw a black filled box to clear the image.
         draw.rectangle((0, 0, self.display.width, self.display.height), outline=0, fill=0)
 
-        draw.text((self.x, self.top), "Welcome to macro-zero", font=self.font, fill=255)
+        draw.text((self.x, self.top), "Welcome to macro-zero", font=self.font_6, fill=255)
 
         # Display image.
         self.display.image(image)
@@ -167,19 +173,10 @@ class MacroZero:
             if value is not None:
                 logging.info(f"Value pulled off Queue - {value}")
 
-                if value == MK_COMMAND_MK_B1:
-                    self.mkeyboard.write_report(chr(32) + chr(0) + chr(11) + chr(0) * 5)  # H
-                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-                    self.mkeyboard.write_report(chr(0) * 2 + chr(8) + chr(0) * 5)  # e
-                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-                    self.mkeyboard.write_report(chr(0) * 2 + chr(15) + chr(0) * 5)  # l
-                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-                    self.mkeyboard.write_report(chr(0) * 2 + chr(15) + chr(0) * 5)  # l
-                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-                    self.mkeyboard.write_report(chr(0) * 2 + chr(18) + chr(0) * 5)  # o
-                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-                    self.mkeyboard.write_report(chr(32) + chr(0) + chr(30) + chr(0) * 5)  # !
-                    self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+                try:
+                    self.command_dictionary.get(value, self._invalid_command)()
+                except ValueError:
+                    logging.exception(f"Last Command - {value}")
 
     def close(self):
         """
@@ -199,6 +196,33 @@ class MacroZero:
         if self.power_switch_over:
             logging.info("System shutdown started!")
             os.system("systemctl poweroff")
+
+    def _process_mk_b1(self):
+        """
+        Process MK_B1 Command
+
+        :return:
+        """
+        self.mkeyboard.write_report(chr(32) + chr(0) + chr(11) + chr(0) * 5)  # H
+        self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+        self.mkeyboard.write_report(chr(0) * 2 + chr(8) + chr(0) * 5)  # e
+        self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+        self.mkeyboard.write_report(chr(0) * 2 + chr(15) + chr(0) * 5)  # l
+        self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+        self.mkeyboard.write_report(chr(0) * 2 + chr(15) + chr(0) * 5)  # l
+        self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+        self.mkeyboard.write_report(chr(0) * 2 + chr(18) + chr(0) * 5)  # o
+        self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+        self.mkeyboard.write_report(chr(32) + chr(0) + chr(30) + chr(0) * 5)  # !
+        self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+
+    def _invalid_command(self):
+        raise ValueError("Invalid Command")
+
+    def build_command_dictionary(self):
+        self.command_dictionary = {
+            MK_COMMAND_MK_B1: self._process_mk_b1,
+        }
 
 
 if __name__ in "__main__":
