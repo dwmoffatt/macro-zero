@@ -32,11 +32,14 @@ RE_SW_PIN = 11
 RE_DR_PIN = 15
 RE_CLK_PIN = 13
 
-__version__ = "0.000.1"
+__version__ = "0.001.5"
 
 path = os.path.dirname(__file__)
-"""Path to StockWatcher package directory."""
+"""Path to modules package directory."""
 
 # Some other nice fonts to try: http://www.dafont.com/bitmap.php
 fonts_path = os.path.join(path, f"fonts{os.sep}")
 """Path to fonts directory."""
+
+configs_path = os.path.join(os.path.dirname(path), f"configs{os.sep}")
+"""Path to configs directory"""

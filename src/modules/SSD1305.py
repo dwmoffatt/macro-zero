@@ -98,6 +98,10 @@ class SSD1305:
 
     def module_close(self):
         logging.info("Closing SSD1305 Display Module")
+
+        self.clear()
+        self.display()
+
         self._spi.close()
 
     def _initialize(self):
