@@ -211,6 +211,9 @@ class MacroZero:
                 except ValueError:
                     logging.exception(f"Last Command - {value}")
 
+            if self.power_switch_over:
+                self.running = False
+
     def close(self):
         """
         Closes all modules and resets I/0
@@ -269,6 +272,8 @@ class MacroZero:
         :return:
         """
         logging.debug("Processing PSO Command")
+
+        self.power_switch_over = True
 
     def _process_mk_b1(self):
         """
