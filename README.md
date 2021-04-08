@@ -211,3 +211,5 @@ https://shallowsky.com/blog/linux/raspberry-pi-ethernet-gadget-2.html
 https://developer.ridgerun.com/wiki/index.php/How_to_use_USB_device_networking
 
 https://everyday.codes/linux/services-in-systemd-in-depth-tutorial/
+
+https://www.tutorialspoint.com/python_pillow/python_pillow_quick_guide.htm
