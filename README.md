@@ -150,9 +150,9 @@ MK_B2       | 31
 MK_B3       | 33
 MK_B4       | 35
 MK_B5       | 37
-MK_B6       | 36
+MK_B6       | 40
 MK_B7       | 38
-MK_B8       | 40
+MK_B8       | 36
 
 \* I/O is part of SPI. Declared in python library. No need to configure\
 ** I2C interface. Declared in python library. No need to configure\
