@@ -250,14 +250,16 @@ class MacroZero:
         current_configuration = copy.deepcopy(self.configuration)
 
         try:
-            self.configuration = json.loads(f"{configs_path}{CONFIGURATION_FILENAME}")
+            with open(f"{configs_path}{CONFIGURATION_FILENAME}") as file:
+                self.configuration = json.load(file)
             config_loaded = True
         except FileNotFoundError:
             logging.debug(f"No custom button config under {CONFIGURATION_FILENAME} filename found")
 
         if not config_loaded:
             try:
-                self.configuration = json.loads(f"{configs_path}{DEFAULT_CONFIGURATION_FILENAME}")
+                with open(f"{configs_path}{DEFAULT_CONFIGURATION_FILENAME}") as file:
+                    self.configuration = json.load(file)
                 # config_loaded = True
             except FileNotFoundError:
                 logging.exception(f"No default config file found - {DEFAULT_CONFIGURATION_FILENAME}")
