@@ -13,6 +13,7 @@ import logging
 import queue
 import copy
 import json
+import time
 from modules import (
     INPUT_LIST_KEY_INPUT_TYPE,
     INPUT_LIST_KEY_PIN_NUMBER,
@@ -152,8 +153,8 @@ class MacroZero:
         self.load_configuration()
 
         # Load font
-        self.font_6 = ImageFont.truetype(f"{fonts_path}04B_08__.TTF", 6)
-        self.font_4 = ImageFont.truetype(f"{fonts_path}04B_08__.TTF", 4)
+        self.font_6 = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 6)
+        self.font_4 = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 4)
         self.padding = 0
         self.top = self.padding
         self.bottom = self.display.height - self.padding
@@ -174,6 +175,8 @@ class MacroZero:
         """
         logging.info("Running macro-zero interface")
 
+        title_font = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 32)
+
         self.running = True
 
         # Make sure to create image with mode '1' for 1-bit color.
@@ -184,13 +187,15 @@ class MacroZero:
         # Draw a black filled box to clear the image.
         draw.rectangle((0, 0, self.display.width, self.display.height), outline=0, fill=0)
 
-        draw.text((self.x, self.top), "Welcome to macro-zero", font=self.font_6, fill=255)
+        draw.text((self.x, self.top), "Macro-Zero", font=title_font, fill=255)
 
         self.current_image = image
 
         # Display image.
         self.display.image(self.current_image)
         self.display.display()
+
+        time.sleep(5)
 
         while self.running:
             value = None
