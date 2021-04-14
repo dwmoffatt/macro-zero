@@ -266,7 +266,7 @@ class MacroZero:
 
         # If the config has changed, verify its new contents
         if current_configuration != self.configuration:
-            self.mode_list = self.configuration.keys()
+            self.mode_list = list(self.configuration.keys())
 
             # TODO: Verify Configuration
 
