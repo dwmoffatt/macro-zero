@@ -65,6 +65,7 @@ logging.basicConfig(
 
 CONFIGURATION_FILENAME = "macro-zero configuration.json"
 DEFAULT_CONFIGURATION_FILENAME = "macro-zero default configuration.json"
+DEVICE_TITLE = "Macro-Zero"
 
 CONFIGURATION_KEY_B1 = "B1"
 CONFIGURATION_KEY_B2 = "B2"
@@ -187,7 +188,11 @@ class MacroZero:
         # Draw a black filled box to clear the image.
         draw.rectangle((0, 0, self.display.width, self.display.height), outline=0, fill=0)
 
-        draw.text((self.x, self.top), "Macro-Zero", font=title_font, fill=255)
+        text_size = draw.textsize(DEVICE_TITLE, font=title_font)
+        offset_x = int((self.display.width - text_size[0]) / 2)
+        if offset_x < 0:
+            offset_x = 0
+        draw.text((self.x + offset_x, self.top), DEVICE_TITLE, font=title_font, fill=255)
 
         self.current_image = image
 
@@ -196,6 +201,9 @@ class MacroZero:
         self.display.display()
 
         time.sleep(5)
+
+        # display current mode
+        self.display_mode_selection(self.current_mode[1])
 
         while self.running:
             value = None
@@ -271,6 +279,43 @@ class MacroZero:
             # TODO: Verify Configuration
 
             self.current_mode = (1, self.mode_list[0])
+
+    def display_mode_selection(self, mode):
+        """
+
+        :param mode:
+        :return:
+        """
+
+        if mode not in self.mode_list:
+            logging.debug(f"Chosen mode to display - {mode} - is not part of mode_list - {self.mode_list}")
+        else:
+            # Make sure to create image with mode '1' for 1-bit color.
+            image = Image.new("1", (self.display.width, self.display.height))
+            # Get drawing object to draw on image.
+            draw = ImageDraw.Draw(image)
+
+            # Draw a black filled box to clear the image.
+            draw.rectangle((0, 0, self.display.width, self.display.height), outline=0, fill=0)
+
+            mode_text_size = draw.textsize(mode, font=self.font_6)
+            offset_x = int((self.display.width - mode_text_size[0]) / 2)
+            if offset_x < 0:
+                offset_x = 0
+            draw.text((self.x + offset_x, self.top), mode, font=self.font_6, fill=255)
+
+            draw.line([(0, mode_text_size[1] + 1), (self.display.width, mode_text_size[1] + 1)], fill=255, width=2)
+            draw.line(
+                [((self.display.width / 2) - 2, mode_text_size[1] + 3), ((self.display.width / 2) - 2, self.bottom)],
+                fill=255,
+                width=2,
+            )
+
+            self.current_image = image
+
+            # Display image.
+            self.display.image(self.current_image)
+            self.display.display()
 
     def _process_pso(self):
         """
