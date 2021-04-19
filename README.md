@@ -23,7 +23,7 @@ Module `__init__`:
 }
 ```
 ##### Configuration Loading
-Button configuration will be loadable. File format will be JSON. File name needed is `macro-zero configuration.json`. Config file needs to be stored in `src/configs`. If no config file is present then default/example config will be loaded from `src/configs`. Default/example config file name is `macro-zero default configuration.json`.  Each mode will have a definition for each button. Within th button definition there will be 3 fields: `CommandName`, `CommandInterval`, `Commands`. `CommandName` is the name that will displayed for the command and is limited to 9 characters.  `CommandInterval` this is the time in seconds to delay between sending commands to the host if more then 1 Command is present in the `Commands` field.
+Button configuration will be loadable. File format will be JSON. File name needed is `macro-zero configuration.json`. Config file needs to be stored in `src/configs`. If no config file is present then default/example config will be loaded from `src/configs`. Default/example config file name is `macro-zero default configuration.json`.  Each mode will have a definition for each button. Within th button definition there will be 3 fields: `CommandName`, `CommandInterval`, `Commands`. `CommandName` is the name that will displayed for the command and is limited to 10 characters.  `CommandInterval` this is the time in seconds to delay between sending commands to the host if more then 1 Command is present in the `Commands` field.
 `Commands` can either be a single string containing the command or can be a list of commands. `Commands` are broken up into 2 parts, the type and the command string seperated by a colon. Available command types are `Command String`, `Function Key`. Example of default/example config below.
 ```
 {
@@ -56,34 +56,34 @@ Button configuration will be loadable. File format will be JSON. File name neede
       "B6": {
          "CommandName": "Git Status",
          "CommandInterval": 1,
-         "Commands": ["git status"]
+         "Commands": ["Command String: git status"]
       },
       "B7": {
          "CommandName": "Git Pull",
          "CommandInterval": 1,
-         "Commands": ["git pull"]
+         "Commands": ["Command String: git pull"]
       },
       "B8": {
          "CommandName": "Shutdown Linux",
          "CommandInterval": 1,
-         "Commands": ["sudo shutdown"]
+         "Commands": ["Command String: sudo shutdown"]
       }
    },
    "Macro-Zero": { 
       "B1": {
          "CommandName": "dmesg cdc_ether",
          "CommandInterval": 1,
-         "Commands": ["dmesg | grep cdc_ether"]
+         "Commands": ["Command String: dmesg | grep cdc_ether"]
       },
       "B2": {
          "CommandName": "En. Inet Sharing",
          "CommandInterval": 15,
-         "Commands": ["echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24"]
+         "Commands": ["Command String: echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "Command String: sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24"]
       },
       "B3": {
          "CommandName": "Dis. Inet Sharing",
          "CommandInterval": 15,
-         "Commands": ["echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -t nat -F POSTROUTING"]
+         "Commands": ["Command String: echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "Command String: sudo iptables -t nat -F POSTROUTING"]
       },
       "B4": {
          "CommandName": "N/A",
