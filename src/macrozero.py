@@ -96,8 +96,7 @@ class MacroZero:
         self.configuration = None
 
         self.current_image = None
-        self.font_6 = None
-        self.font_4 = None
+        self.font_8 = None
         self.padding = 0
         self.top = 0
         self.bottom = 0
@@ -154,8 +153,7 @@ class MacroZero:
         self.load_configuration()
 
         # Load font
-        self.font_6 = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 6)
-        self.font_4 = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 4)
+        self.font_8 = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 6)
         self.padding = 0
         self.top = self.padding
         self.bottom = self.display.height - self.padding
@@ -298,11 +296,11 @@ class MacroZero:
             # Draw a black filled box to clear the image.
             draw.rectangle((0, 0, self.display.width, self.display.height), outline=0, fill=0)
 
-            mode_text_size = draw.textsize(mode, font=self.font_6)
+            mode_text_size = draw.textsize(mode, font=self.font_8)
             offset_x = int((self.display.width - mode_text_size[0]) / 2)
             if offset_x < 0:
                 offset_x = 0
-            draw.text((self.x + offset_x, self.top), mode, font=self.font_6, fill=255)
+            draw.text((self.x + offset_x, self.top), mode, font=self.font_8, fill=255)
 
             draw.line([(0, mode_text_size[1] + 1), (self.display.width, mode_text_size[1] + 1)], fill=255, width=2)
             draw.line(
