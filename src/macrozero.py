@@ -153,7 +153,7 @@ class MacroZero:
         self.load_configuration()
 
         # Load font
-        self.font_8 = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 6)
+        self.font_8 = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 8)
         self.padding = 0
         self.top = self.padding
         self.bottom = self.display.height - self.padding
