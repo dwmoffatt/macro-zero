@@ -100,7 +100,6 @@ class MacroZero:
         self.padding = 0
         self.top = 0
         self.bottom = 0
-        self.x = 0
 
         pso_input_list = [
             {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_SWITCH, INPUT_LIST_KEY_PIN_NUMBER: PSO_PIN},
@@ -153,7 +152,7 @@ class MacroZero:
         self.load_configuration()
 
         # Load font
-        self.font_8 = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 8)
+        self.font_8 = ImageFont.truetype(f"{fonts_path}The Impostor.ttf", 8)
         self.padding = 0
         self.top = self.padding
         self.bottom = self.display.height - self.padding
@@ -190,7 +189,7 @@ class MacroZero:
         offset_x = int((self.display.width - text_size[0]) / 2)
         if offset_x < 0:
             offset_x = 0
-        draw.text((self.x + offset_x, self.top), DEVICE_TITLE, font=title_font, fill=255)
+        draw.text((offset_x, self.top), DEVICE_TITLE, font=title_font, fill=255)
 
         self.current_image = image
 
@@ -198,7 +197,7 @@ class MacroZero:
         self.display.image(self.current_image)
         self.display.display()
 
-        time.sleep(5)
+        time.sleep(2.5)
 
         # display current mode
         self.display_mode_selection(self.current_mode[1])
@@ -296,17 +295,58 @@ class MacroZero:
             # Draw a black filled box to clear the image.
             draw.rectangle((0, 0, self.display.width, self.display.height), outline=0, fill=0)
 
-            mode_text_size = draw.textsize(mode, font=self.font_8)
-            offset_x = int((self.display.width - mode_text_size[0]) / 2)
-            if offset_x < 0:
-                offset_x = 0
-            draw.text((self.x + offset_x, self.top), mode, font=self.font_8, fill=255)
-
-            draw.line([(0, mode_text_size[1] + 1), (self.display.width, mode_text_size[1] + 1)], fill=255, width=2)
             draw.line(
-                [((self.display.width / 2) - 2, mode_text_size[1] + 3), ((self.display.width / 2) - 2, self.bottom)],
+                [((self.display.width / 2) - 1, 2), ((self.display.width / 2) - 1, self.bottom - 2)], fill=128, width=2
+            )
+
+            draw.text(
+                (1, self.top),
+                f"B1: {self.configuration[mode][CONFIGURATION_KEY_B1][CONFIGURATION_KEY_COMMAND_NAME]}",
+                font=self.font_8,
                 fill=255,
-                width=2,
+            )
+            draw.text(
+                (1, self.top + (8 * 1)),
+                f"B3: {self.configuration[mode][CONFIGURATION_KEY_B3][CONFIGURATION_KEY_COMMAND_NAME]}",
+                font=self.font_8,
+                fill=255,
+            )
+            draw.text(
+                (1, self.top + (8 * 2)),
+                f"B5: {self.configuration[mode][CONFIGURATION_KEY_B5][CONFIGURATION_KEY_COMMAND_NAME]}",
+                font=self.font_8,
+                fill=255,
+            )
+            draw.text(
+                (1, self.top + (8 * 3)),
+                f"B7: {self.configuration[mode][CONFIGURATION_KEY_B7][CONFIGURATION_KEY_COMMAND_NAME]}",
+                font=self.font_8,
+                fill=255,
+            )
+
+            draw.text(
+                ((self.display.width / 2) + 2, self.top),
+                f"B2: {self.configuration[mode][CONFIGURATION_KEY_B2][CONFIGURATION_KEY_COMMAND_NAME]}",
+                font=self.font_8,
+                fill=255,
+            )
+            draw.text(
+                ((self.display.width / 2) + 2, self.top + (8 * 1)),
+                f"B4: {self.configuration[mode][CONFIGURATION_KEY_B4][CONFIGURATION_KEY_COMMAND_NAME]}",
+                font=self.font_8,
+                fill=255,
+            )
+            draw.text(
+                ((self.display.width / 2) + 2, self.top + (8 * 2)),
+                f"B6: {self.configuration[mode][CONFIGURATION_KEY_B6][CONFIGURATION_KEY_COMMAND_NAME]}",
+                font=self.font_8,
+                fill=255,
+            )
+            draw.text(
+                ((self.display.width / 2) + 2, self.top + (8 * 3)),
+                f"B8: {self.configuration[mode][CONFIGURATION_KEY_B8][CONFIGURATION_KEY_COMMAND_NAME]}",
+                font=self.font_8,
+                fill=255,
             )
 
             self.current_image = image
