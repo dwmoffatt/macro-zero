@@ -96,7 +96,8 @@ class MacroZero:
         self.configuration = None
 
         self.current_image = None
-        self.font_8 = None
+        self.font = None
+        self.font_size = 5
         self.padding = 0
         self.top = 0
         self.bottom = 0
@@ -152,7 +153,7 @@ class MacroZero:
         self.load_configuration()
 
         # Load font
-        self.font_8 = ImageFont.truetype(f"{fonts_path}The Impostor.ttf", 8)
+        self.font = ImageFont.truetype(f"{fonts_path}Reblinking VIP.ttf", self.font_size)
         self.padding = 0
         self.top = self.padding
         self.bottom = self.display.height - self.padding
@@ -299,53 +300,54 @@ class MacroZero:
                 [((self.display.width / 2) - 1, 2), ((self.display.width / 2) - 1, self.bottom - 2)], fill=128, width=2
             )
 
+            spacer = 1
             draw.text(
                 (1, self.top),
                 f"B1: {self.configuration[mode][CONFIGURATION_KEY_B1][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font_8,
+                font=self.font,
                 fill=255,
             )
             draw.text(
-                (1, self.top + (8 * 1)),
+                (1, self.top + (8 * 1) + spacer),
                 f"B3: {self.configuration[mode][CONFIGURATION_KEY_B3][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font_8,
+                font=self.font,
                 fill=255,
             )
             draw.text(
-                (1, self.top + (8 * 2)),
+                (1, self.top + (8 * 2) + spacer),
                 f"B5: {self.configuration[mode][CONFIGURATION_KEY_B5][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font_8,
+                font=self.font,
                 fill=255,
             )
             draw.text(
-                (1, self.top + (8 * 3)),
+                (1, self.top + (8 * 3) + spacer),
                 f"B7: {self.configuration[mode][CONFIGURATION_KEY_B7][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font_8,
+                font=self.font,
                 fill=255,
             )
 
             draw.text(
                 ((self.display.width / 2) + 2, self.top),
                 f"B2: {self.configuration[mode][CONFIGURATION_KEY_B2][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font_8,
+                font=self.font,
                 fill=255,
             )
             draw.text(
-                ((self.display.width / 2) + 2, self.top + (8 * 1)),
+                ((self.display.width / 2) + 2, self.top + (8 * 1) + spacer),
                 f"B4: {self.configuration[mode][CONFIGURATION_KEY_B4][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font_8,
+                font=self.font,
                 fill=255,
             )
             draw.text(
-                ((self.display.width / 2) + 2, self.top + (8 * 2)),
+                ((self.display.width / 2) + 2, self.top + (8 * 2) + spacer),
                 f"B6: {self.configuration[mode][CONFIGURATION_KEY_B6][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font_8,
+                font=self.font,
                 fill=255,
             )
             draw.text(
-                ((self.display.width / 2) + 2, self.top + (8 * 3)),
+                ((self.display.width / 2) + 2, self.top + (8 * 3) + spacer),
                 f"B8: {self.configuration[mode][CONFIGURATION_KEY_B8][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font_8,
+                font=self.font,
                 fill=255,
             )
 
