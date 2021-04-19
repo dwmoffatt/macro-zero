@@ -297,55 +297,55 @@ class MacroZero:
             draw.rectangle((0, 0, self.display.width, self.display.height), outline=0, fill=0)
 
             draw.line(
-                [((self.display.width / 2) - 1, 2), ((self.display.width / 2) - 1, self.bottom - 2)], fill=128, width=2
+                [((self.display.width / 2) - 1, 2), ((self.display.width / 2) - 1, self.bottom - 2)], fill=255, width=2
             )
 
             spacer = 2
             draw.text(
-                (1, self.top),
+                (2, self.top + spacer),
                 f"1: {self.configuration[mode][CONFIGURATION_KEY_B1][CONFIGURATION_KEY_COMMAND_NAME]}",
                 font=self.font,
                 fill=255,
             )
             draw.text(
-                (1, self.top + (self.font_size * 1) + spacer),
+                (2, self.top + (self.font_size * 1) + spacer),
                 f"3: {self.configuration[mode][CONFIGURATION_KEY_B3][CONFIGURATION_KEY_COMMAND_NAME]}",
                 font=self.font,
                 fill=255,
             )
             draw.text(
-                (1, self.top + (self.font_size * 2) + spacer),
+                (2, self.top + (self.font_size * 2) + spacer),
                 f"5: {self.configuration[mode][CONFIGURATION_KEY_B5][CONFIGURATION_KEY_COMMAND_NAME]}",
                 font=self.font,
                 fill=255,
             )
             draw.text(
-                (1, self.top + (self.font_size * 3) + spacer),
+                (2, self.top + (self.font_size * 3) + spacer),
                 f"7: {self.configuration[mode][CONFIGURATION_KEY_B7][CONFIGURATION_KEY_COMMAND_NAME]}",
                 font=self.font,
                 fill=255,
             )
 
             draw.text(
-                ((self.display.width / 2) + 2, self.top),
+                ((self.display.width / 2) + 3, self.top + spacer),
                 f"2: {self.configuration[mode][CONFIGURATION_KEY_B2][CONFIGURATION_KEY_COMMAND_NAME]}",
                 font=self.font,
                 fill=255,
             )
             draw.text(
-                ((self.display.width / 2) + 2, self.top + (self.font_size * 1) + spacer),
+                ((self.display.width / 2) + 3, self.top + (self.font_size * 1) + spacer),
                 f"4: {self.configuration[mode][CONFIGURATION_KEY_B4][CONFIGURATION_KEY_COMMAND_NAME]}",
                 font=self.font,
                 fill=255,
             )
             draw.text(
-                ((self.display.width / 2) + 2, self.top + (self.font_size * 2) + spacer),
+                ((self.display.width / 2) + 3, self.top + (self.font_size * 2) + spacer),
                 f"6: {self.configuration[mode][CONFIGURATION_KEY_B6][CONFIGURATION_KEY_COMMAND_NAME]}",
                 font=self.font,
                 fill=255,
             )
             draw.text(
-                ((self.display.width / 2) + 2, self.top + (self.font_size * 3) + spacer),
+                ((self.display.width / 2) + 3, self.top + (self.font_size * 3) + spacer),
                 f"8: {self.configuration[mode][CONFIGURATION_KEY_B8][CONFIGURATION_KEY_COMMAND_NAME]}",
                 font=self.font,
                 fill=255,
