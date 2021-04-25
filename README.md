@@ -27,7 +27,7 @@ Button configuration will be loadable. File format will be JSON. File name neede
 `Commands` is a list of command, each command containing a type and a command. Supported types: `Command String`, `Keyboard Function`. `Command String` is a string you want to appear on the connected device. `Keyboard Function` is used to specify a specific keyboard function you want press, ie. Enter Key, Function Keys, Backspace, Tab, etc.
 ```
 {
-   "General": { 
+   "General": {
       "B1": {
          "CommandName": "N/A",
          "CommandInterval": 1,
@@ -56,34 +56,84 @@ Button configuration will be loadable. File format will be JSON. File name neede
       "B6": {
          "CommandName": "Git Status",
          "CommandInterval": 1,
-         "Commands": ["Command String: git status"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "git status"
+            },
+            {
+               "Type": "Keyboard Function",
+               "Command": "Enter"
+            }
+         ]
       },
       "B7": {
          "CommandName": "Git Pull",
          "CommandInterval": 1,
-         "Commands": ["Command String: git pull"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "git pull"
+            },
+            {
+               "Type": "Keyboard Function",
+               "Command": "Enter"
+            }
+         ]
       },
       "B8": {
-         "CommandName": "Shutdown Linux",
+         "CommandName": "Shutdown",
          "CommandInterval": 1,
-         "Commands": ["Command String: sudo shutdown"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "sudo shutdown"
+            }
+         ]
       }
    },
-   "Macro-Zero": { 
+   "Macro-Zero": {
       "B1": {
-         "CommandName": "dmesg cdc_ether",
+         "CommandName": "cdc_ether",
          "CommandInterval": 1,
-         "Commands": ["Command String: dmesg | grep cdc_ether"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "dmesg | grep cdc_ether"
+            },
+            {
+               "Type": "Keyboard Function",
+               "Command": "Enter"
+            }
+         ]
       },
       "B2": {
          "CommandName": "En. Inet Sharing",
          "CommandInterval": 15,
-         "Commands": ["Command String: echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "Command String: sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null"
+            },
+            {
+               "Type": "Command String",
+               "Command": "sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24"
+            }
+         ]
       },
       "B3": {
          "CommandName": "Dis. Inet Sharing",
          "CommandInterval": 15,
-         "Commands": ["Command String: echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "Command String: sudo iptables -t nat -F POSTROUTING"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null"
+            },
+            {
+               "Type": "Command String",
+               "Command": "sudo iptables -t nat -F POSTROUTING"
+            }
+         ]
       },
       "B4": {
          "CommandName": "N/A",
