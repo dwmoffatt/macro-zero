@@ -24,7 +24,7 @@ Module `__init__`:
 ```
 ##### Configuration Loading
 Button configuration will be loadable. File format will be JSON. File name needed is `macro-zero configuration.json`. Config file needs to be stored in `src/configs`. If no config file is present then default/example config will be loaded from `src/configs`. Default/example config file name is `macro-zero default configuration.json`.  Each mode will have a definition for each button. Within th button definition there will be 3 fields: `CommandName`, `CommandInterval`, `Commands`. `CommandName` is the name that will displayed for the command and is limited to 10 characters.  `CommandInterval` this is the time in seconds to delay between sending commands to the host if more then 1 Command is present in the `Commands` field.
-`Commands` can either be a single string containing the command or can be a list of commands. `Commands` are broken up into 2 parts, the type and the command string seperated by a colon. Available command types are `Command String`, `Function Key`. Example of default/example config below.
+`Commands` is a list of command, each command containing a type and a command. Supported types: `Command String`, `Keyboard Function`. `Command String` is a string you want to appear on the connected device. `Keyboard Function` is used to specify a specific keyboard function you want press, ie. Enter Key, Function Keys, Backspace, Tab, etc.
 ```
 {
    "General": { 
