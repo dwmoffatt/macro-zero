@@ -307,7 +307,7 @@ class MacroZero:
                 offset_x = 0
             draw.text((offset_x, self.top), mode, font=self.font, fill=255)
 
-            spacer = 1
+            spacer = 2
             empty_space = self.display.height - (self.font_size * 4) - (spacer * 3)
             selection_offset = self.top + mode_size[1] + empty_space
 
