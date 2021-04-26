@@ -28,34 +28,84 @@
       "B6": {
          "CommandName": "Git Status",
          "CommandInterval": 1,
-         "Commands": ["git status"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "git status"
+            },
+            {
+               "Type": "Keyboard Function",
+               "Command": "Enter"
+            }
+         ]
       },
       "B7": {
          "CommandName": "Git Pull",
          "CommandInterval": 1,
-         "Commands": ["git pull"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "git pull"
+            },
+            {
+               "Type": "Keyboard Function",
+               "Command": "Enter"
+            }
+         ]
       },
       "B8": {
-         "CommandName": "Shutdown Linux",
+         "CommandName": "Shutdown",
          "CommandInterval": 1,
-         "Commands": ["sudo shutdown"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "sudo shutdown"
+            }
+         ]
       }
    },
    "Macro-Zero": {
       "B1": {
-         "CommandName": "dmesg cdc_ether",
+         "CommandName": "cdc_ether",
          "CommandInterval": 1,
-         "Commands": ["dmesg | grep cdc_ether"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "dmesg | grep cdc_ether"
+            },
+            {
+               "Type": "Keyboard Function",
+               "Command": "Enter"
+            }
+         ]
       },
       "B2": {
          "CommandName": "En. Inet Sharing",
          "CommandInterval": 15,
-         "Commands": ["echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null"
+            },
+            {
+               "Type": "Command String",
+               "Command": "sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24"
+            }
+         ]
       },
       "B3": {
          "CommandName": "Dis. Inet Sharing",
          "CommandInterval": 15,
-         "Commands": ["echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null", "sudo iptables -t nat -F POSTROUTING"]
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null"
+            },
+            {
+               "Type": "Command String",
+               "Command": "sudo iptables -t nat -F POSTROUTING"
+            }
+         ]
       },
       "B4": {
          "CommandName": "N/A",
