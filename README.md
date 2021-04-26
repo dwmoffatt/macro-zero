@@ -237,6 +237,7 @@ python3 is used. Required modules below:\
 `sudo ifconfig {NIC returned from ^} 10.0.0.2 netmask 255.255.255.252 up` use to enable NIC
 ###### Enable Internet Sharing
 `echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null`\
+`sudo iptables -P FORWARD ACCEPT`\
 `sudo iptables -A POSTROUTING -t nat -j MASQUERADE -s 10.0.0.1/24`
 ###### Disable Internet Sharing
 `echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null`\
