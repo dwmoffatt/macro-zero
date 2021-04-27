@@ -84,6 +84,12 @@ CONFIGURATION_KEY_COMMAND = "Command"
 CONFIGURATION_TYPE_COMMAND_STRING = "Command String"
 CONFIGURATION_TYPE_KEYBOARD_FUNCTION = "Keyboard Function"
 
+ROTARY_ENCODER_MODES = "Modes"
+ROTARY_ENCODER_BUTTONS = "Buttons"
+
+BUTTONS_INDEXES_MIN = 1
+BUTTONS_INDEXES_MAX = 8
+
 
 class MacroZero:
     def __init__(self):
@@ -96,9 +102,11 @@ class MacroZero:
         self.running = False
         self.power_switch_over = False
         self.current_mode = (0, "")  # No mode, config not loaded
+        self.buttons_display_indexes = (0, 0)  # No mode, config not loaded
         self.mode_list = list()
         self.command_dictionary = None
         self.configuration = None
+        self.rotary_encoder_mode = ROTARY_ENCODER_BUTTONS
 
         self.current_image = None
         self.font = None
@@ -106,6 +114,8 @@ class MacroZero:
         self.padding = 0
         self.top = 0
         self.bottom = 0
+
+        self._update_display = False
 
         pso_input_list = [
             {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_SWITCH, INPUT_LIST_KEY_PIN_NUMBER: PSO_PIN},
@@ -227,6 +237,10 @@ class MacroZero:
                 except ValueError:
                     logging.exception(f"Last Command - {value}")
 
+            if self._update_display:
+                self.display_mode_selection(self.current_mode[1])
+                self._update_display = False
+
             if self.power_switch_over:
                 self.running = False
 
@@ -282,6 +296,7 @@ class MacroZero:
             # TODO: Verify Configuration
 
             self.current_mode = (1, self.mode_list[0])
+            self.buttons_display_indexes = (1, 3)
 
     def display_mode_selection(self, mode):
         """
@@ -311,26 +326,15 @@ class MacroZero:
             selection_offset = mode_size[1] + 1
             spacer = 1
 
-            draw.text(
-                (0, selection_offset + (spacer * 1)),
-                f"B1: {self.configuration[mode][CONFIGURATION_KEY_B1][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font,
-                fill=255,
-            )
-
-            draw.text(
-                (0, selection_offset + (spacer * 2) + (mode_size[1] * 1)),
-                f"b2: {self.configuration[mode][CONFIGURATION_KEY_B2][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font,
-                fill=255,
-            )
-
-            draw.text(
-                (0, selection_offset + (spacer * 3) + (mode_size[1] * 2)),
-                f"B3: {self.configuration[mode][CONFIGURATION_KEY_B3][CONFIGURATION_KEY_COMMAND_NAME]}",
-                font=self.font,
-                fill=255,
-            )
+            position = 1
+            for i in range(self.buttons_display_indexes[0], self.buttons_display_indexes[1] + 1):
+                draw.text(
+                    (0, selection_offset + (spacer * position) + (mode_size[1] * (position - 1))),
+                    f"B1: {self.configuration[mode][f'B{i}'][CONFIGURATION_KEY_COMMAND_NAME]}",
+                    font=self.font,
+                    fill=255,
+                )
+                position += 1
 
             self.current_image = image
 
@@ -433,6 +437,11 @@ class MacroZero:
         """
         logging.debug("Processing RE_B1 Command")
 
+        if self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
+            self.rotary_encoder_mode = ROTARY_ENCODER_MODES
+        elif self.rotary_encoder_mode == ROTARY_ENCODER_MODES:
+            self.rotary_encoder_mode = ROTARY_ENCODER_BUTTONS
+
     def _process_re_cw(self):
         """
         Process RE_CW Command
@@ -441,6 +450,19 @@ class MacroZero:
         """
         logging.debug("Processing RE_CW Command")
 
+        if self.rotary_encoder_mode == ROTARY_ENCODER_MODES:
+            logging.info("ROTARY ENCODER MODES - NOT IMPLEMENTED!!")
+        elif self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
+            outer_value = self.buttons_display_indexes[1]
+            outer_value += 1
+
+            if outer_value > BUTTONS_INDEXES_MAX:
+                self.buttons_display_indexes = (BUTTONS_INDEXES_MAX - 2, BUTTONS_INDEXES_MAX)
+            else:
+                self.buttons_display_indexes = (outer_value - 2, outer_value)
+
+        self._update_display = True
+
     def _process_re_ccw(self):
         """
         Process RE_CCW Command
@@ -448,6 +470,19 @@ class MacroZero:
         :return:
         """
         logging.debug("Processing RE_CCW Command")
+
+        if self.rotary_encoder_mode == ROTARY_ENCODER_MODES:
+            logging.info("ROTARY ENCODER MODES - NOT IMPLEMENTED!!")
+        elif self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
+            inner_value = self.buttons_display_indexes[0]
+            inner_value -= 1
+
+            if inner_value < BUTTONS_INDEXES_MIN:
+                self.buttons_display_indexes = (BUTTONS_INDEXES_MIN, BUTTONS_INDEXES_MIN + 2)
+            else:
+                self.buttons_display_indexes = (inner_value, inner_value + 2)
+
+        self._update_display = True
 
     def _invalid_command(self):
         raise ValueError("Invalid Command")
