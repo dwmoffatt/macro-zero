@@ -218,9 +218,11 @@ class MacroZero:
         # display current mode
         self.display_mode_selection(self.current_mode[1])
 
+        # This is the main running loop for the program
         while self.running:
             value = None
 
+            # Acquire thread lock and pull value off the que
             self.thread_lock.acquire()
             try:
                 value = self.input_que.get_nowait()
@@ -229,18 +231,22 @@ class MacroZero:
             finally:
                 self.thread_lock.release()
 
+            # Process the value if there was one
             if value is not None:
                 logging.info(f"Value pulled off Queue - {value}")
 
+                # Run function for specific command
                 try:
                     self.command_dictionary.get(value, self._invalid_command)()
                 except ValueError:
                     logging.exception(f"Last Command - {value}")
 
+            # Update Display
             if self._update_display:
                 self.display_mode_selection(self.current_mode[1])
                 self._update_display = False
 
+            # Check Power Switch Over Input
             if self.power_switch_over:
                 self.running = False
 
@@ -248,7 +254,7 @@ class MacroZero:
         """
         Closes all modules and resets I/0
 
-        :return:
+        :return: Nothing
         """
         logging.info("Closing macro-zero interface")
 
@@ -269,7 +275,7 @@ class MacroZero:
 
         If default is not present then throw exception
 
-        :return:
+        :return: Nothing
         """
         config_loaded = False
         current_configuration = copy.deepcopy(self.configuration)

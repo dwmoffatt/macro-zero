@@ -55,7 +55,34 @@ KEY_X = b"\x1b"
 KEY_Y = b"\x1c"
 KEY_Z = b"\x1d"
 
-SCAN_CODE_LOOKUP = {"a": KEY_A, "b": KEY_B}
+SCAN_CODE_LOOKUP = {
+    "a": KEY_A,
+    "b": KEY_B,
+    "c": KEY_C,
+    "d": KEY_D,
+    "e": KEY_E,
+    "f": KEY_F,
+    "g": KEY_G,
+    "h": KEY_H,
+    "i": KEY_I,
+    "j": KEY_J,
+    "k": KEY_K,
+    "l": KEY_L,
+    "m": KEY_M,
+    "n": KEY_N,
+    "o": KEY_O,
+    "p": KEY_P,
+    "q": KEY_Q,
+    "r": KEY_R,
+    "s": KEY_S,
+    "t": KEY_T,
+    "u": KEY_U,
+    "v": KEY_V,
+    "w": KEY_W,
+    "x": KEY_X,
+    "y": KEY_Y,
+    "z": KEY_Z,
+}
 
 
 class MKeyboard:
@@ -105,10 +132,12 @@ class MKeyboard:
         Second Byte is reserved, always 0x00
         Next 6 Bytes are scan codes, 0x00 is no key press
 
-        ex. b'\0x02\0x00\0x04\x00\0x00\0x00\0x00\0x00'
+        ex. b'\0x02\0x00\0x04\x00\0x00\0x00\0x00\0x00' = A
 
         :param report: a bytearray
         :return:
         """
+        # TODO: Verify report is formatted correctly
+
         with open("/dev/hidg0", "rb+") as fd:
             fd.write(report)
