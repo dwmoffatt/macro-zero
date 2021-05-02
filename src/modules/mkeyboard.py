@@ -2,9 +2,12 @@
 M-Keyboard
 """
 import logging
-import RPi.GPIO as GPIO
 import queue
-from . import INPUT_LIST_KEY_PIN_NUMBER
+from . import INPUT_LIST_KEY_PIN_NUMBER, RUNNING_ON_PI
+
+if RUNNING_ON_PI:
+    import RPi.GPIO as GPIO
+
 
 MK_COMMAND_MK_B1 = "MK_B1"
 MK_COMMAND_MK_B2 = "MK_B2"
@@ -124,6 +127,29 @@ class MKeyboard:
         finally:
             self._thread_lock.release()
 
+    def verify_report(self, report):
+        """
+        Verify that a report is the correct format
+
+        First byte is modifier
+        Second Byte is reserved, always 0x00
+        Next 6 Bytes are scan codes, 0x00 is no key press
+
+        ex. b'\0x02\0x00\0x04\x00\0x00\0x00\0x00\0x00' = A
+
+        :param report: bytes
+        :return: True on successful report verification or throws Exception
+        """
+        # Verify length of bytes
+        if len(report) != 8:
+            raise ValueError("Report needs to be 8 bytes long")
+
+        # Check second byte is x00
+        if report[1:2] != KEY_NONE:
+            raise ValueError("Second byte in report needs to be x00")
+
+        return True
+
     def write_report(self, report):
         """
         Writes key report to USB Device
@@ -134,10 +160,10 @@ class MKeyboard:
 
         ex. b'\0x02\0x00\0x04\x00\0x00\0x00\0x00\0x00' = A
 
-        :param report: a bytearray
+        :param report: a bytes
         :return:
         """
-        # TODO: Verify report is formatted correctly
+        self.verify_report(report)
 
         with open("/dev/hidg0", "rb+") as fd:
             fd.write(report)

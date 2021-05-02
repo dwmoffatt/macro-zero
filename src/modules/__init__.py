@@ -4,8 +4,14 @@ modules
 
 Holds basic properties used by device
 """
-
 import os
+
+try:
+    import RPi.GPIO as GPIO  # noqa
+
+    RUNNING_ON_PI = True
+except RuntimeError:
+    RUNNING_ON_PI = False
 
 INPUT_LIST_KEY_INPUT_TYPE = "InputType"
 INPUT_LIST_KEY_PIN_NUMBER = "PinNumber"
@@ -32,7 +38,7 @@ RE_SW_PIN = 11
 RE_DR_PIN = 15
 RE_CLK_PIN = 13
 
-__version__ = "0.001.5"
+__version__ = "0.002.9"
 
 path = os.path.dirname(__file__)
 """Path to modules package directory."""
