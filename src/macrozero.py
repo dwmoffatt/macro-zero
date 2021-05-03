@@ -5,16 +5,15 @@ Macro-Zero Interface
 Main Control for Device
 """
 
-import os
-
 # import argparse
+import os
 import threading
 import logging
 import queue
 import copy
 import json
 import time
-from modules import (
+from src.modules import (
     INPUT_LIST_KEY_INPUT_TYPE,
     INPUT_LIST_KEY_PIN_NUMBER,
     INPUT_TYPE_BUTTON,
@@ -37,10 +36,11 @@ from modules import (
     RE_DR_PIN,
     RE_CLK_PIN,
     PSO_PIN,
+    RUNNING_ON_PI,
     fonts_path,
     configs_path,
 )
-from modules.mkeyboard import (
+from src.modules.mkeyboard import (
     MKeyboard,
     MK_COMMAND_MK_B1,
     MK_COMMAND_MK_B2,
@@ -51,17 +51,15 @@ from modules.mkeyboard import (
     MK_COMMAND_MK_B7,
     MK_COMMAND_MK_B8,
 )
-from modules.pso import PSO, PSO_COMMAND_PSO
-from modules.rotaryencoder import RotaryEncoder, RE_COMMAND_RE_B1, RE_COMMAND_RE_CW, RE_COMMAND_RE_CCW
-from modules.SSD1305 import SSD1305
-import RPi.GPIO as GPIO
+from src.modules.pso import PSO, PSO_COMMAND_PSO
+from src.modules.rotaryencoder import RotaryEncoder, RE_COMMAND_RE_B1, RE_COMMAND_RE_CW, RE_COMMAND_RE_CCW
+from src.modules.SSD1305 import SSD1305
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-logging.basicConfig(
-    filename="macro_zero.log", format="[%(asctime)s][%(levelname)s] - %(message)s", filemode="w", level=logging.DEBUG
-)
+if RUNNING_ON_PI:
+    import RPi.GPIO as GPIO
 
 CONFIGURATION_FILENAME = "macro-zero configuration.json"
 DEFAULT_CONFIGURATION_FILENAME = "macro-zero default configuration.json"
@@ -92,10 +90,19 @@ BUTTONS_INDEXES_MAX = 8
 
 
 class MacroZero:
-    def __init__(self):
+    def __init__(self, test_env=False):
         """
         Creates Macro-Zero Device Object
         """
+
+        if test_env is False:
+            logging.basicConfig(
+                filename="macro_zero.log",
+                format="[%(asctime)s][%(levelname)s] - %(message)s",
+                filemode="w",
+                level=logging.DEBUG,
+            )
+
         self.thread_lock = threading.Lock()
         self.input_que = queue.Queue(maxsize=50)
 
@@ -164,7 +171,7 @@ class MacroZero:
         self.mkeyboard.module_init()
         self.mode_select_rotary_encoder.module_init()
 
-        self.build_command_dictionary()
+        self.command_dictionary = self.build_command_dictionary()
         self.load_configuration()
 
         # Load font
@@ -494,7 +501,7 @@ class MacroZero:
         raise ValueError("Invalid Command")
 
     def build_command_dictionary(self):
-        self.command_dictionary = {
+        return {
             PSO_COMMAND_PSO: self._process_pso,
             MK_COMMAND_MK_B1: self._process_mk_b1,
             MK_COMMAND_MK_B2: self._process_mk_b2,

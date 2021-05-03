@@ -2,9 +2,11 @@
 Power Switch Over Supercap Module
 """
 import logging
-import RPi.GPIO as GPIO
 import queue
-from . import INPUT_LIST_KEY_PIN_NUMBER
+from . import INPUT_LIST_KEY_PIN_NUMBER, RUNNING_ON_PI
+
+if RUNNING_ON_PI:
+    import RPi.GPIO as GPIO
 
 PSO_COMMAND_PSO = "PSO"
 

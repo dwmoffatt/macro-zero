@@ -1,10 +1,10 @@
 import unittest
-from src.modules.mkeyboard import MKeyboard
+from src.macrozero import MacroZero
 
 
-class TestVerifyReport(unittest.TestCase):
+class VerifyReportTestCase(unittest.TestCase):
     def setUp(self):
-        self.mkeyboard = MKeyboard()
+        self.app = MacroZero(test_env=True)
 
     def test_verify_report_length_error(self):
         """
@@ -13,11 +13,20 @@ class TestVerifyReport(unittest.TestCase):
         """
         test_report = b"\x00\x00\x00\x00\x00"  # 5 bytes
         with self.assertRaises(ValueError):
-            self.mkeyboard.verify_report(test_report)
+            self.app.mkeyboard._verify_report(test_report)
 
         test_report = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00"  # 9 bytes
         with self.assertRaises(ValueError):
-            self.mkeyboard.verify_report(test_report)
+            self.app.mkeyboard._verify_report(test_report)
+
+    def test_verify_report_first_byte_not_accepted_modifier(self):
+        """
+        Tests that verify_report throws ValueError if the first byte is not one of accepted modifiers
+        :return:
+        """
+        test_report = b"\x22\x00\x00\x00\x00\x00\x00\x00"  # 8 bytes
+        with self.assertRaises(ValueError):
+            self.app.mkeyboard._verify_report(test_report)
 
     def test_verify_report_second_byte_not_00(self):
         """
@@ -26,7 +35,7 @@ class TestVerifyReport(unittest.TestCase):
         """
         test_report = b"\x00\x10\x00\x00\x00\x00\x00\x00"  # 8 bytes
         with self.assertRaises(ValueError):
-            self.mkeyboard.verify_report(test_report)
+            self.app.mkeyboard._verify_report(test_report)
 
     def test_verify_report_valid_report(self):
         """
@@ -34,11 +43,15 @@ class TestVerifyReport(unittest.TestCase):
         :return:
         """
         test_report = b"\x00\x00\x00\x00\x00\x00\x00\x00"  # 8 bytes
-        result = self.mkeyboard.verify_report(test_report)
+        result = self.app.mkeyboard._verify_report(test_report)
+        self.assertTrue(result)
+
+        test_report = b"\x02\x00\x04\x00\x00\x00\x00\x00"  # 8 bytes
+        result = self.app.mkeyboard._verify_report(test_report)
         self.assertTrue(result)
 
     def tearDown(self):
-        del self.mkeyboard
+        del self.app
 
 
 if __name__ == "__main__":

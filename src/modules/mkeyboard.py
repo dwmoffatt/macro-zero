@@ -58,6 +58,18 @@ KEY_X = b"\x1b"
 KEY_Y = b"\x1c"
 KEY_Z = b"\x1d"
 
+MODIFIER_LOOKUP = [
+    KEY_NONE,
+    KEY_MOD_LCTRL,
+    KEY_MOD_LSHIFT,
+    KEY_MOD_LALT,
+    KEY_MOD_LMETA,
+    KEY_MOD_RCTRL,
+    KEY_MOD_RSHIFT,
+    KEY_MOD_RALT,
+    KEY_MOD_RMETA,
+]
+
 SCAN_CODE_LOOKUP = {
     "a": KEY_A,
     "b": KEY_B,
@@ -127,7 +139,8 @@ class MKeyboard:
         finally:
             self._thread_lock.release()
 
-    def verify_report(self, report):
+    @staticmethod
+    def _verify_report(report):
         """
         Verify that a report is the correct format
 
@@ -143,6 +156,10 @@ class MKeyboard:
         # Verify length of bytes
         if len(report) != 8:
             raise ValueError("Report needs to be 8 bytes long")
+
+        # Check first byte is an accepted modifier
+        if report[0:1] not in MODIFIER_LOOKUP:
+            raise ValueError("First byte in report needs to be accepted modified")
 
         # Check second byte is x00
         if report[1:2] != KEY_NONE:
@@ -163,7 +180,7 @@ class MKeyboard:
         :param report: a bytes
         :return:
         """
-        self.verify_report(report)
+        self._verify_report(report)
 
         with open("/dev/hidg0", "rb+") as fd:
             fd.write(report)

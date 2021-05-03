@@ -1,10 +1,16 @@
 import logging
 import time
-
-# import queue
 import spidev
-import RPi.GPIO as GPIO
-from . import INPUT_LIST_KEY_INPUT_TYPE, INPUT_LIST_KEY_PIN_NUMBER, INPUT_TYPE_DISPLAY_RST, INPUT_TYPE_DISPLAY_DC
+from . import (
+    INPUT_LIST_KEY_INPUT_TYPE,
+    INPUT_LIST_KEY_PIN_NUMBER,
+    INPUT_TYPE_DISPLAY_RST,
+    INPUT_TYPE_DISPLAY_DC,
+    RUNNING_ON_PI,
+)
+
+if RUNNING_ON_PI:
+    import RPi.GPIO as GPIO
 
 # Constants
 SSD1305_I2C_ADDRESS = 0x3C  # 011110+SA0+RW - 0x3C or 0x3D
