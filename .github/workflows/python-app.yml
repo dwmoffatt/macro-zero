@@ -30,6 +30,6 @@ jobs:
       run: |
         python3 -m unittest discover -v -s src/tests/unit/app/
 
-    - name: Run all unit tests for app
+    - name: Run all unit tests for mkeyboard module
       run: |
         python3 -m unittest discover -v -s src/tests/unit/mkeyboard/
