@@ -164,6 +164,8 @@ Button configuration will be loadable. File format will be JSON. File name neede
 }
 ```
 
+##### Testing
+`python3 -m unittest discover -s src/tests/unit/*`
 
 ### Hardware
 ##### Board Size:
