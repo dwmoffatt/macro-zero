@@ -26,6 +26,10 @@ jobs:
         python3 -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Tests with unittest
+    - name: Run all unit tests for app
       run: |
-        python3 -m unittest discover -v -s src/tests/unit/*
+        python3 -m unittest discover -v -s src/tests/unit/app/
+
+    - name: Run all unit tests for app
+      run: |
+        python3 -m unittest discover -v -s src/tests/unit/mkeyboard/
