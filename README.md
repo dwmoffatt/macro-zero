@@ -165,7 +165,8 @@ Button configuration will be loadable. File format will be JSON. File name neede
 ```
 
 ##### Testing
-`python3 -m unittest discover -v -s src/tests/unit/*`
+`python3 -m unittest discover -v -s src/tests/unit/app/`\
+`python3 -m unittest discover -v -s src/tests/unit/mkeyboard/`
 
 ### Hardware
 ##### Board Size:
