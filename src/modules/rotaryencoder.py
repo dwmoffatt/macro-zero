@@ -2,7 +2,6 @@
 Rotary Encoder
 """
 import logging
-import RPi.GPIO as GPIO
 import queue
 from . import (
     INPUT_LIST_KEY_PIN_NUMBER,
@@ -10,8 +9,12 @@ from . import (
     INPUT_TYPE_BUTTON,
     INPUT_TYPE_ROTARY_ENCODER_CLK,
     INPUT_TYPE_ROTARY_ENCODER_DIR,
+    RUNNING_ON_PI,
 )
 from .utils import digital_read
+
+if RUNNING_ON_PI:
+    import RPi.GPIO as GPIO
 
 RE_COMMAND_RE_B1 = "RE_B1"
 RE_COMMAND_RE_CW = "RE_CW"

@@ -4,7 +4,10 @@ Utility functions
 """
 
 import time
-import RPi.GPIO as GPIO
+from . import RUNNING_ON_PI
+
+if RUNNING_ON_PI:
+    import RPi.GPIO as GPIO
 
 
 def digital_write(pin, value):
