@@ -58,6 +58,144 @@ KEY_X = b"\x1b"
 KEY_Y = b"\x1c"
 KEY_Z = b"\x1d"
 
+KEY_1 = b"\x1e"  # Keyboard 1 and !
+KEY_2 = b"\x1f"  # Keyboard 2 and @
+KEY_3 = b"\x20"  # Keyboard 3 and #
+KEY_4 = b"\x21"  # Keyboard 4 and $
+KEY_5 = b"\x22"  # Keyboard 5 and %
+KEY_6 = b"\x23"  # Keyboard 6 and ^
+KEY_7 = b"\x24"  # Keyboard 7 and &
+KEY_8 = b"\x25"  # Keyboard 8 and *
+KEY_9 = b"\x26"  # Keyboard 9 and (
+KEY_0 = b"\x27"  # Keyboard 0 and )
+
+KEY_ENTER = b"\x28"  # Keyboard Return (ENTER)
+KEY_ESC = b"\x29"  # Keyboard ESCAPE
+KEY_BACKSPACE = b"\x2a"  # Keyboard DELETE (Backspace)
+KEY_TAB = b"\x2b"  # Keyboard Tab
+KEY_SPACE = b"\x2c"  # Keyboard Spacebar
+KEY_MINUS = b"\x2d"  # Keyboard - and _
+KEY_EQUAL = b"\x2e"  # Keyboard = and +
+KEY_LEFTBRACE = b"\x2f"  # Keyboard [ and {
+KEY_RIGHTBRACE = b"\x30"  # Keyboard ] and }
+KEY_BACKSLASH = b"\x31"  # Keyboard \ and |
+KEY_HASHTILDE = b"\x32"  # Keyboard Non-US # and ~
+KEY_SEMICOLON = b"\x33"  # Keyboard ; and :
+KEY_APOSTROPHE = b"\x34"  # Keyboard ' and "
+KEY_GRAVE = b"\x35"  # Keyboard ` and ~
+KEY_COMMA = b"\x36"  # Keyboard , and <
+KEY_DOT = b"\x37"  # Keyboard . and >
+KEY_SLASH = b"\x38"  # Keyboard / and ?
+KEY_CAPSLOCK = b"\x39"  # Keyboard Caps Lock
+
+KEY_F1 = b"\x3a"  # Keyboard F1
+KEY_F2 = b"\x3b"  # Keyboard F2
+KEY_F3 = b"\x3c"  # Keyboard F3
+KEY_F4 = b"\x3d"  # Keyboard F4
+KEY_F5 = b"\x3e"  # Keyboard F5
+KEY_F6 = b"\x3f"  # Keyboard F6
+KEY_F7 = b"\x40"  # Keyboard F7
+KEY_F8 = b"\x41"  # Keyboard F8
+KEY_F9 = b"\x42"  # Keyboard F9
+KEY_F10 = b"\x43"  # Keyboard F10
+KEY_F11 = b"\x44"  # Keyboard F11
+KEY_F12 = b"\x45"  # Keyboard F12
+
+KEY_SYSRQ = b"\x46"  # Keyboard Print Screen
+KEY_SCROLLLOCK = b"\x47"  # Keyboard Scroll Lock
+KEY_PAUSE = b"\x48"  # Keyboard Pause
+KEY_INSERT = b"\x49"  # Keyboard Insert
+KEY_HOME = b"\x4a"  # Keyboard Home
+KEY_PAGEUP = b"\x4b"  # Keyboard Page Up
+KEY_DELETE = b"\x4c"  # Keyboard Delete Forward
+KEY_END = b"\x4d"  # Keyboard End
+KEY_PAGEDOWN = b"\x4e"  # Keyboard Page Down
+KEY_RIGHT = b"\x4f"  # Keyboard Right Arrow
+KEY_LEFT = b"\x50"  # Keyboard Left Arrow
+KEY_DOWN = b"\x51"  # Keyboard Down Arrow
+KEY_UP = b"\x52"  # Keyboard Up Arrow
+
+KEY_NUMLOCK = b"\x53"  # Keyboard Num Lock and Clear
+KEY_KPSLASH = b"\x54"  # Keypad /
+KEY_KPASTERISK = b"\x55"  # Keypad *
+KEY_KPMINUS = b"\x56"  # Keypad -
+KEY_KPPLUS = b"\x57"  # Keypad +
+KEY_KPENTER = b"\x58"  # Keypad ENTER
+KEY_KP1 = b"\x59"  # Keypad 1 and End
+KEY_KP2 = b"\x5a"  # Keypad 2 and Down Arrow
+KEY_KP3 = b"\x5b"  # Keypad 3 and PageDn
+KEY_KP4 = b"\x5c"  # Keypad 4 and Left Arrow
+KEY_KP5 = b"\x5d"  # Keypad 5
+KEY_KP6 = b"\x5e"  # Keypad 6 and Right Arrow
+KEY_KP7 = b"\x5f"  # Keypad 7 and Home
+KEY_KP8 = b"\x60"  # Keypad 8 and Up Arrow
+KEY_KP9 = b"\x61"  # Keypad 9 and Page Up
+KEY_KP0 = b"\x62"  # Keypad 0 and Insert
+KEY_KPDOT = b"\x63"  # Keypad . and Delete
+
+KEY_102ND = b"\x64"  # Keyboard Non-US \ and |
+KEY_COMPOSE = b"\x65"  # Keyboard Application
+KEY_POWER = b"\x66"  # Keyboard Power
+KEY_KPEQUAL = b"\x67"  # Keypad =
+
+KEY_F13 = b"\x68"  # Keyboard F13
+KEY_F14 = b"\x69"  # Keyboard F14
+KEY_F15 = b"\x6a"  # Keyboard F15
+KEY_F16 = b"\x6b"  # Keyboard F16
+KEY_F17 = b"\x6c"  # Keyboard F17
+KEY_F18 = b"\x6d"  # Keyboard F18
+KEY_F19 = b"\x6e"  # Keyboard F19
+KEY_F20 = b"\x6f"  # Keyboard F20
+KEY_F21 = b"\x70"  # Keyboard F21
+KEY_F22 = b"\x71"  # Keyboard F22
+KEY_F23 = b"\x72"  # Keyboard F23
+KEY_F24 = b"\x73"  # Keyboard F24
+
+KEY_OPEN = b"\x74"  # Keyboard Execute
+KEY_HELP = b"\x75"  # Keyboard Help
+KEY_PROPS = b"\x76"  # Keyboard Menu
+KEY_FRONT = b"\x77"  # Keyboard Select
+KEY_STOP = b"\x78"  # Keyboard Stop
+KEY_AGAIN = b"\x79"  # Keyboard Again
+KEY_UNDO = b"\x7a"  # Keyboard Undo
+KEY_CUT = b"\x7b"  # Keyboard Cut
+KEY_COPY = b"\x7c"  # Keyboard Copy
+KEY_PASTE = b"\x7d"  # Keyboard Paste
+KEY_FIND = b"\x7e"  # Keyboard Find
+KEY_MUTE = b"\x7f"  # Keyboard Mute
+KEY_VOLUMEUP = b"\x80"  # Keyboard Volume Up
+KEY_VOLUMEDOWN = b"\x81"  # Keyboard Volume Down
+
+KEY_LEFTCTRL = b"\xe0"  # Keyboard Left Control
+KEY_LEFTSHIFT = b"\xe1"  # Keyboard Left Shift
+KEY_LEFTALT = b"\xe2"  # Keyboard Left Alt
+KEY_LEFTMETA = b"\xe3"  # Keyboard Left GUI
+KEY_RIGHTCTRL = b"\xe4"  # Keyboard Right Control
+KEY_RIGHTSHIFT = b"\xe5"  # Keyboard Right Shift
+KEY_RIGHTALT = b"\xe6"  # Keyboard Right Alt
+KEY_RIGHTMETA = b"\xe7"  # Keyboard Right GUI
+
+KEY_MEDIA_PLAYPAUSE = b"\xe8"
+KEY_MEDIA_STOPCD = b"\xe9"
+KEY_MEDIA_PREVIOUSSONG = b"\xea"
+KEY_MEDIA_NEXTSONG = b"\xeb"
+KEY_MEDIA_EJECTCD = b"\xec"
+KEY_MEDIA_VOLUMEUP = b"\xed"
+KEY_MEDIA_VOLUMEDOWN = b"\xee"
+KEY_MEDIA_MUTE = b"\xef"
+KEY_MEDIA_WWW = b"\xf0"
+KEY_MEDIA_BACK = b"\xf1"
+KEY_MEDIA_FORWARD = b"\xf2"
+KEY_MEDIA_STOP = b"\xf3"
+KEY_MEDIA_FIND = b"\xf4"
+KEY_MEDIA_SCROLLUP = b"\xf5"
+KEY_MEDIA_SCROLLDOWN = b"\xf6"
+KEY_MEDIA_EDIT = b"\xf7"
+KEY_MEDIA_SLEEP = b"\xf8"
+KEY_MEDIA_COFFEE = b"\xf9"
+KEY_MEDIA_REFRESH = b"\xfa"
+KEY_MEDIA_CALC = b"\xfb"
+
 MODIFIER_LOOKUP = [
     KEY_NONE,
     KEY_MOD_LCTRL,
@@ -97,6 +235,19 @@ SCAN_CODE_LOOKUP = {
     "x": KEY_X,
     "y": KEY_Y,
     "z": KEY_Z,
+    "F1": KEY_F1,
+    "F2": KEY_F2,
+    "F3": KEY_F3,
+    "F4": KEY_F4,
+    "F5": KEY_F5,
+    "F6": KEY_F6,
+    "F7": KEY_F7,
+    "F8": KEY_F8,
+    "F9": KEY_F9,
+    "F10": KEY_F10,
+    "F11": KEY_F11,
+    "F12": KEY_F12,
+    "Enter": KEY_ENTER,
 }
 
 
@@ -139,16 +290,37 @@ class MKeyboard:
         finally:
             self._thread_lock.release()
 
+    def build_report(self, value):
+        """
+        Generate byte report for given value
+
+        :param value: the value we want to convert into a report
+        :return report: byte report for given value
+        """
+        modifier_needed = False
+
+        # Check if modifier is needed
+        if modifier_needed:
+            report = KEY_MOD_LSHIFT
+        else:
+            report = KEY_NONE
+
+        report += KEY_NONE
+
+        report += SCAN_CODE_LOOKUP.get(value) + (KEY_NONE * 5)
+
+        return report
+
     @staticmethod
     def _verify_report(report):
         """
         Verify that a report is the correct format
 
         First byte is modifier
-        Second Byte is reserved, always 0x00
-        Next 6 Bytes are scan codes, 0x00 is no key press
+        Second Byte is reserved, always = b"\x00
+        Next 6 Bytes are scan codes, = b"\x00 is no key press
 
-        ex. b'\0x02\0x00\0x04\x00\0x00\0x00\0x00\0x00' = A
+        ex. b"\x02\x00\x04\x00\x00\x00\x00\x00" = A
 
         :param report: bytes
         :return: True on successful report verification or throws Exception
@@ -172,10 +344,10 @@ class MKeyboard:
         Writes key report to USB Device
 
         First byte is modifier
-        Second Byte is reserved, always 0x00
-        Next 6 Bytes are scan codes, 0x00 is no key press
+        Second Byte is reserved, always = b"\x00
+        Next 6 Bytes are scan codes, = b"\x00 is no key press
 
-        ex. b'\0x02\0x00\0x04\x00\0x00\0x00\0x00\0x00' = A
+        ex. b"\x02\x00\x04\x00\x00\x00\x00\x00" = A
 
         :param report: a bytes
         :return:
