@@ -355,6 +355,26 @@ class MacroZero:
             self.display.image(self.current_image)
             self.display.display()
 
+    def build_report_list(self, command):
+        """
+        Build report_list for given command.
+
+        :param command: Command dictionary from config
+        ex. Command = {
+            "Type": "Keyboard Function"
+            "Command": "Enter"
+        :return report_list: list of reports needed to send command
+        """
+        report_list = list()
+
+        if command[CONFIGURATION_KEY_TYPE] == CONFIGURATION_TYPE_COMMAND_STRING:
+            logging.info(f"Command Type: {CONFIGURATION_TYPE_COMMAND_STRING} - NOT IMPLEMENTED!!")
+        elif command[CONFIGURATION_KEY_TYPE] == CONFIGURATION_TYPE_KEYBOARD_FUNCTION:
+            report_list.append(self.mkeyboard.build_report(command[CONFIGURATION_KEY_COMMAND]))
+            report_list.append(self.mkeyboard.build_report(None))
+
+        return report_list
+
     def _process_pso(self):
         """
         Process PSO Command
@@ -373,18 +393,12 @@ class MacroZero:
         """
         logging.debug("Processing MK_B1 Command")
 
-        # self.mkeyboard.write_report(chr(32) + chr(0) + chr(11) + chr(0) * 5)  # H
-        # self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-        # self.mkeyboard.write_report(chr(0) * 2 + chr(8) + chr(0) * 5)  # e
-        # self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-        # self.mkeyboard.write_report(chr(0) * 2 + chr(15) + chr(0) * 5)  # l
-        # self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-        # self.mkeyboard.write_report(chr(0) * 2 + chr(15) + chr(0) * 5)  # l
-        # self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-        # self.mkeyboard.write_report(chr(0) * 2 + chr(18) + chr(0) * 5)  # o
-        # self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
-        # self.mkeyboard.write_report(chr(32) + chr(0) + chr(30) + chr(0) * 5)  # !
-        # self.mkeyboard.write_report(chr(0) * 8)  # Release all keys
+        commands = self.configuration[CONFIGURATION_KEY_B1][CONFIGURATION_KEY_COMMANDS]
+        for command in commands:
+            report_list = self.build_report_list(command)
+
+            for report in report_list:
+                self.mkeyboard.write_report(report)
 
     def _process_mk_b2(self):
         """
@@ -394,6 +408,13 @@ class MacroZero:
         """
         logging.debug("Processing MK_B2 Command")
 
+        commands = self.configuration[CONFIGURATION_KEY_B2][CONFIGURATION_KEY_COMMANDS]
+        for command in commands:
+            report_list = self.build_report_list(command)
+
+            for report in report_list:
+                self.mkeyboard.write_report(report)
+
     def _process_mk_b3(self):
         """
         Process MK_B3 Command
@@ -401,6 +422,13 @@ class MacroZero:
         :return:
         """
         logging.debug("Processing MK_B3 Command")
+
+        commands = self.configuration[CONFIGURATION_KEY_B3][CONFIGURATION_KEY_COMMANDS]
+        for command in commands:
+            report_list = self.build_report_list(command)
+
+            for report in report_list:
+                self.mkeyboard.write_report(report)
 
     def _process_mk_b4(self):
         """
@@ -410,6 +438,13 @@ class MacroZero:
         """
         logging.debug("Processing MK_B4 Command")
 
+        commands = self.configuration[CONFIGURATION_KEY_B4][CONFIGURATION_KEY_COMMANDS]
+        for command in commands:
+            report_list = self.build_report_list(command)
+
+            for report in report_list:
+                self.mkeyboard.write_report(report)
+
     def _process_mk_b5(self):
         """
         Process MK_B5 Command
@@ -417,6 +452,13 @@ class MacroZero:
         :return:
         """
         logging.debug("Processing MK_B5 Command")
+
+        commands = self.configuration[CONFIGURATION_KEY_B5][CONFIGURATION_KEY_COMMANDS]
+        for command in commands:
+            report_list = self.build_report_list(command)
+
+            for report in report_list:
+                self.mkeyboard.write_report(report)
 
     def _process_mk_b6(self):
         """
@@ -426,6 +468,13 @@ class MacroZero:
         """
         logging.debug("Processing MK_B6 Command")
 
+        commands = self.configuration[CONFIGURATION_KEY_B6][CONFIGURATION_KEY_COMMANDS]
+        for command in commands:
+            report_list = self.build_report_list(command)
+
+            for report in report_list:
+                self.mkeyboard.write_report(report)
+
     def _process_mk_b7(self):
         """
         Process MK_B7 Command
@@ -434,6 +483,13 @@ class MacroZero:
         """
         logging.debug("Processing MK_B7 Command")
 
+        commands = self.configuration[CONFIGURATION_KEY_B7][CONFIGURATION_KEY_COMMANDS]
+        for command in commands:
+            report_list = self.build_report_list(command)
+
+            for report in report_list:
+                self.mkeyboard.write_report(report)
+
     def _process_mk_b8(self):
         """
         Process MK_B8 Command
@@ -441,6 +497,13 @@ class MacroZero:
         :return:
         """
         logging.debug("Processing MK_B8 Command")
+
+        commands = self.configuration[CONFIGURATION_KEY_B8][CONFIGURATION_KEY_COMMANDS]
+        for command in commands:
+            report_list = self.build_report_list(command)
+
+            for report in report_list:
+                self.mkeyboard.write_report(report)
 
     def _process_re_b1(self):
         """

@@ -1,6 +1,6 @@
 import unittest
 from src.macrozero import MacroZero
-from src.modules.mkeyboard import KEY_NONE, KEY_ENTER
+from src.modules.mkeyboard import KEY_NONE, KEY_ENTER, NONE_REPORT
 
 
 class VerifyReportTestCase(unittest.TestCase):
@@ -14,7 +14,11 @@ class VerifyReportTestCase(unittest.TestCase):
         """
         test_value = "Enter"
         test_report = KEY_NONE + KEY_NONE + KEY_ENTER + (KEY_NONE * 5)
+        result = self.app.mkeyboard.build_report(test_value)
+        self.assertEqual(test_report, result)
 
+        test_value = None
+        test_report = NONE_REPORT
         result = self.app.mkeyboard.build_report(test_value)
         self.assertEqual(test_report, result)
 

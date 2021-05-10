@@ -18,6 +18,8 @@ MK_COMMAND_MK_B6 = "MK_B6"
 MK_COMMAND_MK_B7 = "MK_B7"
 MK_COMMAND_MK_B8 = "MK_B8"
 
+NONE_REPORT = b"\x00\x00\x00\x00\x00\x00\x00\x00"
+
 KEY_MOD_LCTRL = b"\x01"
 KEY_MOD_LSHIFT = b"\x02"
 KEY_MOD_LALT = b"\x04"
@@ -208,6 +210,19 @@ MODIFIER_LOOKUP = [
     KEY_MOD_RMETA,
 ]
 
+MODIFIER_NEEDED = [
+    "!",
+    "@",
+    "#",
+    "$",
+    "%",
+    "^",
+    "&",
+    "*",
+    "(",
+    ")",
+]
+
 SCAN_CODE_LOOKUP = {
     "a": KEY_A,
     "b": KEY_B,
@@ -235,6 +250,26 @@ SCAN_CODE_LOOKUP = {
     "x": KEY_X,
     "y": KEY_Y,
     "z": KEY_Z,
+    "1": KEY_1,
+    "2": KEY_2,
+    "3": KEY_3,
+    "4": KEY_4,
+    "5": KEY_5,
+    "6": KEY_6,
+    "7": KEY_7,
+    "8": KEY_8,
+    "9": KEY_9,
+    "0": KEY_0,
+    "!": KEY_1,
+    "@": KEY_2,
+    "#": KEY_3,
+    "$": KEY_4,
+    "%": KEY_5,
+    "^": KEY_6,
+    "&": KEY_7,
+    "*": KEY_8,
+    "(": KEY_8,
+    ")": KEY_0,
     "F1": KEY_F1,
     "F2": KEY_F2,
     "F3": KEY_F3,
@@ -297,10 +332,11 @@ class MKeyboard:
         :param value: the value we want to convert into a report
         :return report: byte report for given value
         """
-        modifier_needed = False
+        if value is None:
+            return NONE_REPORT
 
         # Check if modifier is needed
-        if modifier_needed:
+        if value in MODIFIER_NEEDED:
             report = KEY_MOD_LSHIFT
         else:
             report = KEY_NONE
@@ -308,6 +344,8 @@ class MKeyboard:
         report += KEY_NONE
 
         report += SCAN_CODE_LOOKUP.get(value) + (KEY_NONE * 5)
+
+        self._verify_report(report)
 
         return report
 
