@@ -17,7 +17,7 @@ Module `__init__`:
 - que - Input que - Output
 ###### input_list dictionary struct:
 ```
-{ 
+{
    "InputType": "Button",
    "PinNumber": 22
 }
