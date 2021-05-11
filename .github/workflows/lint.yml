@@ -9,7 +9,7 @@ on:
 jobs:
   # Lint job. Runs pre-commit, fails if there are changed files
   lint:
-    name: Check pre-commit [${{ matrix.python-version }} | ${{ matrix.os }} ${{ matrix.architecture }}]
+    name: Check pre-commit - ${{ matrix.python-version }} | ${{ matrix.os }} ${{ matrix.architecture }}
     strategy:
       fail-fast: true
       matrix:
@@ -35,5 +35,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools wheel
         python -m pip install --upgrade pre-commit
+
     - name: Check pre-commit
       run: pre-commit run --all-files
