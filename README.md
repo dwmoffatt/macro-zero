@@ -226,7 +226,8 @@ https://pinout.xyz/#
 ### Linux
 #### Required python modules
 python3 is used. Required modules below:\
-`sudo apt-get install python3-pip`\
+`sudo apt install python3-pip`\
+`sudo apt install libopenjp2-7-dev`\
 `pip3 install --upgrade pip`\
 `pip3 install -r requirements.txt`
 
