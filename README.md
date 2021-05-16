@@ -227,11 +227,8 @@ https://pinout.xyz/#
 #### Required python modules
 python3 is used. Required modules below:\
 `sudo apt-get install python3-pip`\
-`sudo apt-get install python3-pil`\
-`sudo apt-get install python3-numpy`\
-`sudo pip3 install RPi.GPIO`\
-`sudo pip3 install spidev`\
-`sudo apt-get install python3-smbus`
+`pip3 install --upgrade pip`\
+`pip3 install -r requirements.txt`
 
 #### Setup NIC and setup Internet Sharing
 ##### On Host
