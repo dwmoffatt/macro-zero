@@ -109,7 +109,7 @@ class MacroZero:
         self.running = False
         self.power_switch_over = False
         self.current_mode = (0, "")  # No mode, config not loaded
-        self.buttons_display_indexes = (0, 0)  # No mode, config not loaded
+        self.buttons_display_indexes = (1, 3)  # Default buttons to display
         self.mode_list = list()
         self.command_dictionary = None
         self.configuration = None
@@ -393,7 +393,7 @@ class MacroZero:
         """
         logging.debug("Processing MK_B1 Command")
 
-        commands = self.configuration[CONFIGURATION_KEY_B1][CONFIGURATION_KEY_COMMANDS]
+        commands = self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B1][CONFIGURATION_KEY_COMMANDS]
         for command in commands:
             report_list = self.build_report_list(command)
 
@@ -408,7 +408,7 @@ class MacroZero:
         """
         logging.debug("Processing MK_B2 Command")
 
-        commands = self.configuration[CONFIGURATION_KEY_B2][CONFIGURATION_KEY_COMMANDS]
+        commands = self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B2][CONFIGURATION_KEY_COMMANDS]
         for command in commands:
             report_list = self.build_report_list(command)
 
@@ -423,7 +423,7 @@ class MacroZero:
         """
         logging.debug("Processing MK_B3 Command")
 
-        commands = self.configuration[CONFIGURATION_KEY_B3][CONFIGURATION_KEY_COMMANDS]
+        commands = self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B3][CONFIGURATION_KEY_COMMANDS]
         for command in commands:
             report_list = self.build_report_list(command)
 
@@ -438,7 +438,7 @@ class MacroZero:
         """
         logging.debug("Processing MK_B4 Command")
 
-        commands = self.configuration[CONFIGURATION_KEY_B4][CONFIGURATION_KEY_COMMANDS]
+        commands = self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B4][CONFIGURATION_KEY_COMMANDS]
         for command in commands:
             report_list = self.build_report_list(command)
 
@@ -453,7 +453,7 @@ class MacroZero:
         """
         logging.debug("Processing MK_B5 Command")
 
-        commands = self.configuration[CONFIGURATION_KEY_B5][CONFIGURATION_KEY_COMMANDS]
+        commands = self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B5][CONFIGURATION_KEY_COMMANDS]
         for command in commands:
             report_list = self.build_report_list(command)
 
@@ -468,7 +468,7 @@ class MacroZero:
         """
         logging.debug("Processing MK_B6 Command")
 
-        commands = self.configuration[CONFIGURATION_KEY_B6][CONFIGURATION_KEY_COMMANDS]
+        commands = self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B6][CONFIGURATION_KEY_COMMANDS]
         for command in commands:
             report_list = self.build_report_list(command)
 
@@ -483,7 +483,7 @@ class MacroZero:
         """
         logging.debug("Processing MK_B7 Command")
 
-        commands = self.configuration[CONFIGURATION_KEY_B7][CONFIGURATION_KEY_COMMANDS]
+        commands = self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B7][CONFIGURATION_KEY_COMMANDS]
         for command in commands:
             report_list = self.build_report_list(command)
 
@@ -498,7 +498,7 @@ class MacroZero:
         """
         logging.debug("Processing MK_B8 Command")
 
-        commands = self.configuration[CONFIGURATION_KEY_B8][CONFIGURATION_KEY_COMMANDS]
+        commands = self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B8][CONFIGURATION_KEY_COMMANDS]
         for command in commands:
             report_list = self.build_report_list(command)
 
