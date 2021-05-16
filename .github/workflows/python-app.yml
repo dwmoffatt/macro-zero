@@ -34,6 +34,10 @@ jobs:
         python3 -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+    - name: set pythonpath
+      run: |
+        echo "PYTHONPATH=/home/runner/work/macro-zero/macro-zero/src/" >> $GITHUB_ENV
+
     - name: Run all unit tests for mkeyboard module
       run: |
         python3 -m unittest discover -v -s src/tests/unit/mkeyboard/
