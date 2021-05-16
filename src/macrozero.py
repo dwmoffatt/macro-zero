@@ -343,7 +343,7 @@ class MacroZero:
             for i in range(self.buttons_display_indexes[0], self.buttons_display_indexes[1] + 1):
                 draw.text(
                     (0, selection_offset + (spacer * position) + (mode_size[1] * (position - 1))),
-                    f"B1: {self.configuration[mode][f'B{i}'][CONFIGURATION_KEY_COMMAND_NAME]}",
+                    f"B{i}: {self.configuration[mode][f'B{i}'][CONFIGURATION_KEY_COMMAND_NAME]}",
                     font=self.font,
                     fill=255,
                 )

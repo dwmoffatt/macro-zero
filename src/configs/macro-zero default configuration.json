@@ -1,9 +1,14 @@
 {
    "General": {
       "B1": {
-         "CommandName": "N/A",
+         "CommandName": "Hello World",
          "CommandInterval": 1,
-         "Commands": []
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "Hello World!!"
+            }
+         ]
       },
       "B2": {
          "CommandName": "N/A",
