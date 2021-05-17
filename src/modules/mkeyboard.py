@@ -332,18 +332,26 @@ class MKeyboard:
         :param value: the value we want to convert into a report
         :return report: byte report for given value
         """
+        is_upper = False
+
         if value is None:
             return NONE_REPORT
 
         # Check if modifier is needed
         if value in MODIFIER_NEEDED:
             report = KEY_MOD_LSHIFT
+        elif len(value) == 1 and value.isalpha() and value.isupper():
+            report = KEY_MOD_LSHIFT
+            is_upper = True
         else:
             report = KEY_NONE
 
         report += KEY_NONE
 
-        report += SCAN_CODE_LOOKUP.get(value) + (KEY_NONE * 5)
+        if is_upper:
+            report += SCAN_CODE_LOOKUP.get(value.lower()) + (KEY_NONE * 5)
+        else:
+            report += SCAN_CODE_LOOKUP.get(value) + (KEY_NONE * 5)
 
         self._verify_report(report)
 

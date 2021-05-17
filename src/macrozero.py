@@ -88,6 +88,8 @@ ROTARY_ENCODER_BUTTONS = "Buttons"
 BUTTONS_INDEXES_MIN = 1
 BUTTONS_INDEXES_MAX = 8
 
+CONFIG_MODES_MIN = 1
+
 
 class MacroZero:
     def __init__(self, test_env=False):
@@ -123,6 +125,7 @@ class MacroZero:
         self.bottom = 0
 
         self._update_display = False
+        self._config_modes_max = 0
 
         pso_input_list = [
             {INPUT_LIST_KEY_INPUT_TYPE: INPUT_TYPE_SWITCH, INPUT_LIST_KEY_PIN_NUMBER: PSO_PIN},
@@ -308,6 +311,7 @@ class MacroZero:
 
             # TODO: Verify Configuration
 
+            self._config_modes_max = len(self.mode_list)
             self.current_mode = (1, self.mode_list[0])
             self.buttons_display_indexes = (1, 3)
 
@@ -527,7 +531,14 @@ class MacroZero:
         logging.debug("Processing RE_CW Command")
 
         if self.rotary_encoder_mode == ROTARY_ENCODER_MODES:
-            logging.info("ROTARY ENCODER MODES - NOT IMPLEMENTED!!")
+            value = self.current_mode[0]
+            value += 1
+
+            if value > self._config_modes_max:
+                self.current_mode = (self._config_modes_max, self.mode_list[self._config_modes_max - 1])
+            else:
+                self.current_mode = (value, self.mode_list[value - 1])
+
         elif self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
             outer_value = self.buttons_display_indexes[1]
             outer_value += 1
@@ -548,7 +559,14 @@ class MacroZero:
         logging.debug("Processing RE_CCW Command")
 
         if self.rotary_encoder_mode == ROTARY_ENCODER_MODES:
-            logging.info("ROTARY ENCODER MODES - NOT IMPLEMENTED!!")
+            value = self.current_mode[0]
+            value -= 1
+
+            if value < CONFIG_MODES_MIN:
+                self.current_mode = (CONFIG_MODES_MIN, self.mode_list[CONFIG_MODES_MIN - 1])
+            else:
+                self.current_mode = (value, self.mode_list[value - 1])
+
         elif self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
             inner_value = self.buttons_display_indexes[0]
             inner_value -= 1
