@@ -31,7 +31,12 @@ Button configuration will be loadable. File format will be JSON. File name neede
       "B1": {
          "CommandName": "N/A",
          "CommandInterval": 1,
-         "Commands": []
+         "Commands": [
+            {
+               "Type": "Command String",
+               "Command": "Hello World!!"
+            }
+         ]
       },
       "B2": {
          "CommandName": "N/A",
