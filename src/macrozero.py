@@ -372,7 +372,9 @@ class MacroZero:
         report_list = list()
 
         if command[CONFIGURATION_KEY_TYPE] == CONFIGURATION_TYPE_COMMAND_STRING:
-            logging.info(f"Command Type: {CONFIGURATION_TYPE_COMMAND_STRING} - NOT IMPLEMENTED!!")
+            for char in command[CONFIGURATION_KEY_COMMAND]:
+                report_list.append(self.mkeyboard.build_report(char))
+                report_list.append(self.mkeyboard.build_report(None))
         elif command[CONFIGURATION_KEY_TYPE] == CONFIGURATION_TYPE_KEYBOARD_FUNCTION:
             report_list.append(self.mkeyboard.build_report(command[CONFIGURATION_KEY_COMMAND]))
             report_list.append(self.mkeyboard.build_report(None))
