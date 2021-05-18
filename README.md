@@ -273,3 +273,5 @@ https://everyday.codes/linux/services-in-systemd-in-depth-tutorial/
 https://www.tutorialspoint.com/python_pillow/python_pillow_quick_guide.htm
 
 https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
+
+https://www.freedesktop.org/software/systemd/man/systemd.unit.html
