@@ -224,6 +224,7 @@ MODIFIER_NEEDED = [
 ]
 
 SCAN_CODE_LOOKUP = {
+    " ": KEY_SPACE,
     "a": KEY_A,
     "b": KEY_B,
     "c": KEY_C,
