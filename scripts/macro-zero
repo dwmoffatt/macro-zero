@@ -42,3 +42,5 @@ ls /sys/class/udc > UDC
 
 ifconfig usb0 10.0.0.1 netmask 255.255.255.252 up
 route add default gw 10.0.0.2
+
+chown chown pi:root /dev/hidg0
