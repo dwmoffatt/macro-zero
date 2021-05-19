@@ -29,7 +29,7 @@ Button configuration will be loadable. File format will be JSON. File name neede
 {
    "General": {
       "B1": {
-         "CommandName": "N/A",
+         "CommandName": "Hello World",
          "CommandInterval": 1,
          "Commands": [
             {
@@ -114,11 +114,15 @@ Button configuration will be loadable. File format will be JSON. File name neede
       },
       "B2": {
          "CommandName": "En. Inet Sharing",
-         "CommandInterval": 15,
+         "CommandInterval": 10,
          "Commands": [
             {
                "Type": "Command String",
                "Command": "echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null"
+            },
+            {
+               "Type": "Command String",
+               "Command": "sudo iptables -P FORWARD ACCEPT"
             },
             {
                "Type": "Command String",
@@ -128,7 +132,7 @@ Button configuration will be loadable. File format will be JSON. File name neede
       },
       "B3": {
          "CommandName": "Dis. Inet Sharing",
-         "CommandInterval": 15,
+         "CommandInterval": 10,
          "Commands": [
             {
                "Type": "Command String",
@@ -252,8 +256,6 @@ python3 is used. Required modules below:\
 This is due to Gateway not being setup properly on startup\
 `sudo route del default`\
 `sudo route add default gw 10.0.0.2`
-###### Give pi permission to hidg0
-`sudo chown pi:root /dev/hidg0`
 
 ## Reference Material
 https://www.rmedgar.com/blog/using-rpi-zero-as-keyboard-setup-and-device-definition/
