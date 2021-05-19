@@ -86,11 +86,15 @@
       },
       "B2": {
          "CommandName": "En. Inet Sharing",
-         "CommandInterval": 15,
+         "CommandInterval": 10,
          "Commands": [
             {
                "Type": "Command String",
                "Command": "echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward > /dev/null"
+            },
+            {
+               "Type": "Command String",
+               "Command": "sudo iptables -P FORWARD ACCEPT"
             },
             {
                "Type": "Command String",
@@ -100,7 +104,7 @@
       },
       "B3": {
          "CommandName": "Dis. Inet Sharing",
-         "CommandInterval": 15,
+         "CommandInterval": 10,
          "Commands": [
             {
                "Type": "Command String",

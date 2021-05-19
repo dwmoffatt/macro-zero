@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.getcwd()))))
 
 from macrozero import MacroZero
-from modules.mkeyboard import KEY_NONE, KEY_ENTER, NONE_REPORT, KEY_H, KEY_E, KEY_1, KEY_MOD_LSHIFT
+from modules.mkeyboard import KEY_NONE, KEY_ENTER, NONE_REPORT, KEY_H, KEY_E, KEY_1, KEY_MOD_LSHIFT, KEY_BACKSLASH
 
 
 class VerifyReportTestCase(unittest.TestCase):
@@ -39,6 +39,11 @@ class VerifyReportTestCase(unittest.TestCase):
 
         test_value = "!"
         test_report = KEY_MOD_LSHIFT + KEY_NONE + KEY_1 + (KEY_NONE * 5)
+        result = self.app.mkeyboard.build_report(test_value)
+        self.assertEqual(test_report, result)
+
+        test_value = "\\"
+        test_report = KEY_NONE + KEY_NONE + KEY_BACKSLASH + (KEY_NONE * 5)
         result = self.app.mkeyboard.build_report(test_value)
         self.assertEqual(test_report, result)
 

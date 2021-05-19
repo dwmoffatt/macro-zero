@@ -406,6 +406,10 @@ class MacroZero:
             for report in report_list:
                 self.mkeyboard.write_report(report)
 
+            time.sleep(
+                self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B1][CONFIGURATION_KEY_COMMAND_INTERVAL]
+            )
+
     def _process_mk_b2(self):
         """
         Process MK_B2 Command
@@ -420,6 +424,10 @@ class MacroZero:
 
             for report in report_list:
                 self.mkeyboard.write_report(report)
+
+            time.sleep(
+                self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B2][CONFIGURATION_KEY_COMMAND_INTERVAL]
+            )
 
     def _process_mk_b3(self):
         """
@@ -436,6 +444,10 @@ class MacroZero:
             for report in report_list:
                 self.mkeyboard.write_report(report)
 
+            time.sleep(
+                self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B3][CONFIGURATION_KEY_COMMAND_INTERVAL]
+            )
+
     def _process_mk_b4(self):
         """
         Process MK_B4 Command
@@ -450,6 +462,10 @@ class MacroZero:
 
             for report in report_list:
                 self.mkeyboard.write_report(report)
+
+            time.sleep(
+                self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B4][CONFIGURATION_KEY_COMMAND_INTERVAL]
+            )
 
     def _process_mk_b5(self):
         """
@@ -466,6 +482,10 @@ class MacroZero:
             for report in report_list:
                 self.mkeyboard.write_report(report)
 
+            time.sleep(
+                self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B5][CONFIGURATION_KEY_COMMAND_INTERVAL]
+            )
+
     def _process_mk_b6(self):
         """
         Process MK_B6 Command
@@ -480,6 +500,10 @@ class MacroZero:
 
             for report in report_list:
                 self.mkeyboard.write_report(report)
+
+            time.sleep(
+                self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B6][CONFIGURATION_KEY_COMMAND_INTERVAL]
+            )
 
     def _process_mk_b7(self):
         """
@@ -496,6 +520,10 @@ class MacroZero:
             for report in report_list:
                 self.mkeyboard.write_report(report)
 
+            time.sleep(
+                self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B7][CONFIGURATION_KEY_COMMAND_INTERVAL]
+            )
+
     def _process_mk_b8(self):
         """
         Process MK_B8 Command
@@ -510,6 +538,10 @@ class MacroZero:
 
             for report in report_list:
                 self.mkeyboard.write_report(report)
+
+            time.sleep(
+                self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B8][CONFIGURATION_KEY_COMMAND_INTERVAL]
+            )
 
     def _process_re_b1(self):
         """
