@@ -229,16 +229,11 @@ https://pinout.xyz/#
    dwc2
    libcomposite
    ```
-4. copy `macro-zero` bash script to `/usr/bin` on device rootfs
-5. make it executable `sudo chmod +x /usr/bin/macro-zero`
+4. cd to scripts and run `./install.sh all`
 
 ### Linux
-#### Required python modules
-python3 is used. Required modules below:\
-`sudo apt install python3-pip`\
-`sudo apt install libopenjp2-7-dev`\
-`pip3 install --upgrade pip`\
-`pip3 install -r requirements.txt`
+#### Installing deps
+`./install.sh depsonly`
 
 #### Setup NIC and setup Internet Sharing
 ##### On Host
