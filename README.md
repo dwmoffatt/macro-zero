@@ -270,6 +270,8 @@ https://shallowsky.com/blog/linux/raspberry-pi-ethernet-gadget-2.html
 
 https://developer.ridgerun.com/wiki/index.php/How_to_use_USB_device_networking
 
+https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
+
 https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files
 
 https://www.tutorialspoint.com/python_pillow/python_pillow_quick_guide.htm
