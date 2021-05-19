@@ -16,6 +16,8 @@ function InstallDeps()
 function InstallMain()
 {
   echo "--- Installing Macro-Zero ---"
+  
+  sudo cp ../../macro-zero /usr/bin/
 }
 
 function InstallServices()
