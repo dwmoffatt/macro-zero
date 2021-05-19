@@ -41,7 +41,6 @@ ln -s functions/ecm.usb0 configs/c.1/
 ls /sys/class/udc > UDC
 
 ifconfig usb0 10.0.0.1 netmask 255.255.255.252 up
-route del default
 route add default gw 10.0.0.2
 
 chown pi:root /dev/hidg0
