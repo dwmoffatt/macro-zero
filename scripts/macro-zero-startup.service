@@ -1,5 +1,5 @@
 [Unit]
-Description=Macro-Zero Service
+Description=Macro-Zero Start Up Service
 
 [Service]
 Type=simple
