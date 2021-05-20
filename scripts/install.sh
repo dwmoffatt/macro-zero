@@ -16,18 +16,24 @@ function InstallDeps()
 function InstallMain()
 {
   echo "--- Installing Macro-Zero ---"
-  
+
   sudo cp ../../macro-zero /usr/bin/
 }
 
 function InstallServices()
 {
   echo "--- Installing Macro-Zero Services ---"
+
+  sudo cp macro-zero-startup.service /lib/systemd/system
+
+  sudo systemctl daemon-reload
+  sudo systemctl enable macro-zero-startup.service
+  sudo systemctl start macro-zero-startup.service
 }
 
 if [ $# -ne 1 ]; then
-    echo "1 argument required of either [all|depsonly|main|services]"
-    exit 1
+  echo "1 argument required of either [all|depsonly|main|services]"
+  exit 1
 fi
 
 
