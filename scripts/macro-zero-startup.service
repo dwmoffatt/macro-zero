@@ -3,7 +3,7 @@ Description=Macro-Zero Start Up Service
 
 [Service]
 Type=simple
-ExecStart=/bin/bash /usr/bin/macro-zero
+ExecStart=/bin/bash /usr/bin/macro-zero/scripts/macro-zero
 
 [Install]
 WantedBy=multi-user.target
