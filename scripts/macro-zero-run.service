@@ -1,12 +1,13 @@
 [Unit]
 Description=Macro-Zero Service
 Requires=macro-zero-startup.service
+After=macro-zero-startup.service
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/python3 /usr/bin/macro-zero/src/macrozero.py
 User=pi
-StartLimitIntervalSec=10
+RestartSec=10
 Restart=on-failure
 
 [Install]
