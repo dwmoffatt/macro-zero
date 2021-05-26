@@ -6,8 +6,8 @@ function InstallDeps()
   sudo apt update
   sudo apt -y upgrade
 
-  sudo apt install -y python3-pip
-  sudo apt install -y libopenjp2-7-dev
+  sudo apt install -y python3-pip libopenjp2-7-dev
+  # sudo apt install -y libopenjp2-7-dev
 
   pip3 install --upgrade pip
   pip3 install -r ../requirements.txt
@@ -17,7 +17,7 @@ function InstallMain()
 {
   echo "--- Installing Macro-Zero ---"
 
-  sudo cp ../../macro-zero /usr/bin/
+  sudo cp -r ../../macro-zero /usr/bin/
 }
 
 function InstallServices()
@@ -25,10 +25,14 @@ function InstallServices()
   echo "--- Installing Macro-Zero Services ---"
 
   sudo cp macro-zero-startup.service /lib/systemd/system
+  sudo cp macro-zero-run.service /lib/systemd/system
 
   sudo systemctl daemon-reload
   sudo systemctl enable macro-zero-startup.service
   sudo systemctl start macro-zero-startup.service
+
+  sudo systemctl enable macro-zero-run.service
+  sudo systemctl start macro-zero-run.service
 }
 
 if [ $# -ne 1 ]; then
