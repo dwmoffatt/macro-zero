@@ -9,7 +9,7 @@ from macrozero import MacroZero
 
 class VerifyReportTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = MacroZero(test_env=True)
+        self.app = MacroZero(test_env=True, run_webserver=False)
 
     def test_verify_report_length_error(self):
         """

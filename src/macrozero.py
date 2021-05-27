@@ -57,6 +57,7 @@ from modules.SSD1305 import SSD1305
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
+from flask import Flask
 
 if RUNNING_ON_PI:
     import RPi.GPIO as GPIO
@@ -92,7 +93,7 @@ CONFIG_MODES_MIN = 1
 
 
 class MacroZero:
-    def __init__(self, test_env=False):
+    def __init__(self, test_env=False, run_webserver=True):
         """
         Creates Macro-Zero Device Object
         """
@@ -104,6 +105,10 @@ class MacroZero:
                 filemode="w",
                 level=logging.DEBUG,
             )
+
+        self.webserver = Flask(__name__)
+        self.webserver.add_url_rule("/", "hello", self.hello_world)
+        self._run_webserver = run_webserver
 
         self.thread_lock = threading.Lock()
         self.input_que = queue.Queue(maxsize=50)
@@ -199,6 +204,10 @@ class MacroZero:
         """
         logging.info("Running macro-zero interface")
 
+        if self._run_webserver:
+            t = threading.Thread(target=self.__run_webserver, name="FlaskWebServerThread")
+            t.start()
+
         title_font = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 32)
 
         self.running = True
@@ -274,6 +283,11 @@ class MacroZero:
         self.pso.module_close()
 
         GPIO.cleanup()
+
+        for client_thread in threading.enumerate():
+            if client_thread is threading.main_thread():
+                continue
+            client_thread.join(1)
 
         if self.power_switch_over:
             logging.info("System shutdown started!")
@@ -630,6 +644,12 @@ class MacroZero:
             RE_COMMAND_RE_CW: self._process_re_cw,
             RE_COMMAND_RE_CCW: self._process_re_ccw,
         }
+
+    def __run_webserver(self):
+        self.webserver.run(host="0.0.0.0")
+
+    def hello_world(self):
+        return "Hello World!!"
 
 
 if __name__ in "__main__":
