@@ -9,7 +9,7 @@ from macrozero import MacroZero
 
 class LoadConfigurationTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = MacroZero(test_env=True)
+        self.app = MacroZero(test_env=True, run_webserver=False)
 
     def test_load_configuration_returns_dictionary(self):
         """

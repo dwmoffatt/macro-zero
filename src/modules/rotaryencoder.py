@@ -49,7 +49,7 @@ class RotaryEncoder:
             elif self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_ROTARY_ENCODER_CLK:
                 self._clk_index = i
                 GPIO.add_event_detect(
-                    self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.BOTH, callback=self.clk_trigger, bouncetime=300
+                    self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.BOTH, callback=self.clk_trigger, bouncetime=250
                 )
             elif self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_ROTARY_ENCODER_DIR:
                 self._dir_index = i

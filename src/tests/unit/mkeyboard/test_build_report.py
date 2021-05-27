@@ -10,7 +10,7 @@ from modules.mkeyboard import KEY_NONE, KEY_ENTER, NONE_REPORT, KEY_H, KEY_E, KE
 
 class VerifyReportTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = MacroZero(test_env=True)
+        self.app = MacroZero(test_env=True, run_webserver=False)
 
     def test_build_report_correct_report_generated(self):
         """
