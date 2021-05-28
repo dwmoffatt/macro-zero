@@ -47,6 +47,11 @@ class VerifyReportTestCase(unittest.TestCase):
         result = self.app.mkeyboard.build_report(test_value)
         self.assertEqual(test_report, result)
 
+        test_value = "|"
+        test_report = KEY_MOD_LSHIFT + KEY_NONE + KEY_BACKSLASH + (KEY_NONE * 5)
+        result = self.app.mkeyboard.build_report(test_value)
+        self.assertEqual(test_report, result)
+
     def tearDown(self):
         del self.app
 
