@@ -5,7 +5,8 @@ After=macro-zero-startup.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /usr/bin/macro-zero/src/macrozero.py
+WorkingDirectory=/home/pi/macro-zero
+ExecStart=/usr/bin/python3 /home/pi/macro-zero/src/macrozero.py
 User=pi
 RestartSec=10
 Restart=on-failure
