@@ -18,6 +18,7 @@ function InstallMain()
   echo "--- Installing Macro-Zero ---"
 
   sudo cp -r ../../macro-zero /usr/bin/
+  sudo chown pi:root /usr/bin/macro-zero
 }
 
 function InstallServices()
