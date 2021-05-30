@@ -282,3 +282,5 @@ https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 https://www.raspberrypi-spy.co.uk/2013/07/how-to-use-a-mcp23017-i2c-port-expander-with-the-raspberry-pi-part-2/
 
 https://pypi.org/project/smbus2/
+
+https://ww1.microchip.com/downloads/en/devicedoc/20001952c.pdf
