@@ -32,7 +32,7 @@
       },
       "B6": {
          "CommandName": "Git Status",
-         "CommandInterval": 1,
+         "CommandInterval": 0,
          "Commands": [
             {
                "Type": "Command String",
@@ -46,7 +46,7 @@
       },
       "B7": {
          "CommandName": "Git Pull",
-         "CommandInterval": 1,
+         "CommandInterval": 0,
          "Commands": [
             {
                "Type": "Command String",
@@ -67,6 +67,12 @@
                "Command": "sudo shutdown"
             }
          ]
+      },
+      "LEDs": {
+         "LED1": "Red",
+         "LED2": "Blue",
+         "LED3": "Green",
+         "LED4": "Yellow"
       }
    },
    "Macro-Zero": {
@@ -140,6 +146,12 @@
          "CommandName": "N/A",
          "CommandInterval": 1,
          "Commands": []
+      },
+      "LEDs": {
+         "LED1": "White",
+         "LED2": "Purple",
+         "LED3": "Cyan",
+         "LED4": "Off"
       }
    }
 }
