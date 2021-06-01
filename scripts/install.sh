@@ -6,7 +6,7 @@ function InstallDeps()
   sudo apt update
   sudo apt -y upgrade
 
-  sudo apt install -y python3-pip libopenjp2-7-dev nodejs npm
+  sudo apt install -y python3-pip libopenjp2-7-dev i2c-tools nodejs npm
   # sudo apt install -y libopenjp2-7-dev
 
   pip3 install --upgrade pip

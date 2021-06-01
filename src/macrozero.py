@@ -54,10 +54,12 @@ from modules.mkeyboard import (
 from modules.pso import PSO, PSO_COMMAND_PSO
 from modules.rotaryencoder import RotaryEncoder, RE_COMMAND_RE_B1, RE_COMMAND_RE_CW, RE_COMMAND_RE_CCW
 from modules.SSD1305 import SSD1305
+from modules.RGBDriver import RGBDriver
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 from flask import Flask
+from smbus2 import SMBus
 
 if RUNNING_ON_PI:
     import RPi.GPIO as GPIO
@@ -79,6 +81,11 @@ CONFIGURATION_KEY_COMMAND_INTERVAL = "CommandInterval"
 CONFIGURATION_KEY_COMMANDS = "Commands"
 CONFIGURATION_KEY_TYPE = "Type"
 CONFIGURATION_KEY_COMMAND = "Command"
+CONFIGURATION_KEY_LEDS = "LEDs"
+CONFIGURATION_KEY_LED1 = "LED1"
+CONFIGURATION_KEY_LED2 = "LED2"
+CONFIGURATION_KEY_LED3 = "LED3"
+CONFIGURATION_KEY_LED4 = "LED4"
 
 CONFIGURATION_TYPE_COMMAND_STRING = "Command String"
 CONFIGURATION_TYPE_KEYBOARD_FUNCTION = "Keyboard Function"
@@ -109,6 +116,8 @@ class MacroZero:
         self.webserver = Flask(__name__)
         self.webserver.add_url_rule("/", "hello", self.hello_world)
         self._run_webserver = run_webserver
+
+        self.i2c_bus = SMBus(1)
 
         self.thread_lock = threading.Lock()
         self.input_que = queue.Queue(maxsize=50)
@@ -162,6 +171,7 @@ class MacroZero:
         self.display = SSD1305(display_input_list, self.thread_lock, self.input_que)
         self.mkeyboard = MKeyboard(mkeyboard_input_list, self.thread_lock, self.input_que)
         self.mode_select_rotary_encoder = RotaryEncoder(mode_select_input_list, self.thread_lock, self.input_que)
+        self.rgb_driver = RGBDriver([], self.thread_lock, self.input_que, i2c_bus=self.i2c_bus)
 
     def init(self):
         """
@@ -178,6 +188,7 @@ class MacroZero:
         self.display.module_init()
         self.mkeyboard.module_init()
         self.mode_select_rotary_encoder.module_init()
+        self.rgb_driver.module_init()
 
         self.command_dictionary = self.build_command_dictionary()
         self.load_configuration()
@@ -277,10 +288,13 @@ class MacroZero:
         """
         logging.info("Closing macro-zero interface")
 
+        self.rgb_driver.module_close()
         self.mode_select_rotary_encoder.module_close()
         self.mkeyboard.module_close()
         self.display.module_close()
         self.pso.module_close()
+
+        self.i2c_bus.close()
 
         GPIO.cleanup()
 

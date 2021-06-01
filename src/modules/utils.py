@@ -20,3 +20,11 @@ def digital_read(pin):
 
 def delay_ms(delaytime):
     time.sleep(delaytime / 1000.0)
+
+
+def set_bit(value, bit_index):
+    return bin(value | (1 << bit_index))
+
+
+def unset_bit(value, bit_index):
+    return bin(value & ~(1 << bit_index))
