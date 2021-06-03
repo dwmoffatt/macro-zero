@@ -117,7 +117,9 @@ class MacroZero:
         self.webserver.add_url_rule("/", "hello", self.hello_world)
         self._run_webserver = run_webserver
 
-        self.i2c_bus = SMBus(1)
+        self.i2c_bus = None
+        if RUNNING_ON_PI:
+            self.i2c_bus = SMBus(1)
 
         self.thread_lock = threading.Lock()
         self.input_que = queue.Queue(maxsize=50)
