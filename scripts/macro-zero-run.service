@@ -8,7 +8,7 @@ Type=simple
 WorkingDirectory=/home/pi/macro-zero
 ExecStart=/usr/bin/python3 /home/pi/macro-zero/src/macrozero.py
 User=pi
-RestartSec=10
+RestartSec=5
 Restart=on-failure
 
 [Install]
