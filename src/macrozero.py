@@ -13,7 +13,7 @@ import queue
 import copy
 import json
 import time
-from modules import (
+from src.modules import (
     INPUT_LIST_KEY_INPUT_TYPE,
     INPUT_LIST_KEY_PIN_NUMBER,
     INPUT_TYPE_BUTTON,
@@ -40,7 +40,7 @@ from modules import (
     fonts_path,
     configs_path,
 )
-from modules.mkeyboard import (
+from src.modules.mkeyboard import (
     MKeyboard,
     MK_COMMAND_MK_B1,
     MK_COMMAND_MK_B2,
@@ -51,10 +51,10 @@ from modules.mkeyboard import (
     MK_COMMAND_MK_B7,
     MK_COMMAND_MK_B8,
 )
-from modules.pso import PSO, PSO_COMMAND_PSO
-from modules.rotaryencoder import RotaryEncoder, RE_COMMAND_RE_B1, RE_COMMAND_RE_CW, RE_COMMAND_RE_CCW
-from modules.SSD1305 import SSD1305
-from modules.RGBDriver import RGBDriver
+from src.modules.pso import PSO, PSO_COMMAND_PSO
+from src.modules.rotaryencoder import RotaryEncoder, RE_COMMAND_RE_B1, RE_COMMAND_RE_CW, RE_COMMAND_RE_CCW
+from src.modules.SSD1305 import SSD1305
+from src.modules.RGBDriver import RGBDriver
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont

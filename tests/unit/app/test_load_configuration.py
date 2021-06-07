@@ -1,10 +1,6 @@
 import unittest
-import sys
-import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.getcwd()))))
-
-from macrozero import MacroZero
+from src.macrozero import MacroZero
 
 
 class LoadConfigurationTestCase(unittest.TestCase):
