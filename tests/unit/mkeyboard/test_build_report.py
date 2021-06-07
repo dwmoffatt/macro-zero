@@ -1,11 +1,6 @@
 import unittest
-import sys
-import os
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.getcwd()))))
-
-from macrozero import MacroZero
-from modules.mkeyboard import KEY_NONE, KEY_ENTER, NONE_REPORT, KEY_H, KEY_E, KEY_1, KEY_MOD_LSHIFT, KEY_BACKSLASH
+from src.macrozero import MacroZero
+from src.modules.mkeyboard import KEY_NONE, KEY_ENTER, NONE_REPORT, KEY_H, KEY_E, KEY_1, KEY_MOD_LSHIFT, KEY_BACKSLASH
 
 
 class VerifyReportTestCase(unittest.TestCase):

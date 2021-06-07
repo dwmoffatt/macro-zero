@@ -12,6 +12,16 @@ RGB_COLOR_YELLOW = "Yellow"
 RGB_COLOR_PURPLE = "Purple"
 RGB_COLOR_CYAN = "Cyan"
 RGB_COLOR_WHITE = "White"
+COLOR_LIST = [
+    RGB_COLOR_OFF,
+    RGB_COLOR_RED,
+    RGB_COLOR_BLUE,
+    RGB_COLOR_GREEN,
+    RGB_COLOR_YELLOW,
+    RGB_COLOR_PURPLE,
+    RGB_COLOR_CYAN,
+    RGB_COLOR_WHITE,
+]
 
 IODIRA = 0x00
 IODIRB = 0x01
@@ -80,6 +90,12 @@ class RGBDriver:
         self._i2c_bus.write_byte_data(self.device_address, OLATB, 0b00000000)
 
     def build_output_bank(self, bank="A"):
+        """
+        Given the bank specified, generate the bit value based on the values in the output_mappings
+
+        :param bank: Specified bank you want to generate output bit value for
+        :return: Value in bit format of specified bank
+        """
         # Check bank is of valid type, A or B
         value = 0b00000000
 
