@@ -22,7 +22,7 @@ jobs:
     env:
       PYTHONUNBUFFERED: 1
 
-    if: github.event_name == 'pull_request' || (github.event_name == 'push' && matrix.python-version == '3.7')
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && ${{ matrix.python-version }} == '3.7')
     steps:
     - name: Checkout
       uses: actions/checkout@v2
