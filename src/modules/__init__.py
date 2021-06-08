@@ -9,7 +9,7 @@ import os
 try:
     import RPi.GPIO as GPIO  # noqa
 
-    RUNNING_ON_PI = True
+    RUNNING_ON_PI = True  # pragma: no cover
 except RuntimeError:
     RUNNING_ON_PI = False
 
