@@ -36,11 +36,11 @@ jobs:
 
     - name: Run all tests using pytest for Macro-Zero Application
       run: |
-        python3 -m pytest --cov-report html:cov_html --cov=src tests/
+        python3 -m pytest --cov-report xml html:cov_html --cov=src tests/
 
     - name: Upload coverage data to coveralls.io
       if: matrix.python-version == '3.7'
       continue-on-error: true
-      run: python3 -m coveralls
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: python3 -m coveralls --service=github
