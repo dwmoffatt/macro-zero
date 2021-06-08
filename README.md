@@ -1,8 +1,12 @@
 # macro-zero
-From prototype to production, macro keyboard utilizing power of a raspberry-pi to take DIY to a whole new level. Designed around the raspberry pi zero.
+From prototype to production, macro keyboard utilizing power of a Raspberry Pi to take DIY to a whole new level. Designed around the Raspberry Pi Zero.
 
 ## Vision
-The idea behind this device is to create a macro-board to assist with tasks that are repeative or tedious while adding some cool features in a small form factor. 8 macro keys, a rotary encoder and a display to show options. The one rotary encoder will be used to switch modes and add some features in each mode.
+The idea behind this device is to create a macro-board to assist with tasks that are repeative or tedious while adding some cool features in a small form factor.
+
+[![Application Testing Workflow](https://github.com/dwmoffatt/macro-zero/workflows/Application%20Testing/badge.svg?branch=master)](https://github.com/dwmoffatt/macro-zero/actions?query=workflow%3AApplication%20Testing)
+[![Linter Workflow](https://github.com/dwmoffatt/macro-zero/workflows/Lint/badge.svg?branch=master)](https://github.com/dwmoffatt/macro-zero/actions?query=workflow%3ALint)
+[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Design
 ### Software
