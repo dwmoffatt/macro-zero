@@ -333,12 +333,16 @@ class MKeyboard:
                 self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.RISING, callback=self.btn_release, bouncetime=200
             )
 
+        return True
+
     def module_close(self):
         logging.info("Closing mKeyboard Module")
 
         # De-attach events from I/O
         for i in range(0, len(self._input_list)):
             GPIO.remove_event_detect(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER])
+
+        return True
 
     def btn_release(self, channel):
         button = 0

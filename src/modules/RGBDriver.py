@@ -82,12 +82,16 @@ class RGBDriver:
         self._i2c_bus.write_byte_data(self.device_address, OLATA, self._output_bank_a)
         self._i2c_bus.write_byte_data(self.device_address, OLATB, self._output_bank_b)
 
+        return True
+
     def module_close(self):
         logging.info("Closing RGBDriver Module")
 
         # Set outputs to 0
         self._i2c_bus.write_byte_data(self.device_address, OLATA, 0b00000000)
         self._i2c_bus.write_byte_data(self.device_address, OLATB, 0b00000000)
+
+        return True
 
     def build_output_bank(self, bank="A"):
         """

@@ -119,6 +119,8 @@ class MacroZero:
 
         self.i2c_bus = None
         if RUNNING_ON_PI:
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setwarnings(False)
             self.i2c_bus = SMBus(1)
 
         self.thread_lock = threading.Lock()
@@ -182,9 +184,6 @@ class MacroZero:
         :return: Nothing
         """
         logging.info("Initializing macro-zero I/O & peripherals")
-
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setwarnings(False)
 
         self.pso.module_init()
         self.display.module_init()

@@ -54,12 +54,16 @@ class RotaryEncoder:
             elif self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_ROTARY_ENCODER_DIR:
                 self._dir_index = i
 
+        return True
+
     def module_close(self):
         logging.info("Closing Rotary Encoder Module")
 
         # De-attach events from I/O
         GPIO.remove_event_detect(self._input_list[self._button_index][INPUT_LIST_KEY_PIN_NUMBER])
         GPIO.remove_event_detect(self._input_list[self._clk_index][INPUT_LIST_KEY_PIN_NUMBER])
+
+        return True
 
     def btn_release(self, channel):
 
