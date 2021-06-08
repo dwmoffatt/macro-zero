@@ -1,10 +1,11 @@
-import unittest
-
 from src.macrozero import MacroZero
 
 
-class LoadConfigurationTestCase(unittest.TestCase):
-    def setUp(self):
+class TestLoadConfiguration:
+    # @classmethod
+    # def setup_class(cls):
+
+    def setup_method(self, method):
         self.app = MacroZero(test_env=True, run_webserver=False)
 
     def test_load_configuration_returns_dictionary(self):
@@ -13,11 +14,10 @@ class LoadConfigurationTestCase(unittest.TestCase):
         :return:
         """
         self.app.load_configuration()
-        self.assertEqual(type(dict()), type(self.app.configuration))
+        assert isinstance(self.app.configuration, dict)
 
-    def tearDown(self):
+    def teardown_method(self, method):
         del self.app
 
-
-if __name__ == "__main__":
-    unittest.main()
+    # @classmethod
+    # def teardown_class(cls):
