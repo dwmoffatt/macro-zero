@@ -1,4 +1,4 @@
-# macro-zero
+# Macro-Zero
 From prototype to production, macro keyboard utilizing power of a Raspberry Pi to take DIY to a whole new level. Designed around the Raspberry Pi Zero.
 
 ## Vision
