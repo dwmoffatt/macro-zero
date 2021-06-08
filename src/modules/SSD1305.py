@@ -99,8 +99,11 @@ class SSD1305:
         # Reset and initialize display.
         self.reset()
         self._initialize()
+
         # Turn on the display.
         self.command(SSD1305_DISPLAYON)
+
+        return True
 
     def module_close(self):
         logging.info("Closing SSD1305 Display Module")
@@ -109,6 +112,8 @@ class SSD1305:
         self.display()
 
         self._spi.close()
+
+        return True
 
     def _initialize(self):
         # 128x32 pixel specific initialization.

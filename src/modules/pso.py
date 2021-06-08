@@ -28,11 +28,15 @@ class PSO:
             self._input_list[0][INPUT_LIST_KEY_PIN_NUMBER], GPIO.FALLING, callback=self.pso_switch_over, bouncetime=200
         )
 
+        return True
+
     def module_close(self):
         logging.info("Closing Power Switch Over Module")
 
         # De-attach event from I/O
         GPIO.remove_event_detect(self._input_list[0][INPUT_LIST_KEY_PIN_NUMBER])
+
+        return True
 
     def pso_switch_over(self, channel):
         logging.info("Power switch over!!! Device running off supercaps")

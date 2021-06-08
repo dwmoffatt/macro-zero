@@ -43,4 +43,5 @@ jobs:
       continue-on-error: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: python3 -m coveralls --service=github
+      run: |
+        python3 -m coveralls --service=github
