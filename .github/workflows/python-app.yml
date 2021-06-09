@@ -3,7 +3,7 @@ name: Application Testing & Test Coverage Report Upload
 on:
   push:
     branches: [ master ]
-    
+
   pull_request:
     branches: [ master ]
 
