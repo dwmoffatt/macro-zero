@@ -13,7 +13,7 @@ from . import (
 )
 from .utils import digital_read
 
-if RUNNING_ON_PI:
+if RUNNING_ON_PI:  # pragma: no cover
     import RPi.GPIO as GPIO
 
 RE_COMMAND_RE_B1 = "RE_B1"

@@ -22,9 +22,23 @@ def delay_ms(delaytime):  # pragma: no cover
     time.sleep(delaytime / 1000.0)
 
 
-def set_bit(value, bit_index):  # pragma: no cover
-    return bin(value | (1 << bit_index))
+def set_bit(value, bit_index):
+
+    # TODO: Verify value
+
+    # bit_index needs to be type int
+    if not isinstance(bit_index, int):
+        raise TypeError("bit_index needs to be type int")
+
+    return value | (1 << bit_index)
 
 
-def unset_bit(value, bit_index):  # pragma: no cover
-    return bin(value & ~(1 << bit_index))
+def unset_bit(value, bit_index):
+
+    # TODO: Verify value
+
+    # bit_index needs to be type int
+    if not isinstance(bit_index, int):
+        raise TypeError("bit_index needs to be type int")
+
+    return value & ~(1 << bit_index)
