@@ -5,7 +5,7 @@ import logging
 import queue
 from . import INPUT_LIST_KEY_PIN_NUMBER, RUNNING_ON_PI
 
-if RUNNING_ON_PI:
+if RUNNING_ON_PI:  # pragma: no cover
     import RPi.GPIO as GPIO
 
 PSO_COMMAND_PSO = "PSO"
