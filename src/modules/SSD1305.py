@@ -9,7 +9,7 @@ from . import (
     RUNNING_ON_PI,
 )
 
-if RUNNING_ON_PI:
+if RUNNING_ON_PI:  # pragma: no cover
     import RPi.GPIO as GPIO
 
 # Constants

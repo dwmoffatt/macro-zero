@@ -5,7 +5,7 @@ import logging
 import queue
 from . import INPUT_LIST_KEY_PIN_NUMBER, RUNNING_ON_PI
 
-if RUNNING_ON_PI:
+if RUNNING_ON_PI:  # pragma: no cover
     import RPi.GPIO as GPIO
 
 
@@ -350,15 +350,16 @@ class MKeyboard:
             if self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER] == channel:
                 button = i + 1
 
-        logging.info(f"mKeyboard Button {button} released")
+        if button != 0:
+            logging.info(f"mKeyboard Button {button} released")
 
-        self._thread_lock.acquire()
-        try:
-            self._que.put_nowait(f"MK_B{button}")
-        except queue.Full:
-            logging.exception(f"Que is full when adding MK_B{button}")
-        finally:
-            self._thread_lock.release()
+            self._thread_lock.acquire()
+            try:
+                self._que.put_nowait(f"MK_B{button}")
+            except queue.Full:
+                logging.exception(f"Que is full when adding MK_B{button}")
+            finally:
+                self._thread_lock.release()
 
     def build_report(self, value):
         """
@@ -437,3 +438,5 @@ class MKeyboard:
 
         with open("/dev/hidg0", "rb+") as fd:
             fd.write(report)
+
+        return True
