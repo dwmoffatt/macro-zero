@@ -20,26 +20,15 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Increment version
-      if: contains(github.event.commits[0].message, '--version')
-      run: |
-        python3 scripts/version.py --version
-    - name: Increment major
-      if: contains(github.event.commits[0].message, '--major')
-      run: |
-        python3 scripts/version.py --major
     - name: Increment minor
-      if: contains(github.event.commits[0].message, '--minor')
       run: |
         python3 scripts/version.py --minor
     - name: Commit files
-      if: contains(github.event.commits[0].message, '--minor') || contains(github.event.commits[0].message, '--major') || contains(github.event.commits[0].message, '--version')
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -m "Application version incremented" -a
     - name: Push changes
-      if: contains(github.event.commits[0].message, '--minor') || contains(github.event.commits[0].message, '--major') || contains(github.event.commits[0].message, '--version')
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
