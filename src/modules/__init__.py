@@ -38,7 +38,7 @@ RE_SW_PIN = 11
 RE_DR_PIN = 15
 RE_CLK_PIN = 13
 
-__version__ = "0.16.0"
+__version__ = "0.16.1"
 
 path = os.path.dirname(__file__)
 """Path to modules package directory."""
