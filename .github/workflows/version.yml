@@ -22,7 +22,8 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Increment minor
       run: |
-        python3 scripts/version.py --minor
+        cd scripts/
+        python3 version.py --minor
     - name: Commit files
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
