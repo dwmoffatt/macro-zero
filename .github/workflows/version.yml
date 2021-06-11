@@ -39,7 +39,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git commit -m "Application version change" -a
     - name: Push changes
-    if: contains(github.event.head_commit.message, "--minor") || contains(github.event.head_commit.message, "--major") || contains(github.event.head_commit.message, "--version")
+      if: contains(github.event.head_commit.message, "--minor") || contains(github.event.head_commit.message, "--major") || contains(github.event.head_commit.message, "--version")
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
