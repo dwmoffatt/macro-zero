@@ -17,8 +17,10 @@ jobs:
       with:
         python-version: 3.9
     - name: Dump GitHub Context
+      env: 
+        GITHUB_PR_CONTEXT: ${{ toJson(github.event.pull_request) }}
       run: |
-        echo ${{ github.event.pull_request.commits[0].message }}
+        echo "$GITHUB_CONTEXT"
     #- name: Install dependencies
     #  run: |
     #    python3 -m pip install --upgrade pip
