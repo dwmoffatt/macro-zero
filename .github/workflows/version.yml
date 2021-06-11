@@ -30,8 +30,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git commit -m "Application version incremented" -a
     - name: Push changes
-      uses: nelonoel/branch-name@v1.0.1
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ BRANCH_NAME }}
+        branch: ${{ github.event.pull_request.head.ref }}
