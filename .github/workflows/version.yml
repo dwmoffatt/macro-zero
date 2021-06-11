@@ -16,21 +16,25 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
-    - name: Install dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Increment minor
-      run: |
-        cd scripts/
-        python3 version.py --minor
-    - name: Commit files
-      run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git commit -m "Application version incremented" -a
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.event.pull_request.head.ref }}
+    - name: Dump GitHub Context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    #- name: Install dependencies
+    #  run: |
+    #    python3 -m pip install --upgrade pip
+    #    if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    #- name: Increment minor
+    #  run: |
+    #    cd scripts/
+    #    python3 version.py --minor
+    #- name: Commit files
+    #  run: |
+    #    git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    #    git config --local user.name "github-actions[bot]"
+    #    git commit -m "Application version incremented" -a
+    #- name: Push changes
+    #  uses: ad-m/github-push-action@master
+    #  with:
+    #    github_token: ${{ secrets.GITHUB_TOKEN }}
+    #    branch: ${{ github.event.pull_request.head.ref }}
