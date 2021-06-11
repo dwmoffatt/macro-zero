@@ -37,7 +37,7 @@ jobs:
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git commit -m "Application version change" -a
+        git commit -m "Application version incremented" -a
     - name: Push changes
       if: contains(github.event.head_commit.message, '--minor') || contains(github.event.head_commit.message, '--major') || contains(github.event.head_commit.message, '--version')
       uses: ad-m/github-push-action@master
