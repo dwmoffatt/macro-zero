@@ -8,8 +8,27 @@ on:
     branches: [ master ]
 
 jobs:
+  get-commit-message:
+    name: Get Commit Message
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+        with:
+          # We need to fetch with a depth of 2 for pull_request so we can do HEAD^2
+          fetch-depth: 2
+
+      - name: Get Commit Message
+        id: get_commit_message
+        run: echo ::set-output name=commit_message::$(git log --format=%B -n 1 HEAD^2)
+
+    outputs:
+      commit_message: $steps.get_commit_message.outputs.commit_message
+
   version-app:
     name: Version application based on commit message
+    needs: get-commit-message
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -24,35 +43,22 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Dump GitHub Context
-        env:
-          GITHUB_PR_CONTEXT: ${{ toJson(github.event.pull_request.commits) }}
-        run: |
-          echo "$GITHUB_PR_CONTEXT"
-
-      - name: Get Commit Message
-        run: |
-          echo "commitmsg=$(git log --format=%B -n 1 ${{ github.event.after }})" >> $GITHUB_ENV
-
-      - name: Show Commit Message
-        run: echo $commitmsg
-
       - name: Increment version
-        if: contains( env.commitmsg , '--version' )
+        if: contains( needs.get-commit-message.outputs.commit_message , '--version' )
         run: |
           cd scripts/
           python3 version.py --version
           cd ..
 
       - name: Increment major
-        if: contains( env.commitmsg , '--major' )
+        if: contains( needs.get-commit-message.outputs.commit_message , '--major' )
         run: |
           cd scripts/
           python3 version.py --major
           cd ..
 
       - name: Increment minor
-        if: contains( env.commitmsg , '--minor' )
+        if: contains( needs.get-commit-message.outputs.commit_message , '--minor' )
         run: |
           cd scripts/
           python3 version.py --minor
