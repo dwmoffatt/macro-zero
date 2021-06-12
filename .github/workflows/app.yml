@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_PR_CONTEXT: ${{ toJson(github.event.pull_request.commits) }}
         run: |
-          echo "$GITHUB_CONTEXT"
+          echo "$GITHUB_PR_CONTEXT"
 
       - name: Get Commit Message
         run: |
