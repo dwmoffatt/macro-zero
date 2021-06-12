@@ -21,7 +21,12 @@ jobs:
 
       - name: Get Commit Message
         id: get_commit_message
-        run: echo ::set-output name=commit_message::$(git log --format=%B -n 1 HEAD^2)
+        run: |
+          echo ::set-output name=commit_message::$(git log --format=%B -n 1 HEAD^2)
+          echo "commitmsg=$(git log --format=%B -n 1 HEAD^2)" >> $GITHUB_ENV
+
+      - name: Show Commit Message
+        run: echo $commitmsg
 
     outputs:
       commit_message: $steps.get_commit_message.outputs.commit_message
