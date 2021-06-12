@@ -98,7 +98,7 @@ jobs:
   test:
     name: Run unit tests - ${{ matrix.python-version }} | ${{ matrix.os }} ${{ matrix.architecture }}
     needs: lint
-    if: (github.event_name == 'pull_request' || github.event_name == 'push') && (needs.lint.result == 'success' || needs.lint.result == 'skipped')
+    if: needs.lint.result == 'success' || needs.lint.result == 'skipped'
     strategy:
       fail-fast: true
       matrix:
