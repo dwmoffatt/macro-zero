@@ -38,6 +38,8 @@ RE_SW_PIN = 11
 RE_DR_PIN = 15
 RE_CLK_PIN = 13
 
+STATUS_OK = "OK"
+
 __version__ = "0.17.5"
 
 path = os.path.dirname(__file__)
