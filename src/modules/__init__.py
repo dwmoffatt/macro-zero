@@ -40,7 +40,7 @@ RE_CLK_PIN = 13
 
 STATUS_OK = "OK"
 
-__version__ = "0.17.5"
+__version__ = "0.17.6"
 
 path = os.path.dirname(__file__)
 """Path to modules package directory."""
