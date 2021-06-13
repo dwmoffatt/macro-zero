@@ -58,7 +58,7 @@ jobs:
           python3 version.py --minor
           cd ..
 
-      - name: Commit files
+      - name: Commit & Push files
         if: contains( env.commitmsg , '--version' ) || contains( env.commitmsg , '--major' ) || contains( env.commitmsg , '--minor' )
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"

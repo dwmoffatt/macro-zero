@@ -9,18 +9,20 @@ class TestVerifyReport:
     def setup_method(self, method):
         self.app = MacroZero(test_env=True, run_webserver=False)
 
-    def test_verify_report_length_error(self):
+    @pytest.mark.parametrize(
+        "test_input,expected",
+        [
+            (b"\x00\x00\x00\x00\x00", None),
+            (b"\x00\x00\x00\x00\x00\x00\x00\x00\x00", None),
+        ],
+    )
+    def test_verify_report_length_error(self, test_input, expected):
         """
         Test that verify_report throws ValueError if report length is not equal to 8
         :return:
         """
-        test_report = b"\x00\x00\x00\x00\x00"  # 5 bytes
         with pytest.raises(ValueError):
-            self.app.mkeyboard._verify_report(test_report)
-
-        test_report = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00"  # 9 bytes
-        with pytest.raises(ValueError):
-            self.app.mkeyboard._verify_report(test_report)
+            self.app.mkeyboard._verify_report(test_input)
 
     def test_verify_report_first_byte_not_accepted_modifier(self):
         """
@@ -40,18 +42,20 @@ class TestVerifyReport:
         with pytest.raises(ValueError):
             self.app.mkeyboard._verify_report(test_report)
 
-    def test_verify_report_valid_report(self):
+    @pytest.mark.parametrize(
+        "test_input,expected",
+        [
+            (b"\x00\x00\x00\x00\x00\x00\x00\x00", True),
+            (b"\x02\x00\x04\x00\x00\x00\x00\x00", True),
+        ],
+    )
+    def test_verify_report_valid_report(self, test_input, expected):
         """
         Tests that verify_report returns True and doesn't throw any exceptions when valid report is passed in
         :return:
         """
-        test_report = b"\x00\x00\x00\x00\x00\x00\x00\x00"  # 8 bytes
-        result = self.app.mkeyboard._verify_report(test_report)
-        assert result is True
-
-        test_report = b"\x02\x00\x04\x00\x00\x00\x00\x00"  # 8 bytes
-        result = self.app.mkeyboard._verify_report(test_report)
-        assert result is True
+        result = self.app.mkeyboard._verify_report(test_input)
+        assert result is expected
 
     def teardown_method(self, method):
         del self.app

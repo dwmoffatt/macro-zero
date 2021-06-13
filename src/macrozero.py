@@ -37,6 +37,7 @@ from src.modules import (
     RE_CLK_PIN,
     PSO_PIN,
     RUNNING_ON_PI,
+    STATUS_OK,
     fonts_path,
     configs_path,
 )
@@ -204,6 +205,8 @@ class MacroZero:
         self.display.clear()
         self.display.display()
 
+        return True
+
     def run(self):
         """
         Runs the interface. This function returns when PSO signals that device is shutting down.
@@ -307,6 +310,8 @@ class MacroZero:
         if self.power_switch_over:
             logging.info("System shutdown started!")
             os.system("systemctl poweroff")
+
+        return True
 
     def load_configuration(self):
         """
@@ -414,11 +419,15 @@ class MacroZero:
         """
         Process PSO Command
 
-        :return:
+        :return status: OK
         """
+        status = STATUS_OK
+
         logging.debug("Processing PSO Command")
 
         self.power_switch_over = True
+
+        return status
 
     def _process_mk_b1(self):
         """
@@ -439,6 +448,8 @@ class MacroZero:
                 self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B1][CONFIGURATION_KEY_COMMAND_INTERVAL]
             )
 
+        return True
+
     def _process_mk_b2(self):
         """
         Process MK_B2 Command
@@ -457,6 +468,8 @@ class MacroZero:
             time.sleep(
                 self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B2][CONFIGURATION_KEY_COMMAND_INTERVAL]
             )
+
+        return True
 
     def _process_mk_b3(self):
         """
@@ -477,6 +490,8 @@ class MacroZero:
                 self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B3][CONFIGURATION_KEY_COMMAND_INTERVAL]
             )
 
+        return True
+
     def _process_mk_b4(self):
         """
         Process MK_B4 Command
@@ -495,6 +510,8 @@ class MacroZero:
             time.sleep(
                 self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B4][CONFIGURATION_KEY_COMMAND_INTERVAL]
             )
+
+        return True
 
     def _process_mk_b5(self):
         """
@@ -515,6 +532,8 @@ class MacroZero:
                 self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B5][CONFIGURATION_KEY_COMMAND_INTERVAL]
             )
 
+        return True
+
     def _process_mk_b6(self):
         """
         Process MK_B6 Command
@@ -533,6 +552,8 @@ class MacroZero:
             time.sleep(
                 self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B6][CONFIGURATION_KEY_COMMAND_INTERVAL]
             )
+
+        return True
 
     def _process_mk_b7(self):
         """
@@ -553,6 +574,8 @@ class MacroZero:
                 self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B7][CONFIGURATION_KEY_COMMAND_INTERVAL]
             )
 
+        return True
+
     def _process_mk_b8(self):
         """
         Process MK_B8 Command
@@ -572,18 +595,24 @@ class MacroZero:
                 self.configuration[self.current_mode[1]][CONFIGURATION_KEY_B8][CONFIGURATION_KEY_COMMAND_INTERVAL]
             )
 
+        return True
+
     def _process_re_b1(self):
         """
         Process RE_B1 Command
 
         :return:
         """
+        status = STATUS_OK
+
         logging.debug("Processing RE_B1 Command")
 
         if self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
             self.rotary_encoder_mode = ROTARY_ENCODER_MODES
         elif self.rotary_encoder_mode == ROTARY_ENCODER_MODES:
             self.rotary_encoder_mode = ROTARY_ENCODER_BUTTONS
+
+        return status
 
     def _process_re_cw(self):
         """
@@ -613,6 +642,8 @@ class MacroZero:
 
         self._update_display = True
 
+        return True
+
     def _process_re_ccw(self):
         """
         Process RE_CCW Command
@@ -641,6 +672,8 @@ class MacroZero:
 
         self._update_display = True
 
+        return True
+
     def _invalid_command(self):
         raise ValueError("Invalid Command")
 
@@ -660,14 +693,14 @@ class MacroZero:
             RE_COMMAND_RE_CCW: self._process_re_ccw,
         }
 
-    def __run_webserver(self):
+    def __run_webserver(self):  # pragma: no cover
         self.webserver.run(host="0.0.0.0")
 
     def hello_world(self):
         return "Hello World!!"
 
 
-if __name__ in "__main__":
+if __name__ in "__main__":  # pragma: no cover
 
     macro_zero = None
 
