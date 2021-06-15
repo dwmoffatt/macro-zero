@@ -3,6 +3,7 @@ RGB Driver
 """
 import logging
 from .utils import set_bit, unset_bit
+from . import STATUS_OK
 
 RGB_COLOR_OFF = "Off"
 RGB_COLOR_RED = "Red"
@@ -12,16 +13,16 @@ RGB_COLOR_YELLOW = "Yellow"
 RGB_COLOR_PURPLE = "Purple"
 RGB_COLOR_CYAN = "Cyan"
 RGB_COLOR_WHITE = "White"
-COLOR_LIST = [
-    RGB_COLOR_OFF,
-    RGB_COLOR_RED,
-    RGB_COLOR_BLUE,
-    RGB_COLOR_GREEN,
-    RGB_COLOR_YELLOW,
-    RGB_COLOR_PURPLE,
-    RGB_COLOR_CYAN,
-    RGB_COLOR_WHITE,
-]
+COLOR_LIST = {
+    RGB_COLOR_OFF: {"R": 0, "G": 0, "B": 0},
+    RGB_COLOR_RED: {"R": 1, "G": 0, "B": 0},
+    RGB_COLOR_BLUE: {"R": 0, "G": 0, "B": 1},
+    RGB_COLOR_GREEN: {"R": 0, "G": 1, "B": 0},
+    RGB_COLOR_YELLOW: {"R": 1, "G": 1, "B": 0},
+    RGB_COLOR_PURPLE: {"R": 1, "G": 0, "B": 1},
+    RGB_COLOR_CYAN: {"R": 0, "G": 1, "B": 1},
+    RGB_COLOR_WHITE: {"R": 1, "G": 1, "B": 1},
+}
 
 IODIRA = 0x00
 IODIRB = 0x01
@@ -65,8 +66,8 @@ class RGBDriver:
                 "GP7": {"Type": "N/A", "Value": 0},
             },
         }
-        self._output_bank_a = 0b00000000
-        self._output_bank_b = 0b00000000
+        self.output_bank_a = 0b00000000
+        self.output_bank_b = 0b00000000
 
         if "i2c_bus" in kwargs.keys():
             self._i2c_bus = kwargs["i2c_bus"]
@@ -78,9 +79,8 @@ class RGBDriver:
         self._i2c_bus.write_byte_data(self.device_address, IODIRA, 0b00000000)
         self._i2c_bus.write_byte_data(self.device_address, IODIRB, 0b00000000)
 
-        # Set outputs to 0
-        self._i2c_bus.write_byte_data(self.device_address, OLATA, self._output_bank_a)
-        self._i2c_bus.write_byte_data(self.device_address, OLATB, self._output_bank_b)
+        # Write output banks
+        self.write_output_banks()
 
         return True
 
@@ -88,8 +88,9 @@ class RGBDriver:
         logging.info("Closing RGBDriver Module")
 
         # Set outputs to 0
-        self._i2c_bus.write_byte_data(self.device_address, OLATA, 0b00000000)
-        self._i2c_bus.write_byte_data(self.device_address, OLATB, 0b00000000)
+        self.output_bank_a = 0b00000000
+        self.output_bank_b = 0b00000000
+        self.write_output_banks()
 
         return True
 
@@ -113,3 +114,51 @@ class RGBDriver:
                 value = set_bit(value, bit_index=index)
 
         return value
+
+    def set_output_mappings(self, color, index):
+        """
+        Given a color and index set the associated color in RGB Rep
+        Color has to be one of the supported color types, throw ValueError otherwise
+        Index needs to be between 1-4, throw ValueError otherwise
+
+        :param color: color in COLOR_LIST
+        :param index: int between 1-4
+        :return status: OK on success, error message on error case
+        """
+        status = STATUS_OK
+
+        if color not in COLOR_LIST.keys():
+            raise ValueError(f"color value is not part of accepted colors - {COLOR_LIST.keys()}")
+
+        if index < 1 or index > 4:
+            raise ValueError("index needs to be between 1 and 4")
+
+        rgb = COLOR_LIST.get(color)
+        for gp in self.output_mappings[f"Bank {BANK_A}"].keys():
+            if f"LED{index}" in self.output_mappings[f"Bank {BANK_A}"][gp]["Type"]:
+                if "Red" in self.output_mappings[f"Bank {BANK_A}"][gp]["Type"]:
+                    self.output_mappings[f"Bank {BANK_A}"][gp]["Value"] = rgb.get("R")
+                elif "Green" in self.output_mappings[f"Bank {BANK_A}"][gp]["Type"]:
+                    self.output_mappings[f"Bank {BANK_A}"][gp]["Value"] = rgb.get("G")
+                elif "Blue" in self.output_mappings[f"Bank {BANK_A}"][gp]["Type"]:
+                    self.output_mappings[f"Bank {BANK_A}"][gp]["Value"] = rgb.get("B")
+
+        for gp in self.output_mappings[f"Bank {BANK_B}"].keys():
+            if f"LED{index}" in self.output_mappings[f"Bank {BANK_B}"][gp]["Type"]:
+                if "Red" in self.output_mappings[f"Bank {BANK_B}"][gp]["Type"]:
+                    self.output_mappings[f"Bank {BANK_B}"][gp]["Value"] = rgb.get("R")
+                elif "Green" in self.output_mappings[f"Bank {BANK_B}"][gp]["Type"]:
+                    self.output_mappings[f"Bank {BANK_B}"][gp]["Value"] = rgb.get("G")
+                elif "Blue" in self.output_mappings[f"Bank {BANK_B}"][gp]["Type"]:
+                    self.output_mappings[f"Bank {BANK_B}"][gp]["Value"] = rgb.get("B")
+
+        return status
+
+    def write_output_banks(self):
+        """
+        Write both output banks
+        :return:
+        """
+        # write outputs
+        self._i2c_bus.write_byte_data(self.device_address, OLATA, self.output_bank_a)
+        self._i2c_bus.write_byte_data(self.device_address, OLATB, self.output_bank_b)
