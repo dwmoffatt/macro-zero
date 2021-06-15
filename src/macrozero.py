@@ -55,7 +55,7 @@ from src.modules.mkeyboard import (
 from src.modules.pso import PSO, PSO_COMMAND_PSO
 from src.modules.rotaryencoder import RotaryEncoder, RE_COMMAND_RE_B1, RE_COMMAND_RE_CW, RE_COMMAND_RE_CCW
 from src.modules.SSD1305 import SSD1305
-from src.modules.RGBDriver import RGBDriver
+from src.modules.RGBDriver import RGBDriver, BANK_A, BANK_B
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -144,6 +144,7 @@ class MacroZero:
         self.bottom = 0
 
         self._update_display = False
+        self._update_leds = False
         self._config_modes_max = 0
 
         pso_input_list = [
@@ -252,6 +253,10 @@ class MacroZero:
         # display current mode
         self.display_mode_selection(self.current_mode[1])
 
+        # turn on LEDs associated with the current mode
+        self.update_leds_based_on_mode(self.current_mode[1])
+        self.rgb_driver.write_output_banks()
+
         # This is the main running loop for the program
         while self.running:
             value = None
@@ -279,6 +284,12 @@ class MacroZero:
             if self._update_display:
                 self.display_mode_selection(self.current_mode[1])
                 self._update_display = False
+
+            # Update LEDs
+            if self._update_leds:
+                self.update_leds_based_on_mode(self.current_mode[1])
+                self.rgb_driver.write_output_banks()
+                self._update_leds = False
 
             # Check Power Switch Over Input
             if self.power_switch_over:
@@ -631,6 +642,8 @@ class MacroZero:
             else:
                 self.current_mode = (value, self.mode_list[value - 1])
 
+            self._update_leds = True
+
         elif self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
             outer_value = self.buttons_display_indexes[1]
             outer_value += 1
@@ -660,6 +673,8 @@ class MacroZero:
                 self.current_mode = (CONFIG_MODES_MIN, self.mode_list[CONFIG_MODES_MIN - 1])
             else:
                 self.current_mode = (value, self.mode_list[value - 1])
+
+            self._update_leds = True
 
         elif self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
             inner_value = self.buttons_display_indexes[0]
@@ -692,6 +707,27 @@ class MacroZero:
             RE_COMMAND_RE_CW: self._process_re_cw,
             RE_COMMAND_RE_CCW: self._process_re_ccw,
         }
+
+    def update_leds_based_on_mode(self, mode):
+
+        if mode not in self.mode_list:
+            logging.debug(f"Chosen mode for LED update - {mode} - is not part of mode_list - {self.mode_list}")
+        else:
+            # Update LED output mappings and output banks
+            self.rgb_driver.set_output_mappings(
+                self.configuration[mode][CONFIGURATION_KEY_LEDS][CONFIGURATION_KEY_LED1], 1
+            )
+            self.rgb_driver.set_output_mappings(
+                self.configuration[mode][CONFIGURATION_KEY_LEDS][CONFIGURATION_KEY_LED2], 2
+            )
+            self.rgb_driver.set_output_mappings(
+                self.configuration[mode][CONFIGURATION_KEY_LEDS][CONFIGURATION_KEY_LED3], 3
+            )
+            self.rgb_driver.set_output_mappings(
+                self.configuration[mode][CONFIGURATION_KEY_LEDS][CONFIGURATION_KEY_LED4], 4
+            )
+            self.rgb_driver.output_bank_a = self.rgb_driver.build_output_bank(BANK_A)
+            self.rgb_driver.output_bank_b = self.rgb_driver.build_output_bank(BANK_B)
 
     def __run_webserver(self):  # pragma: no cover
         self.webserver.run(host="0.0.0.0")
