@@ -1,5 +1,4 @@
 import pytest
-from src.macrozero import MacroZero
 from src.modules import (
     MK_B1_PIN,
     MK_B2_PIN,
@@ -27,8 +26,7 @@ class TestBtnRelease:
     # @classmethod
     # def setup_class(cls):
 
-    def setup_method(self, method):
-        self.app = MacroZero(test_env=True, run_webserver=False)
+    # def setup_method(self, method):
 
     @pytest.mark.parametrize(
         "test_input,expected",
@@ -43,25 +41,24 @@ class TestBtnRelease:
             (MK_B8_PIN, MK_COMMAND_MK_B8),
         ],
     )
-    def test_btn_release_valid_channel(self, test_input, expected):
+    def test_btn_release_valid_channel(self, test_input, expected, app):
         """
         Tests all button pin mappings put the correct value on the que
         :return:
         """
-        self.app.mkeyboard.btn_release(test_input)
-        que_value = self.app.input_que.get_nowait()
+        app.mkeyboard.btn_release(test_input)
+        que_value = app.input_que.get_nowait()
         assert que_value == expected
 
-    def test_btn_release_invalid_channel(self):
+    def test_btn_release_invalid_channel(self, app):
         """
         Test an invalid channel input put nothing on the que
         :return:
         """
-        self.app.mkeyboard.btn_release(RE_SW_PIN)
-        assert self.app.input_que.qsize() == 0
+        app.mkeyboard.btn_release(RE_SW_PIN)
+        assert app.input_que.qsize() == 0
 
-    def teardown_method(self, method):
-        del self.app
+    # def teardown_method(self, method):
 
     # @classmethod
     # def teardown_class(cls):
