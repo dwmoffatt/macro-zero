@@ -56,10 +56,10 @@ from modules.pso import PSO, PSO_COMMAND_PSO
 from modules.rotaryencoder import RotaryEncoder, RE_COMMAND_RE_B1, RE_COMMAND_RE_CW, RE_COMMAND_RE_CCW
 from modules.SSD1305 import SSD1305
 from modules.RGBDriver import RGBDriver, BANK_A, BANK_B
+from backend.api import API
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-from flask import Flask
 from smbus2 import SMBus
 
 if RUNNING_ON_PI:
@@ -114,8 +114,6 @@ class MacroZero:
                 level=logging.DEBUG,
             )
 
-        self.webserver = Flask(__name__)
-        self.webserver.add_url_rule("/", "hello", self.hello_world)
         self._run_webserver = run_webserver
 
         self.i2c_bus = None
@@ -178,6 +176,7 @@ class MacroZero:
         self.mkeyboard = MKeyboard(mkeyboard_input_list, self.thread_lock, self.input_que)
         self.mode_select_rotary_encoder = RotaryEncoder(mode_select_input_list, self.thread_lock, self.input_que)
         self.rgb_driver = RGBDriver([], self.thread_lock, self.input_que, i2c_bus=self.i2c_bus)
+        self.api = API()
 
     def init(self):
         """
@@ -221,7 +220,7 @@ class MacroZero:
         logging.info("Running macro-zero interface")
 
         if self._run_webserver:
-            t = threading.Thread(target=self.__run_webserver, name="FlaskWebServerThread")
+            t = threading.Thread(target=self.api.run_api, name="APIThread")
             t.start()
 
         title_font = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 32)
@@ -728,12 +727,6 @@ class MacroZero:
             )
             self.rgb_driver.output_bank_a = self.rgb_driver.build_output_bank(BANK_A)
             self.rgb_driver.output_bank_b = self.rgb_driver.build_output_bank(BANK_B)
-
-    def __run_webserver(self):  # pragma: no cover
-        self.webserver.run(host="0.0.0.0")
-
-    def hello_world(self):
-        return "Hello World!!"
 
 
 if __name__ in "__main__":  # pragma: no cover

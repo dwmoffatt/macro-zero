@@ -11,9 +11,9 @@ def app():
 
 @pytest.fixture
 def client(app):
-    return app.webserver.test_client()
+    return app.api.server.test_client()
 
 
 @pytest.fixture
 def runner(app):
-    return app.webserver.test_cli_runner()
+    return app.api.server.test_cli_runner()
