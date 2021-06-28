@@ -288,4 +288,6 @@ https://pypi.org/project/smbus2/
 
 https://ww1.microchip.com/downloads/en/devicedoc/20001952c.pdf
 
+https://ibaslogic.com/react-tutorial-for-beginners/#writing-react-directly-in-html
+
 https://material-ui.com/
