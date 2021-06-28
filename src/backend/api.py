@@ -20,7 +20,7 @@ class API:
         """
 
     def run_api(self):
-        self.server.run(host="0.0.0.0")
+        self.server.run(host="0.0.0.0", port=1994)
 
     @staticmethod
     def hello_world():

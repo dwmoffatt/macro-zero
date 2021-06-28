@@ -3,7 +3,9 @@ import logo from './../../logo.svg';
 import './App.css';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import { Button, Paper } from '@material-ui/core';function App() {
+import { Button, Paper } from '@material-ui/core';
+
+function App() {
   return (
     <Container maxWidth="sm" className="App">
       <Paper>
