@@ -291,3 +291,5 @@ https://ww1.microchip.com/downloads/en/devicedoc/20001952c.pdf
 https://ibaslogic.com/react-tutorial-for-beginners/#writing-react-directly-in-html
 
 https://material-ui.com/
+
+https://medium.com/@timmykko/deploying-create-react-app-with-nginx-and-ubuntu-e6fe83c5e9e7
