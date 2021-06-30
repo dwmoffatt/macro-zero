@@ -13,14 +13,23 @@ function InstallDeps()
   pip3 install -r ../requirements.txt
 }
 
-function InstallMain()
+function InstallBuild()
 {
-  echo "--- Installing Macro-Zero ---"
+  echo "--- Build React Front End ---"
+
+  sudo systemctl stop macro-zero-startup.service
+  sudo systemctl stop macro-zero-run.service
+
+  cd ~/macro-zero/scr/frontend || return
+  npm run build
 }
 
 function InstallServices()
 {
   echo "--- Installing Macro-Zero Services ---"
+
+  sudo systemctl stop macro-zero-startup.service
+  sudo systemctl stop macro-zero-run.service
 
   sudo cp macro-zero-startup.service /lib/systemd/system
   sudo cp macro-zero-run.service /lib/systemd/system
@@ -34,26 +43,26 @@ function InstallServices()
 }
 
 if [ $# -ne 1 ]; then
-  echo "1 argument required of either [all|depsonly|main|services]"
+  echo "1 argument required of either [all|depsonly|build|services]"
   exit 1
 fi
 
 
-if [[ ("$1" != "all" && "$1" != "depsonly" && "$1" != "main" && "$1" != "services") ]]; then
-  echo "1 argument required of either [all|depsonly|main|services]"
+if [[ ("$1" != "all" && "$1" != "depsonly" && "$1" != "build" && "$1" != "services") ]]; then
+  echo "1 argument required of either [all|depsonly|build|services]"
   exit 1
 fi
 
 case $1 in
 "all")
 InstallDeps
-InstallMain
+InstallBuild
 InstallServices
 ;;
 "depsonly")
 InstallDeps ;;
-"main")
-InstallMain ;;
+"build")
+InstallBuild ;;
 "services")
 InstallServices ;;
 esac
