@@ -180,6 +180,9 @@ Button configuration will be loadable. File format will be JSON. File name neede
 ##### Testing
 `python3 -m pytest --cov-report html:cov_html --cov=src tests/`
 
+#### Generate Documentation
+`pdoc -o ../docs macrozero.py modules/ backend/`
+
 ### Hardware
 ##### Board Size:
 80mm (w) x 100mm (L)
