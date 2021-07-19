@@ -4,9 +4,13 @@ From prototype to production, macro keyboard utilizing power of a Raspberry Pi t
 ## Vision
 The idea behind this device is to create a macro-board to assist with tasks that are repeative or tedious while adding some cool features in a small form factor.
 
-[![Coverage Status](https://coveralls.io/repos/github/dwmoffatt/macro-zero/badge.svg?branch=master)](https://coveralls.io/github/dwmoffatt/macro-zero?branch=master)
-[![Macro-Zero CI](https://github.com/dwmoffatt/macro-zero/actions/workflows/app.yml/badge.svg)](https://github.com/dwmoffatt/macro-zero/actions/workflows/app.yml)
-[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Coverage Status](https://img.shields.io/coveralls/github/dwmoffatt/macro-zero?style=for-the-badge)](https://coveralls.io/github/dwmoffatt/macro-zero?branch=master)
+[![Macro-Zero CI](https://img.shields.io/github/workflow/status/dwmoffatt/macro-zero/Macro-Zero%20CI?label=Macro-Zero%20CI&logo=github&style=for-the-badge)](https://github.com/dwmoffatt/macro-zero/actions/workflows/app.yml)
+[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
+[![Made With: Python](https://img.shields.io/badge/MADE%20WITH-PYTHON-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![Made With: Flask](https://img.shields.io/badge/MADE%20WITH-FLASK-black?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/2.0.x/)
+[![Made With: React](https://img.shields.io/badge/MADE%20WITH-REACT-red?style=for-the-badge&logo=react)](https://reactjs.org/)
+
 
 ## Design
 ### Software
@@ -179,6 +183,10 @@ Button configuration will be loadable. File format will be JSON. File name neede
 
 ##### Testing
 `python3 -m pytest --cov-report html:cov_html --cov=src tests/`
+
+#### Generate Documentation
+Run below command from src dir
+`pdoc -o ../docs macrozero.py modules/ backend/`
 
 ### Hardware
 ##### Board Size:
