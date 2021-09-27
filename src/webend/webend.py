@@ -2,7 +2,7 @@ import sqlite3 as sql
 from flask import Flask, jsonify
 
 
-class API:
+class WebEnd:
     def __init__(self, thread_lock=None, que=None):
         self._thread_lock = thread_lock
         self._que = que
