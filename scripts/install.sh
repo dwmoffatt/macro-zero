@@ -16,8 +16,8 @@ function InstallBuild()
 {
   echo "--- Build Web End ---"
 
-  sudo systemctl stop macro-zero-startup.service
-  sudo systemctl stop macro-zero-run.service
+  # sudo systemctl stop macro-zero-startup.service
+  # sudo systemctl stop macro-zero-run.service
 }
 
 function InstallServices()
