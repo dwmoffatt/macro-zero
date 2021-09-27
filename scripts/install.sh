@@ -6,8 +6,7 @@ function InstallDeps()
   sudo apt update
   sudo apt -y upgrade
 
-  sudo apt install -y python3-pip libopenjp2-7-dev i2c-tools nodejs npm
-  # sudo apt install -y libopenjp2-7-dev
+  sudo apt install -y python3-pip libopenjp2-7-dev i2c-tools
 
   pip3 install --upgrade pip
   pip3 install -r ../requirements.txt
@@ -15,13 +14,10 @@ function InstallDeps()
 
 function InstallBuild()
 {
-  echo "--- Build React Front End ---"
+  echo "--- Build Web End ---"
 
   sudo systemctl stop macro-zero-startup.service
   sudo systemctl stop macro-zero-run.service
-
-  cd ~/macro-zero/scr/frontend || return
-  npm run build
 }
 
 function InstallServices()

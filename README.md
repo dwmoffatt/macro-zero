@@ -9,7 +9,6 @@ The idea behind this device is to create a macro-board to assist with tasks that
 [![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
 [![Made With: Python](https://img.shields.io/badge/MADE%20WITH-PYTHON-blue?style=for-the-badge&logo=python)](https://www.python.org/)
 [![Made With: Flask](https://img.shields.io/badge/MADE%20WITH-FLASK-black?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/2.0.x/)
-[![Made With: React](https://img.shields.io/badge/MADE%20WITH-REACT-red?style=for-the-badge&logo=react)](https://reactjs.org/)
 
 
 ## Design
@@ -186,7 +185,7 @@ Button configuration will be loadable. File format will be JSON. File name neede
 
 #### Generate Documentation
 Run below command from src dir
-`pdoc -o ../docs macrozero.py modules/ backend/`
+`pdoc -o ../docs macrozero.py modules/ webend/`
 
 ### Hardware
 ##### Board Size:

@@ -56,7 +56,7 @@ from modules.pso import PSO, PSO_COMMAND_PSO
 from modules.rotaryencoder import RotaryEncoder, RE_COMMAND_RE_B1, RE_COMMAND_RE_CW, RE_COMMAND_RE_CCW
 from modules.SSD1305 import SSD1305
 from modules.RGBDriver import RGBDriver, BANK_A, BANK_B
-from backend.api import API
+from webend.webend import WebEnd
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -176,7 +176,7 @@ class MacroZero:
         self.mkeyboard = MKeyboard(mkeyboard_input_list, self.thread_lock, self.input_que)
         self.mode_select_rotary_encoder = RotaryEncoder(mode_select_input_list, self.thread_lock, self.input_que)
         self.rgb_driver = RGBDriver([], self.thread_lock, self.input_que, i2c_bus=self.i2c_bus)
-        self.api = API()
+        self.webend = WebEnd()
 
     def init(self):
         """
@@ -220,7 +220,7 @@ class MacroZero:
         logging.info("Running macro-zero interface")
 
         if self._run_webserver:
-            t = threading.Thread(target=self.api.run_api, name="APIThread")
+            t = threading.Thread(target=self.webend.run_api, name="APIThread")
             t.start()
 
         title_font = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 32)
