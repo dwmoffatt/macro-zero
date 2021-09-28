@@ -48,7 +48,7 @@ class RotaryEncoder:
                 )
             elif self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_ROTARY_ENCODER_CLK:
                 self._clk_index = i
-                GPIO.setup(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+                GPIO.setup(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_UP)
                 GPIO.add_event_detect(
                     self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER],
                     GPIO.FALLING,
@@ -57,7 +57,7 @@ class RotaryEncoder:
                 )
             elif self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_ROTARY_ENCODER_DIR:
                 self._dir_index = i
-                GPIO.setup(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+                GPIO.setup(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_UP)
                 GPIO.add_event_detect(
                     self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER],
                     GPIO.FALLING,
