@@ -36,10 +36,10 @@ class RotaryEncoder:
 
         # Setup I/O as Inputs Pull Up
         for i in range(0, len(self._input_list)):
-            GPIO.setup(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
             if self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_BUTTON:
                 self._button_index = i
+                GPIO.setup(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_UP)
                 GPIO.add_event_detect(
                     self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER],
                     GPIO.RISING,
@@ -48,11 +48,22 @@ class RotaryEncoder:
                 )
             elif self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_ROTARY_ENCODER_CLK:
                 self._clk_index = i
+                GPIO.setup(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
                 GPIO.add_event_detect(
-                    self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.BOTH, callback=self.clk_trigger, bouncetime=250
+                    self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER],
+                    GPIO.FALLING,
+                    callback=self.clk_trigger,
+                    bouncetime=300,
                 )
             elif self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_ROTARY_ENCODER_DIR:
                 self._dir_index = i
+                GPIO.setup(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+                GPIO.add_event_detect(
+                    self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER],
+                    GPIO.FALLING,
+                    callback=self.dir_trigger,
+                    bouncetime=300,
+                )
 
         return True
 
@@ -62,6 +73,7 @@ class RotaryEncoder:
         # De-attach events from I/O
         GPIO.remove_event_detect(self._input_list[self._button_index][INPUT_LIST_KEY_PIN_NUMBER])
         GPIO.remove_event_detect(self._input_list[self._clk_index][INPUT_LIST_KEY_PIN_NUMBER])
+        GPIO.remove_event_detect(self._input_list[self._dir_index][INPUT_LIST_KEY_PIN_NUMBER])
 
         return True
 
@@ -76,18 +88,31 @@ class RotaryEncoder:
             self._thread_lock.release()
 
     def clk_trigger(self, channel):
-        clk_value = digital_read(channel)
+        clk_value = digital_read(self._input_list[self._clk_index][INPUT_LIST_KEY_PIN_NUMBER])
         dir_value = digital_read(self._input_list[self._dir_index][INPUT_LIST_KEY_PIN_NUMBER])
 
-        if clk_value == dir_value:
+        if clk_value == 0 and dir_value == 1:
             value = RE_COMMAND_RE_CW
-        else:
+
+            self._thread_lock.acquire()
+            try:
+                self._que.put_nowait(value)
+            except queue.Full:
+                logging.exception(f"Que is full when adding {value}")
+            finally:
+                self._thread_lock.release()
+
+    def dir_trigger(self, channel):
+        clk_value = digital_read(self._input_list[self._clk_index][INPUT_LIST_KEY_PIN_NUMBER])
+        dir_value = digital_read(self._input_list[self._dir_index][INPUT_LIST_KEY_PIN_NUMBER])
+
+        if clk_value == 1 and dir_value == 0:
             value = RE_COMMAND_RE_CCW
 
-        self._thread_lock.acquire()
-        try:
-            self._que.put_nowait(value)
-        except queue.Full:
-            logging.exception(f"Que is full when adding {value}")
-        finally:
-            self._thread_lock.release()
+            self._thread_lock.acquire()
+            try:
+                self._que.put_nowait(value)
+            except queue.Full:
+                logging.exception(f"Que is full when adding {value}")
+            finally:
+                self._thread_lock.release()
