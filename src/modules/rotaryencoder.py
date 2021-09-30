@@ -36,7 +36,6 @@ class RotaryEncoder:
 
         # Setup I/O as Inputs Pull Up
         for i in range(0, len(self._input_list)):
-
             if self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_BUTTON:
                 self._button_index = i
                 GPIO.setup(self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER], GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -91,7 +90,7 @@ class RotaryEncoder:
         clk_value = digital_read(self._input_list[self._clk_index][INPUT_LIST_KEY_PIN_NUMBER])
         dir_value = digital_read(self._input_list[self._dir_index][INPUT_LIST_KEY_PIN_NUMBER])
 
-        if clk_value == 0 and dir_value == 1:
+        if clk_value == 1 and dir_value == 0:
             value = RE_COMMAND_RE_CW
 
             self._thread_lock.acquire()
@@ -106,7 +105,7 @@ class RotaryEncoder:
         clk_value = digital_read(self._input_list[self._clk_index][INPUT_LIST_KEY_PIN_NUMBER])
         dir_value = digital_read(self._input_list[self._dir_index][INPUT_LIST_KEY_PIN_NUMBER])
 
-        if clk_value == 1 and dir_value == 0:
+        if clk_value == 0 and dir_value == 1:
             value = RE_COMMAND_RE_CCW
 
             self._thread_lock.acquire()
