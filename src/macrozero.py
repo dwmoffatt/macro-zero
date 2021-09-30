@@ -222,7 +222,7 @@ class MacroZero:
         logging.info("Running macro-zero interface")
 
         if self._run_webserver:
-            t = threading.Thread(target=self.webend.run_api, name="APIThread")
+            t = threading.Thread(target=self.web.run_api, name="WebThread")
             t.start()
 
         title_font = ImageFont.truetype(f"{fonts_path}Gamer.ttf", 32)
