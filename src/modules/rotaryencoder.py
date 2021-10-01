@@ -51,8 +51,8 @@ class RotaryEncoder:
                 GPIO.add_event_detect(
                     self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER],
                     GPIO.FALLING,
-                    callback=self.clk_trigger,
-                    bouncetime=300,
+                    callback=self.dir_trigger,
+                    bouncetime=250,
                 )
             elif self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_ROTARY_ENCODER_DIR:
                 self._dir_index = i
@@ -60,8 +60,8 @@ class RotaryEncoder:
                 GPIO.add_event_detect(
                     self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER],
                     GPIO.FALLING,
-                    callback=self.dir_trigger,
-                    bouncetime=300,
+                    callback=self.clk_trigger,
+                    bouncetime=250,
                 )
 
         return True
@@ -90,7 +90,7 @@ class RotaryEncoder:
         clk_value = digital_read(self._input_list[self._clk_index][INPUT_LIST_KEY_PIN_NUMBER])
         dir_value = digital_read(self._input_list[self._dir_index][INPUT_LIST_KEY_PIN_NUMBER])
 
-        if clk_value == 1 and dir_value == 0:
+        if clk_value == 0 and dir_value == 1:
             value = RE_COMMAND_RE_CW
 
             self._thread_lock.acquire()
@@ -105,7 +105,7 @@ class RotaryEncoder:
         clk_value = digital_read(self._input_list[self._clk_index][INPUT_LIST_KEY_PIN_NUMBER])
         dir_value = digital_read(self._input_list[self._dir_index][INPUT_LIST_KEY_PIN_NUMBER])
 
-        if clk_value == 0 and dir_value == 1:
+        if clk_value == 1 and dir_value == 0:
             value = RE_COMMAND_RE_CCW
 
             self._thread_lock.acquire()
