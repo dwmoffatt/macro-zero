@@ -636,38 +636,6 @@ class MacroZero:
 
         if self.rotary_encoder_mode == ROTARY_ENCODER_MODES:
             value = self.current_mode[0]
-            value += 1
-
-            if value > self._config_modes_max:
-                self.current_mode = (self._config_modes_max, self.mode_list[self._config_modes_max - 1])
-            else:
-                self.current_mode = (value, self.mode_list[value - 1])
-
-            self._update_leds = True
-
-        elif self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
-            outer_value = self.buttons_display_indexes[1]
-            outer_value += 1
-
-            if outer_value > BUTTONS_INDEXES_MAX:
-                self.buttons_display_indexes = (BUTTONS_INDEXES_MAX - 2, BUTTONS_INDEXES_MAX)
-            else:
-                self.buttons_display_indexes = (outer_value - 2, outer_value)
-
-        self._update_display = True
-
-        return True
-
-    def _process_re_ccw(self):
-        """
-        Process RE_CCW Command
-
-        :return:
-        """
-        logging.debug("Processing RE_CCW Command")
-
-        if self.rotary_encoder_mode == ROTARY_ENCODER_MODES:
-            value = self.current_mode[0]
             value -= 1
 
             if value < CONFIG_MODES_MIN:
@@ -685,6 +653,38 @@ class MacroZero:
                 self.buttons_display_indexes = (BUTTONS_INDEXES_MIN, BUTTONS_INDEXES_MIN + 2)
             else:
                 self.buttons_display_indexes = (inner_value, inner_value + 2)
+
+        self._update_display = True
+
+        return True
+
+    def _process_re_ccw(self):
+        """
+        Process RE_CCW Command
+
+        :return:
+        """
+        logging.debug("Processing RE_CCW Command")
+
+        if self.rotary_encoder_mode == ROTARY_ENCODER_MODES:
+            value = self.current_mode[0]
+            value += 1
+
+            if value > self._config_modes_max:
+                self.current_mode = (self._config_modes_max, self.mode_list[self._config_modes_max - 1])
+            else:
+                self.current_mode = (value, self.mode_list[value - 1])
+
+            self._update_leds = True
+
+        elif self.rotary_encoder_mode == ROTARY_ENCODER_BUTTONS:
+            outer_value = self.buttons_display_indexes[1]
+            outer_value += 1
+
+            if outer_value > BUTTONS_INDEXES_MAX:
+                self.buttons_display_indexes = (BUTTONS_INDEXES_MAX - 2, BUTTONS_INDEXES_MAX)
+            else:
+                self.buttons_display_indexes = (outer_value - 2, outer_value)
 
         self._update_display = True
 
