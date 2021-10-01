@@ -51,7 +51,7 @@ class RotaryEncoder:
                 GPIO.add_event_detect(
                     self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER],
                     GPIO.FALLING,
-                    callback=self.dir_trigger,
+                    callback=self.clk_trigger,
                     bouncetime=250,
                 )
             elif self._input_list[i][INPUT_LIST_KEY_INPUT_TYPE] == INPUT_TYPE_ROTARY_ENCODER_DIR:
@@ -60,7 +60,7 @@ class RotaryEncoder:
                 GPIO.add_event_detect(
                     self._input_list[i][INPUT_LIST_KEY_PIN_NUMBER],
                     GPIO.FALLING,
-                    callback=self.clk_trigger,
+                    callback=self.dir_trigger,
                     bouncetime=250,
                 )
 
